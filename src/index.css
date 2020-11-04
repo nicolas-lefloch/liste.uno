@@ -11,3 +11,71 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+
+input {
+  width: 80%;
+  border-radius: 0.5em;
+  border: 1px darkgrey solid;
+  font-size: calc(10px + 2vmin);
+  height: 2em;
+  padding-left: 1rem;
+}
+
+input.item{
+  height: 100%;
+  border-radius: 0em;
+  border: 0px darkgrey solid;
+  background-color: transparent;
+  font-size: calc(10px + 2vmin);
+}
+
+.itemList {
+  width: 60%;
+  background-color: lightgrey;
+  border-radius: 0.5em;
+  padding: 2rem 0;
+}
+
+ol {
+  list-style-type: none;
+  color: dimgrey;
+  text-align: left;
+  padding-inline-start: 0;
+
+}
+
+li {
+  justify-content: space-between;
+}
+
+.button-container {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.5rem 1rem;
+  align-items: center;
+}
+
+
+ol li:nth-child(odd) {
+  background-color: #e6e6e6;
+}
+
+button {
+  border-radius: 2em;
+  border: 0;
+  color: white;
+  width: 2em;
+  height: 2em;
+  font-weight: bold;
+  font-size: 0.6em;
+}
+
+button.positive {
+  background-color: lightgreen;
+
+}
+
+button.negative {
+  background-color: darkslategrey;
+}
