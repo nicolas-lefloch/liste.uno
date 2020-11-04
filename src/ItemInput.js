@@ -1,33 +1,23 @@
-import React from 'react';
+import React , {useState}from 'react';
 
-class ItemInput extends React.Component {
+const ItemInput = (props) => {
+    const [value, setValue] = useState('')
 
-    constructor(props) {
-        super(props);
-        this.state = { value: '' };
-        this.handleInput = this.handleInput.bind(this);
-        this.handleKeyPress = this.handleKeyPress.bind(this);
-    }
-
-    handleInput(event) {
-        this.setState({value: event.target.value});
-    }
-    handleKeyPress(event) {
+    const handleKeyPress = (event) => {
         if (event.code === "Enter") {
-            this.setState({value : ''})
-            this.props.onEnterPress(event);
+            const newItem = {id : Math.random(), value: event.target.value}
+            props.onItemOutput(newItem);
+            setValue('');
 
         }
     }
 
-    render() {
-        return <input type="text"
-                  placeholder={this.props.placeholder}
-                  value={this.state.value}
-                  onInput={this.handleInput}
-                  onKeyPress={this.handleKeyPress}
-        />;
-    }
-}
+    return <input type="text"
+          placeholder={props.placeholder}
+          value={value}
+          onInput={event => setValue(event.target.value)}
+          onKeyPress={handleKeyPress}
+    />;
 
+}
 export default ItemInput;

@@ -7,20 +7,18 @@ class ItemList extends React.Component {
     constructor(props) {
         super(props);
         this.state = { list: [
-                this.newItem('Pomme'),
-                this.newItem('Banane'),
-                this.newItem('Café'),
-                this.newItem('Beurre') ]
+                {id:1, value : 'Banane'},
+                {id: 2, value : 'Pomme'},
+                {id: 3, value : 'Café'},
+                {id: 4, value : 'Beurre'} ]
         };
-        this.onEnterPress = this.onEnterPress.bind(this);
+        this.addItemToList = this.addItemToList.bind(this);
         this.delete = this.delete.bind(this);
     }
 
-    newItem(name) {
-        return {id :Math.random(), value : name}
-    }
-    onEnterPress(event) {
-        this.setState({ list: [...this.state.list, this.newItem(event.target.value)]})
+
+    addItemToList(item) {
+        this.setState({ list: [...this.state.list, item]})
     }
 
     delete(id) {
@@ -33,7 +31,7 @@ class ItemList extends React.Component {
             <Item indexArray={item.id} key={item.id} name={item.value} onDelete={()=>this.delete(item.id)}/>
         );
         return <div className="itemList">
-            <ItemInput placeholder="Ajouter un item" onEnterPress={this.onEnterPress}/>
+            <ItemInput placeholder="Ajouter un item" onItemOutput={this.addItemToList}/>
             <ol>
                 {listItems}
             </ol>
