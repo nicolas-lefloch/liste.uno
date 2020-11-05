@@ -1,18 +1,21 @@
 import React, { useState } from 'react';
-import ItemRow from './ItemRow';
+import WhileShoppingItemRow from './WhileShoppingItemRow';
 
 const WhileShoppingList = () => {
-    const [list, setList] = useState([{ id: 1, value: 'Banane' },
+    const [list] = useState([{ id: 1, value: 'Banane' },
         { id: 2, value: 'Pomme' },
         { id: 3, value: 'Café' },
         { id: 4, value: 'Beurre' }]);
 
-    const deleteItem = (id) => {
-        setList(list.filter((e) => e.id !== id));
-    };
-
     const itemList = list.map(
-        (item) => <ItemRow key={item.id} name={item.value} onDelete={() => deleteItem(item.id)} />,
+        (item) => {
+            console.log(item);
+            return (
+                <WhileShoppingItemRow
+                    item={item}
+                />
+            );
+        },
     );
 
     return (
