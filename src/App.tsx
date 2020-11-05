@@ -21,11 +21,11 @@ function App() {
                         <Switch>
                             <Route path="/shop">
                                 <WhileShoppingList />
-                                <Link to="/"><button type="button">Edit</button></Link>
+                                <Link to="/"><i className="gg-back-button" /></Link>
                             </Route>
                             <Route path="/">
                                 <BuildShoppingList />
-                                <Link to="/shop"><button type="button">Shop</button></Link>
+                                <Link to="/shop"><i className="gg-play-button" /></Link>
                             </Route>
                         </Switch>
                     </header>
