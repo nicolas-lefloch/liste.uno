@@ -36,7 +36,12 @@ input.item{
   border-radius: 0.5em;
   padding: 2rem 0;
 }
-
+.whileShoppingList {
+  background-color: lightseagreen;
+  width: 60%;
+  border-radius: 0.5em;
+  padding: 2rem 0;
+}
 ol {
   list-style-type: none;
   color: dimgrey;
@@ -64,6 +69,12 @@ ol li:nth-child(odd) {
 button {
   border-radius: 2em;
   border: 0;
+  color: white;
+  font-weight: bold;
+  font-size: 0.6em;
+}
+
+button.icon {
   color: white;
   width: 2em;
   height: 2em;

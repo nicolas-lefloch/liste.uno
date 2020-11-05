@@ -20,7 +20,7 @@ const Item = (props: Props) => {
         el = (
             <li className="button-container" onDoubleClick={() => setEditable(!editable)}>
                 {name}
-                <button type="button" className="negative" onClick={props.onDelete}>X</button>
+                <button type="button" className="icon negative" onClick={props.onDelete}>X</button>
             </li>
         );
     } else {
@@ -34,7 +34,7 @@ const Item = (props: Props) => {
                     type="text"
                     value={name}
                 />
-                <button type="button" className="positive" onClick={() => setEditable(false)}>V</button>
+                <button type="button" className="icon positive" onClick={() => setEditable(false)}>V</button>
 
             </li>
         );

@@ -1,15 +1,37 @@
 import React from 'react';
-import './App.css';
-import ItemList from './ItemList';
+import './ressources/App.css';
+import {
+    BrowserRouter as Router,
+    Switch,
+    Route,
+    Link,
+} from 'react-router-dom';
+import BuildShoppingList from './components/BuildShoppingList';
+import WhileShoppingList from './components/WhileShoppingList';
 
 function App() {
     return (
-        <div className="App">
-            <header className="App-header">
-                <h1> GEOSHOP</h1>
-                <ItemList />
-            </header>
-        </div>
+        <Router>
+            <div>
+                {/* A <Switch> looks through its children <Route>s and
+            renders the first one that matches the current URL. */}
+                <div className="App">
+                    <header className="App-header">
+                        <h1> GEOSHOP</h1>
+                        <Switch>
+                            <Route path="/shop">
+                                <WhileShoppingList />
+                                <Link to="/"><button type="button">Edit</button></Link>
+                            </Route>
+                            <Route path="/">
+                                <BuildShoppingList />
+                                <Link to="/shop"><button type="button">Shop</button></Link>
+                            </Route>
+                        </Switch>
+                    </header>
+                </div>
+            </div>
+        </Router>
     );
 }
 

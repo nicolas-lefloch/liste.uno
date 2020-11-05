@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import VoiceRecorder from './voice-recorder.service';
+import VoiceRecorder from '../voice-recorder.service';
 
-import { Item } from './Item';
+import { Item } from '../datatypes/Item';
 
 interface Props {
     onItemOutput: (item: Item) => void
@@ -14,9 +14,11 @@ const ItemInput = (props: Props) => {
 
     const onSubmit = (event: React.FormEvent) => {
         event.preventDefault();
-        const newItem = { id: Math.random(), value };
-        props.onItemOutput(newItem);
-        setValue('');
+        if (value !== '') {
+            const newItem = { id: Math.random(), value };
+            props.onItemOutput(newItem);
+            setValue('');
+        }
     };
 
     const startRecording = () => {

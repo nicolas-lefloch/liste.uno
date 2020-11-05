@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import ItemInput from './ItemInput';
 import ItemRow from './ItemRow';
 
-const ItemList = () => {
+const BuildShoppingList = () => {
     const [list, setList] = useState([{ id: 1, value: 'Banane' },
         { id: 2, value: 'Pomme' },
         { id: 3, value: 'Café' },
@@ -30,4 +30,4 @@ const ItemList = () => {
     );
 };
 
-export default ItemList;
+export default BuildShoppingList;
