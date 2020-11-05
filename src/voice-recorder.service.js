@@ -24,7 +24,7 @@ export class VoiceRecorder {
         console.log(transcript)
         const res = transcript.split(/ puis | et /)
             .map(s => s.trim())
-            .map(item => item.replace(/^des /, ''))
+            .map(item => item.replace(/^des |^du /, ''))
             .map(s => s.charAt(0).toUpperCase()+s.slice(1))
         console.log(res);
         return res
