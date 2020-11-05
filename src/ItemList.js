@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import ItemInput from "./ItemInput";
-import Item from "./Item";
+import ItemRow from "./ItemRow";
 const ItemList = (props) => {
 
     const [list, setList] = useState([{id:1, value : 'Banane'},
@@ -16,16 +16,18 @@ const ItemList = (props) => {
         setList(list.filter(e =>  e.id !== id));
     };
 
-    const listItems = list.map(item =>
-        <Item key={item.id} name={item.value} onDelete={()=>deleteItem(item.id)}/>
+    const itemList = list.map(item =>
+        <ItemRow key={item.id} name={item.value} onDelete={()=>deleteItem(item.id)}/>
     );
 
-    return <div className="itemList">
-        <ItemInput placeholder="Ajouter un item" onItemOutput={addItemToList}/>
-        <ol>
-            {listItems}
-        </ol>
-    </div>
+    return (
+        <div className="itemList">
+            <ItemInput placeholder="Ajouter un item" onItemOutput={addItemToList}/>
+            <ol>
+                {itemList}
+            </ol>
+        </div>
+    );
 
 };
 
