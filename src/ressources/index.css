@@ -144,3 +144,11 @@ button.negative {
   left: 21px
 }
 
+
+
+.item-addition-explanation{
+  color : green;
+  font-size: small;
+  display: block;
+  margin-bottom: 0;
+}

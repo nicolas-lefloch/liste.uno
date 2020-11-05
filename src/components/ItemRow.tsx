@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
+import { Item } from '../datatypes/Item';
 
 interface Props {
-  name: string
+  item : Item;
   onDelete: () => void
 }
 
-const Item = (props: Props) => {
-    const [name, setName] = useState(props.name);
+const ItemRow = (props: Props) => {
+    const [item, setItem] = useState(props.item);
     const [editable, setEditable] = useState(false);
 
     const handleKeyPress = (event: any) => {
@@ -19,7 +20,12 @@ const Item = (props: Props) => {
     if (!editable) {
         el = (
             <li className="button-container" onDoubleClick={() => setEditable(!editable)}>
-                {name}
+                <div>
+                    {item.additionExplanation && (
+                        <p className="item-addition-explanation">{item.additionExplanation}</p>
+                    )}
+                    <p>{item.value}</p>
+                </div>
                 <button type="button" className="icon negative" onClick={props.onDelete}>X</button>
             </li>
         );
@@ -29,10 +35,10 @@ const Item = (props: Props) => {
                 <input
                     className="item"
                     onKeyPress={handleKeyPress}
-                    onChange={(event) => setName(event.target.value)}
+                    onChange={(event) => setItem({ ...item, value: event.target.value })}
                     // autoFocus
                     type="text"
-                    value={name}
+                    value={item.value}
                 />
                 <button type="button" className="icon positive" onClick={() => setEditable(false)}>V</button>
 
@@ -43,4 +49,4 @@ const Item = (props: Props) => {
     return el;
 };
 
-export default Item;
+export default ItemRow;

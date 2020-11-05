@@ -29,10 +29,10 @@ export default class VoiceRecorder {
         const res = transcript.split(/ puis | et /)
             .map((s) => s.trim())
             .map((item) => item.replace(/^des |^du |^de la /, ''))
-            .map((item) => item.replace(/^une |^un /, '1'))
+            .map((item) => item.replace(/^une |^un /, '1 '))
             // The speech recognition mistakes "deux" for "de"
             // Except for the expression "de la" (e.g. "de la creme") which is handled before
-            .map((item) => item.replace(/^de /, '2'))
+            .map((item) => item.replace(/^de /, '2 '))
             .map((s) => s.charAt(0).toUpperCase() + s.slice(1));
         return res;
     }

@@ -20,7 +20,14 @@ export default class CleverListService {
         const newQuantity = this.getQuantity(newItem);
 
         const computedItemName = `${existingQuantity + newQuantity} ${newItemName}`;
-        const computedItem = { id: Math.random(), value: computedItemName };
+        const explanation = matchingItem.additionExplanation
+            ? matchingItem.additionExplanation.replace(')', `+ ${newQuantity} )`)
+            : `( ${existingQuantity} + ${newQuantity} )`;
+        const computedItem: Item = {
+            id: Math.random(),
+            value: computedItemName,
+            additionExplanation: explanation,
+        };
         return [
             ...existingItems.filter((i) => i !== matchingItem),
             computedItem,

@@ -12,7 +12,7 @@ const WhileShoppingList = () => {
     };
 
     const itemList = list.map(
-        (item) => <ItemRow key={item.id} name={item.value} onDelete={() => deleteItem(item.id)} />,
+        (item) => <ItemRow key={item.id} item={item} onDelete={() => deleteItem(item.id)} />,
     );
 
     return (
