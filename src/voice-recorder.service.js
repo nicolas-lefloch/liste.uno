@@ -22,7 +22,7 @@ export class VoiceRecorder {
 
     static toShoppingList(transcript) {
         console.log(transcript)
-        const res = transcript.split(/puis|et/)
+        const res = transcript.split(/ puis | et /)
             .map(s => s.trim())
             .map(item => item.replace(/^des /, ''))
             .map(s => s.charAt(0).toUpperCase()+s.slice(1))
