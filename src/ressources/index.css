@@ -1,19 +1,19 @@
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+  sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+  monospace;
 }
 
 
-input {
+input[type="text"] {
   width: 80%;
   border-radius: 0.5em;
   border: 1px darkgrey solid;
@@ -32,12 +32,10 @@ input.item{
 
 .itemList {
   width: 60%;
-  background-color: lightgrey;
   border-radius: 0.5em;
   padding: 2rem 0;
 }
 .whileShoppingList {
-  background-color: lightseagreen;
   width: 60%;
   border-radius: 0.5em;
   padding: 2rem 0;
@@ -61,9 +59,19 @@ li {
   align-items: center;
 }
 
+.item-container {
+  display: flex;
+  justify-content: flex-start;
+  padding: 0.5rem 1rem;
+  align-items: center;
+}
+
 
 ol li:nth-child(odd) {
   background-color: #e6e6e6;
+}
+ol li:nth-child(even) {
+  background-color: #f0f0f0;
 }
 
 button {
@@ -81,6 +89,13 @@ button.icon {
   font-weight: bold;
   font-size: 0.6em;
 }
+button.full{
+  width: 100%;
+  height: 100%;
+  background-color: transparent;
+  color: dimgrey;
+  font: inherit;
+}
 
 button.positive {
   background-color: lightgreen;
@@ -92,11 +107,13 @@ button.negative {
 }
 
 
+
+/* ICONS */
+
 .gg-play-button {
   box-sizing: border-box;
   position: relative;
   display: block;
-  transform: scale(var(--ggs,1));
   width: 66px;
   height: 66px;
   background-color: cadetblue;
@@ -122,7 +139,6 @@ button.negative {
   box-sizing: border-box;
   position: relative;
   display: block;
-  transform: scale(var(--ggs,1));
   width: 66px;
   height: 66px;
   background-color: cadetblue;
@@ -152,3 +168,69 @@ button.negative {
   display: block;
   margin-bottom: 0;
 }
+/* CHECKBOX */
+* {
+  box-sizing: border-box;
+}
+
+*::before, *::after {
+  box-sizing: border-box;
+}
+
+input[type="checkbox"] {
+  position: relative;
+  width: 1.5em;
+  height: 1.5em;
+  color: #363839;
+  border: 1px solid #bdc1c6;
+  border-radius: 4px;
+  appearance: none;
+  outline: 0;
+  cursor: pointer;
+  transition: background 175ms cubic-bezier(0.1, 0.1, 0.25, 1);
+}
+input[type="checkbox"]::before {
+  position: absolute;
+  content: '';
+  display: block;
+  top: 0;
+  left: 5px;
+  width: 8px;
+  height: 14px;
+  border-style: solid;
+  border-color: #fff;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+  opacity: 0;
+}
+input[type="checkbox"]:checked {
+  color: #fff;
+  border-color: cadetblue;
+  background: cadetblue;
+}
+input[type="checkbox"]:checked::before {
+  opacity: 1;
+}
+input[type="checkbox"]:checked ~label::before {
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+}
+
+label {
+  position: relative;
+  cursor: pointer;
+  font-size: 1.5em;
+  font-weight: 600;
+  padding: 0 0.25em 0;
+  user-select: none;
+}
+label::before {
+  position: absolute;
+  content: attr(data-content);
+  color: #9c9e9f;
+  clip-path: polygon(0 0, 0 0, 0% 100%, 0 100%);
+  text-decoration: line-through;
+  text-decoration-color: #363839;
+  transition: clip-path 200ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+
