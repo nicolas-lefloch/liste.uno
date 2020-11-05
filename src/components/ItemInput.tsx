@@ -4,7 +4,7 @@ import VoiceRecorder from '../voice-recorder.service';
 import { Item } from '../datatypes/Item';
 
 interface Props {
-    onItemOutput: (item: Item) => void
+    onItemsOutput: (items: Item[]) => void
     placeholder: string
 }
 
@@ -16,7 +16,7 @@ const ItemInput = (props: Props) => {
         event.preventDefault();
         if (value !== '') {
             const newItem = { id: Math.random(), value };
-            props.onItemOutput(newItem);
+            props.onItemsOutput([newItem]);
             setValue('');
         }
     };
@@ -24,7 +24,9 @@ const ItemInput = (props: Props) => {
     const startRecording = () => {
         setListening(true);
         VoiceRecorder.recordShoppingList().then(
-            (items) => items.map((item) => props.onItemOutput({ id: Math.random(), value: item })),
+            (items) => props.onItemsOutput(
+                items.map((item) => ({ id: Math.random(), value: item })),
+            ),
         ).finally(() => setListening(false));
     };
 

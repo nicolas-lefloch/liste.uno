@@ -11,6 +11,7 @@ export default class VoiceRecorder {
         return new Promise((resolve, reject) => {
             recognition.onresult = (event) => {
                 const { transcript } = event.results[0][0];
+                console.log(transcript);
                 resolve(VoiceRecorder.toShoppingList(transcript));
             };
             // will be called only if resolve did not happen (i.e. no result was outputed)
