@@ -18,15 +18,15 @@ export default class CleverListService {
         }
         const existingQuantity = this.getQuantity(matchingItem);
         const newQuantity = this.getQuantity(newItem);
-
-        const computedItemName = `${existingQuantity + newQuantity} ${newItemName}`;
+        const computedQuantity = String(existingQuantity + newQuantity).replace('.', ',');
+        const computedItemName = `${computedQuantity} ${newItemName}`;
         const explanation = matchingItem.additionExplanation
             ? matchingItem.additionExplanation.replace(')', `+ ${newQuantity} )`)
             : `( ${existingQuantity} + ${newQuantity} )`;
         const computedItem: Item = {
             id: Math.random(),
             value: computedItemName,
-            additionExplanation: explanation,
+            additionExplanation: explanation.replace('.', ','),
         };
         return [
             ...existingItems.filter((i) => i !== matchingItem),
