@@ -88,5 +88,59 @@ button.positive {
 }
 
 button.negative {
-  background-color: darkslategrey;
+  background-color: cadetblue;
 }
+
+
+.gg-play-button {
+  box-sizing: border-box;
+  position: relative;
+  display: block;
+  transform: scale(var(--ggs,1));
+  width: 66px;
+  height: 66px;
+  background-color: cadetblue;
+  border-radius: 2em;
+  color: white;
+  margin-top: 1em;
+}
+.gg-play-button::before {
+  content: "";
+  display: block;
+  box-sizing: border-box;
+  position: absolute;
+  width: 0;
+  height: 30px;
+  border-top: 15px solid transparent;
+  border-bottom: 15px solid transparent;
+  border-left: 18px solid;
+  top: 18px;
+  left: 27px
+}
+
+.gg-back-button {
+  box-sizing: border-box;
+  position: relative;
+  display: block;
+  transform: scale(var(--ggs,1));
+  width: 66px;
+  height: 66px;
+  background-color: cadetblue;
+  border-radius: 2em;
+  color: white;
+  margin-top: 1em;
+}
+.gg-back-button::before {
+  content: "";
+  display: block;
+  box-sizing: border-box;
+  position: absolute;
+  width: 0;
+  height: 30px;
+  border-top: 15px solid transparent;
+  border-bottom: 15px solid transparent;
+  border-right: 18px solid;
+  top: 18px;
+  left: 21px
+}
+
