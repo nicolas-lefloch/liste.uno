@@ -1,17 +1,16 @@
 import React, { useState } from 'react';
 import WhileShoppingItemRow from './WhileShoppingItemRow';
+import TransportService from '../services/transport.service';
 
 const WhileShoppingList = () => {
-    const [list] = useState([{ id: 1, value: 'Banane' },
-        { id: 2, value: 'Pomme' },
-        { id: 3, value: 'Café' },
-        { id: 4, value: 'Beurre' }]);
+    const [list] = useState(TransportService.getList());
 
     const itemList = list.map(
         (item) => {
             console.log(item);
             return (
                 <WhileShoppingItemRow
+                    key={item.id}
                     item={item}
                 />
             );

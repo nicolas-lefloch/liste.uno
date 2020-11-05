@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import VoiceRecorder from '../voice-recorder.service';
+import VoiceRecorder from '../services/voice-recorder.service';
 
 import { Item } from '../datatypes/Item';
 

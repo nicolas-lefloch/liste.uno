@@ -1,4 +1,4 @@
-import { Item } from './datatypes/Item';
+import { Item } from '../datatypes/Item';
 
 export default class CleverListService {
     public static regroupByName(existingItems: Item[], newItems: Item[]): Item[] {

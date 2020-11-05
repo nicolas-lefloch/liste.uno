@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Item } from '../datatypes/Item';
+import TransportService from '../services/transport.service';
 
 interface Props {
   item : Item;
@@ -13,18 +14,19 @@ const ItemRow = (props: Props) => {
     const handleKeyPress = (event: any) => {
         if (event.code === 'Enter') {
             setEditable(false);
+            TransportService.updateItem(item);
         }
     };
 
     let el;
     if (!editable) {
         el = (
-            <li className="button-container" onDoubleClick={() => setEditable(!editable)}>
+            <li className="button-container" onDoubleClick={() => setEditable(true)}>
                 <div>
                     {item.additionExplanation && (
                         <p className="item-addition-explanation">{item.additionExplanation}</p>
                     )}
-                    <p>{item.value}</p>
+                    <span className="label">{item.value}</span>
                 </div>
                 <button type="button" className="icon negative" onClick={props.onDelete}>X</button>
             </li>
@@ -40,7 +42,7 @@ const ItemRow = (props: Props) => {
                     type="text"
                     value={item.value}
                 />
-                <button type="button" className="icon positive" onClick={() => setEditable(false)}>V</button>
+                <button type="button" className="icon positive" onClick={() => { setEditable(false); TransportService.updateItem(item); }}>V</button>
 
             </li>
         );
