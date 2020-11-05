@@ -1,7 +1,12 @@
-const SpeechRecognition = window.webkitSpeechRecognition
-const recognition = new SpeechRecognition()
-recognition.lang = 'fr-FR'
+const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition
+const recognition = SpeechRecognition? new SpeechRecognition() : undefined
+
+if(recognition){
+    recognition.lang = 'fr-FR'
+}
 export class VoiceRecorder {
+    static voiceRecognitionIsSupported = !!recognition;
+
     static recordShoppingList() {
         console.log(recognition);
 

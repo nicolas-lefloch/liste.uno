@@ -1,4 +1,3 @@
-import logo from './logo.svg';
 import './App.css';
 import ItemList from './ItemList.js';
 import React from "react";

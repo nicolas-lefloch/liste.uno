@@ -37,8 +37,11 @@ const ItemInput = (props) => {
             </form>
             <button
                 style={{ width: '120px', color: 'black' }}
-                onClick={listening ? stopRecording : startRecording}>
+                onClick={listening ? stopRecording : startRecording}
+                disabled={!VoiceRecorder.voiceRecognitionIsSupported}
+                >
                 {listening ? 'Listening...' : 'Audio'}
+                {!VoiceRecorder.voiceRecognitionIsSupported && ' (unavailable - use Chrome)'}
             </button>
         </>
     );
