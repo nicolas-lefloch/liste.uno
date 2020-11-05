@@ -1,51 +1,28 @@
-import React from "react";
-class Item extends React.Component {
+import React, { useState } from "react";
+const Item = (props) => {
 
-    constructor(props) {
-        super(props);
-        this.state = { name: this.props.name, editable : false };
+    const [name, setName] = useState(props.name);
+    const [editable, setEditable] = useState(false);
 
-        this.save = this.save.bind(this);
-        this.handleDblClick = this.handleDblClick.bind(this);
-        this.handleKeyPress = this.handleKeyPress.bind(this);
-        this.handleInput = this.handleInput.bind(this);
-
-    }
-
-    render() {
-        let el;
-        if(this.state.editable === false) {
-            el = <li className={"button-container"} onDoubleClick={this.handleDblClick}>{this.state.name}
-                <button className={"negative"} onClick={this.props.onDelete}>X</button>
-            </li>
-        } else {
-            el = <li className={"button-container"}>
-                <input className={"item"} onKeyPress={this.handleKeyPress}
-                   onInput={this.handleInput}  autoFocus type="text"
-                   value={this.state.name}/><button className={"positive"} onClick={this.save}>V</button></li>
-        }
-
-        return el;
-    }
-
-    handleInput(event) {
-        this.setState({name: event.target.value});
-    }
-
-    save() {
-       this.setState({editable : false})
-    }
-
-    handleDblClick() {
-        this.setState({editable: !this.state.editable})
-    }
-
-    handleKeyPress(event) {
+    const handleKeyPress = (event) => {
         if (event.code === "Enter") {
-            this.setState({editable : false})
+            setEditable(false);
         }
+    };
+
+    let el;
+    if(!editable) {
+        el = <li className={"button-container"} onDoubleClick={()=> setEditable(!editable)}>{name}
+            <button className={"negative"} onClick={props.onDelete}>X</button>
+        </li>
+    } else {
+        el = <li className={"button-container"}>
+            <input className={"item"} onKeyPress={handleKeyPress}
+                   onInput={(event) => setName(event.target.value)}  autoFocus type="text"
+                   value={name}/><button className={"positive"} onClick={() => setEditable(false)}>V</button></li>
     }
 
+    return el;
 }
 
 export default Item;
