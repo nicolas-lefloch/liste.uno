@@ -6,7 +6,7 @@ import ItemInput from './ItemInput';
 import ItemRow from './ItemRow';
 
 const BuildShoppingList = () => {
-    const [list, setList] = useState<Item[]>([]);
+    const [list, setList] = useState<Item[]>(ShoppingListService.getLocalList());
     useEffect(() => {
         ShoppingListService.getListChangeListener().subscribe(
             (l) => {

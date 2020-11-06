@@ -3,4 +3,5 @@ export interface Item {
     name: string,
     additionExplanation? : string
     lastUpdate : number;
+    bought : boolean
 }
