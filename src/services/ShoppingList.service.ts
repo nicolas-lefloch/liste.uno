@@ -3,65 +3,64 @@ import { Subject } from 'rxjs';
 
 import { Item } from '../datatypes/Item';
 
-firebase.initializeApp({
-    databaseURL: 'https://liste-de-course-6799d.firebaseio.com/',
-});
-export default class ShoppingListService {
-    private database : firebase.database.Database;
+const listChange$ : Subject<Item[]> = new Subject();
+let database : firebase.database.Database;
+let listRef : firebase.database.Reference;
 
-    private listRef :firebase.database.Reference;
+function saveLocally(shoppingList : Item[]) {
+    localStorage.setItem('list', JSON.stringify(shoppingList));
+}
 
-    private listChange$ : Subject<Item[]> = new Subject();
+function init() {
+    console.log('----- FIREBASE INIT -------');
+    firebase.initializeApp({
+        databaseURL: 'https://liste-de-course-6799d.firebaseio.com/',
+    });
+    database = firebase.database();
+    listRef = database.ref('/lists/abzf/');
+    database.ref('/lists/abzf/current').on('value',
+        (snapshot) => {
+            // console.log(snapshot);
+            const listValue = snapshot.val();
+            const itemList = listValue ? Object.entries(listValue).map(
+                ([key, item]) => ({ ...(item as Item), key }),
+            ) : [];
+            console.log(itemList.map((i) => i.name));
 
-    private shoppingList : Item[]
+            saveLocally(itemList);
+            listChange$.next(itemList);
+        });
+}
 
-    constructor() {
-        this.shoppingList = localStorage.getItem('list') ? JSON.parse(localStorage.getItem('list')) : [];
-        this.database = firebase.database();
-        this.listRef = this.database.ref('/lists/abzf/');
-        this.database.ref('/lists/abzf/current').on('value',
-            (snapshot) => {
-                const itemList = Object.entries(snapshot.val()).map(
-                    ([key, item]) => ({ ...(item as Item), key }),
-                );
-                this.shoppingList = itemList;
-                console.log(itemList);
+init();
 
-                this.saveLocally();
-                this.listChange$.next(itemList);
-            });
-    }
-
-    private saveLocally() {
-        localStorage.setItem('list', JSON.stringify(this.shoppingList));
-    }
-
-    public addItem(item: Item) : Item {
-        this.shoppingList.push(item);
-        this.saveLocally();
-        const { key } = this.listRef.child('current').push(item);
+export default class ShoppingService {
+    static addItem(item: Item) : Item {
+        console.log('addItem');
+        const localList = this.getLocalList();
+        localList.push(item);
+        saveLocally(localList);
+        const { key } = listRef.child('current').push(item);
         return { ...item, key };
     }
 
-    public removeItem(itemKey : string) {
-        this.shoppingList = this.shoppingList.filter((i) => i.key !== itemKey);
-        this.saveLocally();
-        this.listRef.child('current').child(itemKey).remove();
+    static removeItem(itemKey : string) {
+        saveLocally(this.getLocalList().filter((i) => i.key !== itemKey));
+        listRef.child('current').child(itemKey).remove();
     }
 
-    public updateItem(item : Item) {
-        this.shoppingList = this.shoppingList.map(
+    static updateItem(item : Item) {
+        saveLocally(this.getLocalList().map(
             (it) => (it.key === item.key ? item : it),
-        );
-        this.saveLocally();
-        this.listRef.child(`current/${item.key}`).update(item);
+        ));
+        listRef.child(`current/${item.key}`).update(item);
     }
 
-    public getListChangeListener() {
-        return this.listChange$.asObservable();
+    static getListChangeListener() {
+        return listChange$.asObservable();
     }
 
-    public getLocalList() : Item[] {
-        return [...this.shoppingList];
+    static getLocalList() : Item[] {
+        return localStorage.getItem('list') ? JSON.parse(localStorage.getItem('list')) : [];
     }
 }

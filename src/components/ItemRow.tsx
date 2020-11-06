@@ -11,12 +11,10 @@ const ItemRow = (props: Props) => {
     const [item, setItem] = useState(props.item);
     const [editable, setEditable] = useState(false);
 
-    const shoppingListService = new ShoppingListService();
-
     const handleKeyPress = (event: any) => {
         if (event.code === 'Enter') {
             setEditable(false);
-            shoppingListService.updateItem({ ...item, lastUpdate: new Date().getTime() });
+            ShoppingListService.updateItem({ ...item, lastUpdate: new Date().getTime() });
         }
     };
 

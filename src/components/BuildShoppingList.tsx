@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 // import CleverListService from '../services/clever-list.service';
 import ShoppingListService from '../services/ShoppingList.service';
 import { Item } from '../datatypes/Item';
@@ -6,25 +6,28 @@ import ItemInput from './ItemInput';
 import ItemRow from './ItemRow';
 
 const BuildShoppingList = () => {
-    const shoppingListService = new ShoppingListService();
-
-    const [list, setList] = useState<Item[]>(shoppingListService.getLocalList());
-
-    shoppingListService.getListChangeListener().subscribe(
-        (l) => setList(l),
-    );
+    const [list, setList] = useState<Item[]>([]);
+    useEffect(() => {
+        ShoppingListService.getListChangeListener().subscribe(
+            (l) => {
+                console.log(`change from firebase, setting list to ${l.map((e) => `${e.name},${e.key}`)}`);
+                setList(l);
+            },
+        );
+    }, []);
 
     const addItemsToList = (newItems : Item[]) => {
         const withKey = newItems.map(
-            (item) => shoppingListService.addItem(item),
+            (item) => ShoppingListService.addItem(item),
         );
+        console.log(`sdk answered, appending ${withKey.map((e) => `${e.name},${e.key}`)} to ${list.map((e) => `${e.name},${e.key}`)}`);
         setList([...list, ...withKey]);
     };
 
     const deleteItem = (key) => {
         const newList = list.filter((e) => e.key !== key);
         setList(newList);
-        shoppingListService.removeItem(key);
+        ShoppingListService.removeItem(key);
     };
 
     const itemList = list.map(
@@ -36,6 +39,8 @@ const BuildShoppingList = () => {
             />
         ),
     );
+
+    console.log(list);
 
     return (
         <div className="itemList">
