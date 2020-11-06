@@ -2,6 +2,7 @@ import firebase from 'firebase';
 import { Subject } from 'rxjs';
 
 import { Item } from '../datatypes/Item';
+import CleverListService from './clever-list.service';
 
 const listChange$ : Subject<Item[]> = new Subject();
 let database : firebase.database.Database;
@@ -25,8 +26,7 @@ function init() {
             const itemList = listValue ? Object.entries(listValue).map(
                 ([key, item]) => ({ ...(item as Item), key }),
             ) : [];
-            console.log(itemList.map((i) => i.name));
-
+            // console.log(itemList.map((i) => i.name));
             saveLocally(itemList);
             listChange$.next(itemList);
         });
@@ -36,11 +36,16 @@ init();
 
 export default class ShoppingService {
     static addItem(item: Item) : Item {
-        console.log('addItem');
-        const localList = this.getLocalList();
-        localList.push(item);
+        let localList = this.getLocalList();
+        // Duplicates handling
+        const { itemToRemove, itemToAdd } = CleverListService.handleQuantities(localList, item);
+        if (itemToRemove) {
+            listRef.child('current').child(itemToRemove.key).remove();
+            localList = localList.filter((i) => i.key !== itemToRemove.key);
+        }
+        localList.push(itemToAdd);
         saveLocally(localList);
-        const { key } = listRef.child('current').push(item);
+        const { key } = listRef.child('current').push(itemToAdd);
         return { ...item, key };
     }
 

@@ -21,7 +21,7 @@ const BuildShoppingList = () => {
             (item) => ShoppingListService.addItem(item),
         );
         console.log(`sdk answered, appending ${withKey.map((e) => `${e.name},${e.key}`)} to ${list.map((e) => `${e.name},${e.key}`)}`);
-        setList([...list, ...withKey]);
+        setList(ShoppingListService.getLocalList());
     };
 
     const deleteItem = (key) => {

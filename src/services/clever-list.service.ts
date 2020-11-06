@@ -1,20 +1,23 @@
 import { Item } from '../datatypes/Item';
 
 export default class CleverListService {
-    public static regroupByName(existingItems: Item[], newItems: Item[]): Item[] {
-        return newItems.reduce(
-            (regroupedItem, newItem) => this.regroupOneItem(regroupedItem, newItem),
-            existingItems,
-        );
-    }
+    // public static regroupByName(existingItems: Item[], newItems: Item[]): Item[] {
+    //     return newItems.reduce(
+    //         (regroupedItem, newItem) => this.regroupOneItem(regroupedItem, newItem),
+    //         existingItems,
+    //     );
+    // }
 
-    private static regroupOneItem(existingItems: Item[], newItem: Item): Item[] {
+    public static handleQuantities(existingItems: Item[], newItem: Item): {
+        itemToRemove? : Item,
+        itemToAdd : Item
+    } {
         const newItemName = this.itemNameWithoutQuantity(newItem);
         const matchingItem = existingItems.find(
             (i) => this.itemNameWithoutQuantity(i) === newItemName,
         );
         if (!matchingItem) {
-            return [...existingItems, newItem];
+            return { itemToAdd: newItem };
         }
         const existingQuantity = this.getQuantity(matchingItem);
         const newQuantity = this.getQuantity(newItem);
@@ -30,13 +33,13 @@ export default class CleverListService {
             lastUpdate: new Date().getTime(),
             bought: false,
         };
-        return [
-            ...existingItems.filter((i) => i !== matchingItem),
-            computedItem,
-        ];
+        return {
+            itemToRemove: matchingItem,
+            itemToAdd: computedItem,
+        };
     }
 
-    private static itemNameWithoutQuantity(item: Item) {
+    private static itemNameWithoutQuantity(item: Item):string {
         const quantity = this.getQuantity(item);
         if (!quantity) {
             return item.name;
@@ -44,7 +47,11 @@ export default class CleverListService {
         const quantityPointDecimal = String(quantity);
         const quantityCommaDecimal = quantityPointDecimal.replace('.', ',');
         const toRemove = new RegExp(`(${quantityPointDecimal}|${quantityCommaDecimal})`);
-        return item.name.replace(toRemove, '').trim();
+        const itemNameWithoutQuantity = item.name.replace(toRemove, '').trim();
+        if (quantity === 1 && !itemNameWithoutQuantity.endsWith('s')) {
+            return `${itemNameWithoutQuantity}s`;
+        }
+        return itemNameWithoutQuantity;
     }
 
     private static getQuantity(item: Item) {
