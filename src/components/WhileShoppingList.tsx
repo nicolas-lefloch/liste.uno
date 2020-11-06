@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import WhileShoppingItemRow from './WhileShoppingItemRow';
-import TransportService from '../services/transport.service';
+// import TransportService from '../services/transport.service';
 
 const WhileShoppingList = () => {
-    const [list] = useState(TransportService.getList());
+    const [list] = useState([]);
 
     const itemList = list.map(
         (item) => {

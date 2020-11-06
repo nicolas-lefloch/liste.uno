@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Item } from '../datatypes/Item';
-import TransportService from '../services/transport.service';
 
 interface Props {
   item : Item;
@@ -14,7 +13,7 @@ const ItemRow = (props: Props) => {
     const handleKeyPress = (event: any) => {
         if (event.code === 'Enter') {
             setEditable(false);
-            TransportService.updateItem(item);
+            // ShoppingListService.updateItem(item);
         }
     };
 
@@ -26,7 +25,7 @@ const ItemRow = (props: Props) => {
                     {item.additionExplanation && (
                         <p className="item-addition-explanation">{item.additionExplanation}</p>
                     )}
-                    <span className="label">{item.value}</span>
+                    <span className="label">{item.name}</span>
                 </div>
                 <button type="button" className="icon negative" onClick={props.onDelete}>X</button>
             </li>
@@ -37,12 +36,12 @@ const ItemRow = (props: Props) => {
                 <input
                     className="item"
                     onKeyPress={handleKeyPress}
-                    onChange={(event) => setItem({ ...item, value: event.target.value })}
+                    onChange={(event) => setItem({ ...item, name: event.target.value })}
                     // autoFocus
                     type="text"
-                    value={item.value}
+                    value={item.name}
                 />
-                <button type="button" className="icon positive" onClick={() => { setEditable(false); TransportService.updateItem(item); }}>V</button>
+                <button type="button" className="icon positive" onClick={() => { setEditable(false); }}>V</button>
 
             </li>
         );

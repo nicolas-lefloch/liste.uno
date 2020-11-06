@@ -8,12 +8,12 @@ interface Props {
 const WhileShoppingItemRow = (props: Props) => (
     <li>
         <button type="button" className="item-container full">
-            <input type="checkbox" id={String(props.item.id)} name={props.item.value} value={props.item.value} />
+            <input type="checkbox" id={props.item.key} name={props.item.name} value={props.item.name} />
             <label
-                htmlFor={String(props.item.id)}
-                data-content={props.item.value}
+                htmlFor={String(props.item.key)}
+                data-content={props.item.name}
             >
-                {props.item.value}
+                {props.item.name}
             </label>
         </button>
     </li>

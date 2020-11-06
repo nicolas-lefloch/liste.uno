@@ -1,32 +1,41 @@
 import React, { useState } from 'react';
-import CleverListService from '../services/clever-list.service';
-import TransportService from '../services/transport.service';
+// import CleverListService from '../services/clever-list.service';
+import ShoppingListService from '../services/ShoppingList.service';
 import { Item } from '../datatypes/Item';
 import ItemInput from './ItemInput';
 import ItemRow from './ItemRow';
 
 const BuildShoppingList = () => {
-    const [list, setList] = useState(TransportService.getList);
+    const shoppingListService = new ShoppingListService();
 
-    const addItemToList = (items : Item[]) => {
-        const newList = CleverListService.regroupByName(list, items);
-        setList(newList);
-        TransportService.saveList(newList);
+    const [list, setList] = useState<Item[]>(shoppingListService.getLocalList());
+
+    shoppingListService.getListChangeListener().subscribe(
+        (l) => setList(l),
+    );
+
+    const addItemsToList = (newItems : Item[]) => {
+        const withKey = newItems.map(
+            (item) => ({ ...item, key: shoppingListService.addItem(item) }),
+        );
+        setList([...list, ...withKey]);
     };
 
-    const deleteItem = (id) => {
-        const newList = list.filter((e) => e.id !== id);
+    const deleteItem = (key) => {
+        const newList = list.filter((e) => e.key !== key);
         setList(newList);
-        TransportService.saveList(newList);
+        shoppingListService.removeItem(key);
     };
+
+    console.log(list);
 
     const itemList = list.map(
-        (item) => <ItemRow key={item.id} item={item} onDelete={() => deleteItem(item.id)} />,
+        (item) => <ItemRow key={item.key} item={item} onDelete={() => deleteItem(item.key)} />,
     );
 
     return (
         <div className="itemList">
-            <ItemInput placeholder="Ajouter un item" onItemsOutput={addItemToList} />
+            <ItemInput placeholder="Ajouter un item" onItemsOutput={addItemsToList} />
             <ol>
                 {itemList}
             </ol>

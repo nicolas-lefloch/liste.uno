@@ -1,0 +1,21 @@
+{
+    "lists" : {
+        "abzf" : {
+            "current" : [{
+                "id" : 1,
+                "name" : "4 carottes",
+                "addition_explanation" : "(2+2)"
+            }],
+            "archived" : [{
+                "id" : 2,
+                "name" :"4 pistaches"
+            }],
+            "categories" : [
+                {
+                    "name" : "boulangerie",
+                    "image" : "boul.png"
+                }
+            ]
+        }
+    }
+}

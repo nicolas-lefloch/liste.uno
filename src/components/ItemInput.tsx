@@ -9,15 +9,15 @@ interface Props {
 }
 
 const ItemInput = (props: Props) => {
-    const [value, setValue] = useState('');
+    const [itemName, setItemName] = useState('');
     const [listening, setListening] = useState(false);
 
     const onSubmit = (event: React.FormEvent) => {
         event.preventDefault();
-        if (value !== '') {
-            const newItem = { id: Math.random(), value };
+        if (itemName !== '') {
+            const newItem : Item = { name: itemName };
             props.onItemsOutput([newItem]);
-            setValue('');
+            setItemName('');
         }
     };
 
@@ -25,7 +25,7 @@ const ItemInput = (props: Props) => {
         setListening(true);
         VoiceRecorder.recordShoppingList().then(
             (items) => props.onItemsOutput(
-                items.map((item) => ({ id: Math.random(), value: item })),
+                items.map((item) => ({ name: item })),
             ),
         ).finally(() => setListening(false));
     };
@@ -41,8 +41,8 @@ const ItemInput = (props: Props) => {
                 <input
                     type="text"
                     placeholder={props.placeholder}
-                    value={value}
-                    onChange={(event) => setValue(event.target.value)}
+                    value={itemName}
+                    onChange={(event) => setItemName(event.target.value)}
                 />
             </form>
             <button
