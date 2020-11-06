@@ -16,7 +16,7 @@ const BuildShoppingList = () => {
 
     const addItemsToList = (newItems : Item[]) => {
         const withKey = newItems.map(
-            (item) => ({ ...item, key: shoppingListService.addItem(item) }),
+            (item) => shoppingListService.addItem(item),
         );
         setList([...list, ...withKey]);
     };
@@ -27,10 +27,14 @@ const BuildShoppingList = () => {
         shoppingListService.removeItem(key);
     };
 
-    console.log(list);
-
     const itemList = list.map(
-        (item) => <ItemRow key={item.key} item={item} onDelete={() => deleteItem(item.key)} />,
+        (item) => (
+            <ItemRow
+                key={item.key + item.lastUpdate}
+                item={item}
+                onDelete={() => deleteItem(item.key)}
+            />
+        ),
     );
 
     return (

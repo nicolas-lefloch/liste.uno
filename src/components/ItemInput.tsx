@@ -15,7 +15,7 @@ const ItemInput = (props: Props) => {
     const onSubmit = (event: React.FormEvent) => {
         event.preventDefault();
         if (itemName !== '') {
-            const newItem : Item = { name: itemName };
+            const newItem : Item = { name: itemName, lastUpdate: new Date().getTime() };
             props.onItemsOutput([newItem]);
             setItemName('');
         }
@@ -25,7 +25,7 @@ const ItemInput = (props: Props) => {
         setListening(true);
         VoiceRecorder.recordShoppingList().then(
             (items) => props.onItemsOutput(
-                items.map((item) => ({ name: item })),
+                items.map((item) => ({ name: item, lastUpdate: new Date().getTime() })),
             ),
         ).finally(() => setListening(false));
     };

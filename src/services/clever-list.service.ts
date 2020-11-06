@@ -27,6 +27,7 @@ export default class CleverListService {
             key: String(Math.random()),
             name: computedItemName,
             additionExplanation: explanation.replace('.', ','),
+            lastUpdate: new Date().getTime(),
         };
         return [
             ...existingItems.filter((i) => i !== matchingItem),
