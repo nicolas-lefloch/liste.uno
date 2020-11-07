@@ -4,24 +4,29 @@ import ShoppingListService from '../services/ShoppingList.service';
 
 interface Props {
   item : Item;
-  onDelete: () => void
+  onDelete: () => void;
+  editable : boolean;
+  onToggleEdition : (editable : boolean) => void;
 }
 
 const ItemRow = (props: Props) => {
     const [item, setItem] = useState(props.item);
-    const [editable, setEditable] = useState(false);
 
     const handleKeyPress = (event: any) => {
         if (event.code === 'Enter') {
-            setEditable(false);
-            ShoppingListService.updateItem({ ...item, lastUpdate: new Date().getTime() });
+            props.onToggleEdition(false);
+            ShoppingListService.updateItem({
+                ...item,
+                additionExplanation: null,
+                lastUpdate: new Date().getTime(),
+            });
         }
     };
 
     let el;
-    if (!editable) {
+    if (!props.editable) {
         el = (
-            <li className="button-container" onDoubleClick={() => setEditable(true)}>
+            <li className="button-container" onDoubleClick={() => props.onToggleEdition(true)}>
                 <div>
                     {item.additionExplanation && (
                         <p className="item-addition-explanation">{item.additionExplanation}</p>
@@ -38,11 +43,12 @@ const ItemRow = (props: Props) => {
                     className="item"
                     onKeyPress={handleKeyPress}
                     onChange={(event) => setItem({ ...item, name: event.target.value })}
-                    // autoFocus
+                    // eslint-disable-next-line jsx-a11y/no-autofocus
+                    autoFocus
                     type="text"
                     value={item.name}
                 />
-                <button type="button" className="icon positive" onClick={() => { setEditable(false); }}>V</button>
+                <button type="button" className="icon positive" onClick={() => { props.onToggleEdition(false); }}>V</button>
 
             </li>
         );

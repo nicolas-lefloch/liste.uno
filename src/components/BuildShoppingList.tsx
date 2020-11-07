@@ -7,20 +7,19 @@ import ItemRow from './ItemRow';
 
 const BuildShoppingList = () => {
     const [list, setList] = useState<Item[]>(ShoppingListService.getLocalList());
+    const [editedItemKey, setEditedItemKey] = useState<string>();
     useEffect(() => {
         ShoppingListService.getListChangeListener().subscribe(
             (l) => {
-                console.log(`change from firebase, setting list to ${l.map((e) => `${e.name},${e.key}`)}`);
                 setList(l);
             },
         );
     }, []);
 
     const addItemsToList = (newItems : Item[]) => {
-        const withKey = newItems.map(
+        newItems.map(
             (item) => ShoppingListService.addItem(item),
         );
-        console.log(`sdk answered, appending ${withKey.map((e) => `${e.name},${e.key}`)} to ${list.map((e) => `${e.name},${e.key}`)}`);
         setList(ShoppingListService.getLocalList());
     };
 
@@ -35,12 +34,14 @@ const BuildShoppingList = () => {
             <ItemRow
                 key={item.key + item.lastUpdate}
                 item={item}
+                editable={editedItemKey === item.key}
+                onToggleEdition={
+                    (shouldEdit) => setEditedItemKey(shouldEdit ? item.key : undefined)
+                }
                 onDelete={() => deleteItem(item.key)}
             />
         ),
     );
-
-    console.log(list);
 
     return (
         <div className="itemList">
