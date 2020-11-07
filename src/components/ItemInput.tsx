@@ -47,9 +47,8 @@ const ItemInput = (props: Props) => {
 
     return (
         <>
-            <form onSubmit={onSubmit}>
+            <form onSubmit={onSubmit} className="item-input">
                 <textarea
-                    // type="text"
                     placeholder={props.placeholder}
                     value={itemName}
                     onChange={(event) => setItemName(event.target.value)}

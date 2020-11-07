@@ -74,57 +74,34 @@ ol li:nth-child(odd) {
 ol li:nth-child(even) {
   background-color: #f0f0f0;
 }
-/*
-button {
-  border-radius: 2em;
-  border: 0;
-  color: white;
-  font-weight: bold;
-  font-size: 0.6em;
+
+textarea::placeholder {
+  text-align: center;
+  vertical-align: center;
 }
 
-button.icon {
-  color: white;
-  width: 2em;
-  height: 2em;
-  font-weight: bold;
-  font-size: 0.6em;
-  background-color: cadetblue;
-  border-radius: 3em;
-  padding-top: 0.25em;
+textarea {
+  border-radius: 0.5em;
+  resize: none;
+  height: calc(2 * 1.71428571rem);
+  width: 84% ;
+  line-height:1.7em;
+  overflow: hidden;
 }
-button.icon.big {
-  width: 4em;
-  height: 4em;
-}
-
-button.full{
-  width: 100%;
-  height: 100%;
-  background-color: transparent;
-  color: dimgrey;
-  font: inherit;
-}
-
-button.positive {
-  background-color: lightgreen;
-
-}
-
-button.negative {
-  background-color: cadetblue;
-}
-*/
-
 h1 {
   font-size: 3em;
 }
 button {
   border : 0;
   background-color: transparent;
+  margin-left: 1em;
 }
 
-
+form.item-input {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
 .item-addition-explanation{
   color : green;
   font-size: small;
