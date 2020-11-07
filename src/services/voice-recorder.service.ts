@@ -1,5 +1,5 @@
-import { Item } from "../datatypes/Item";
-import CleverListService from "./clever-list.service";
+import { Item } from '../datatypes/Item';
+import CleverListService from './clever-list.service';
 
 const SpeechRecognition = window.SpeechRecognition || (window as any).webkitSpeechRecognition;
 const recognition = SpeechRecognition ? new SpeechRecognition() : undefined;
@@ -27,5 +27,4 @@ export default class VoiceRecorder {
         recognition.onend = () => { };
         recognition.stop();
     }
-
 }
