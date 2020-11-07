@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import VoiceRecorder from '../services/voice-recorder.service';
 
 import { Item } from '../datatypes/Item';
+import CleverListService from '../services/clever-list.service';
 
 interface Props {
     onItemsOutput: (items: Item[]) => void
@@ -28,17 +29,18 @@ const ItemInput = (props: Props) => {
     const startRecording = () => {
         setListening(true);
         VoiceRecorder.recordShoppingList().then(
-            (items) => props.onItemsOutput(
-                items.map(
-                    (item) => ({ name: item, lastUpdate: new Date().getTime(), bought: false }),
-                ),
-            ),
+            (items) => props.onItemsOutput(items),
         ).finally(() => setListening(false));
     };
 
     const stopRecording = () => {
         setListening(false);
         VoiceRecorder.stopVoiceRecognition();
+    };
+
+    const handlePaste = (pastedText: string) => {
+        props.onItemsOutput(CleverListService.transcriptToItems(pastedText));
+        setItemName('');
     };
 
     return (
@@ -49,6 +51,9 @@ const ItemInput = (props: Props) => {
                     placeholder={props.placeholder}
                     value={itemName}
                     onChange={(event) => setItemName(event.target.value)}
+                    onPaste={(e) => setTimeout(
+                        () => { handlePaste((e.target as HTMLInputElement).value); }, 0,
+                    )}
                 />
             </form>
             <button

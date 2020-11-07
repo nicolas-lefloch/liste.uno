@@ -26,8 +26,8 @@ const ItemRow = (props: Props) => {
     let el;
     if (!props.editable) {
         el = (
-            <li className="button-container" onDoubleClick={() => props.onToggleEdition(true)}>
-                <div>
+            <li className="button-container">
+                <div onDoubleClick={() => props.onToggleEdition(true)}>
                     {item.additionExplanation && (
                         <p className="item-addition-explanation">{item.additionExplanation}</p>
                     )}
