@@ -21,11 +21,19 @@ function App() {
                         <Switch>
                             <Route path="/shop">
                                 <WhileShoppingList />
-                                <Link to="/"><i className="gg-back-button" /></Link>
+                                <Link to="/">
+                                    <button type="button" className="circular massive ui icon button" title="Go shopping">
+                                        <i className="play icon" style={{ transform: 'rotate(180deg)' }} />
+                                    </button>
+                                </Link>
                             </Route>
                             <Route path="/">
                                 <BuildShoppingList />
-                                <Link to="/shop"><i className="gg-play-button" /></Link>
+                                <Link to="/shop">
+                                    <button type="button" className="circular green massive ui icon button" title="Go shopping">
+                                        <i className="play icon" />
+                                    </button>
+                                </Link>
                             </Route>
                         </Switch>
                     </header>
