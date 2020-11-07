@@ -16,10 +16,26 @@ export default class CleverListService {
         const matchingItem = existingItems.find(
             (i) => this.itemNameWithoutQuantity(i) === newItemName,
         );
+        /*
+         No matching item : the new item is not a duplicate
+         and the existing list shall not be altered
+         */
         if (!matchingItem) {
             return { itemToAdd: newItem };
         }
         const existingQuantity = this.getQuantity(matchingItem);
+
+        /*
+        * A matching item, but with no quantity specified
+        * The matching item shall be removed but no quantity computing will be performed
+        */
+        if (!existingQuantity) {
+            return {
+                itemToRemove: matchingItem,
+                itemToAdd: newItem,
+            };
+        }
+
         const newQuantity = this.getQuantity(newItem);
         const computedQuantity = String(existingQuantity + newQuantity).replace('.', ',');
         const computedItemName = `${computedQuantity} ${newItemName}`;

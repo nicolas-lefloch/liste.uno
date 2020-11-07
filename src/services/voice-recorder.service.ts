@@ -26,10 +26,10 @@ export default class VoiceRecorder {
     }
 
     static toShoppingList(transcript: string) {
-        const res = transcript.split(/ puis | et /)
+        const res = transcript.split(/ (?=[0-9])| et | des | du | de la |(?= une? )/i)
             .map((s) => s.trim())
-            .map((item) => item.replace(/^des |^du |^de la /, ''))
-            .map((item) => item.replace(/^une |^un /, '1 '))
+            .map((item) => item.replace(/^des |^du |^de la /i, ''))
+            .map((item) => item.replace(/^une |^un /i, '1 '))
             // The speech recognition mistakes "deux" for "de"
             // Except for the expression "de la" (e.g. "de la creme") which is handled before
             .map((item) => item.replace(/^de /, '2 '))
