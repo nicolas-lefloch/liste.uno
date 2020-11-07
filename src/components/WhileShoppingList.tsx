@@ -19,6 +19,7 @@ const WhileShoppingList = () => {
             />
         ),
     );
+    itemList.reverse();
 
     return (
         <div className="whileShoppingList">

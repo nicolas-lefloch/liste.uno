@@ -20,12 +20,10 @@ function init() {
     listRef = database.ref('/lists/abzf/');
     database.ref('/lists/abzf/current').on('value',
         (snapshot) => {
-            // console.log(snapshot);
             const listValue = snapshot.val();
             const itemList = listValue ? Object.entries(listValue).map(
                 ([key, item]) => ({ ...(item as Item), key }),
             ) : [];
-            // console.log(itemList.map((i) => i.name));
             saveLocally(itemList);
             listChange$.next(itemList);
         });

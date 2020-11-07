@@ -43,6 +43,8 @@ const BuildShoppingList = () => {
         ),
     );
 
+    itemList.reverse();
+
     return (
         <div className="itemList">
             <ItemInput placeholder="Ajouter un item" onItemsOutput={addItemsToList} />
