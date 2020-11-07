@@ -13,7 +13,6 @@ function saveLocally(shoppingList : Item[]) {
 }
 
 function init() {
-    console.log('----- FIREBASE INIT -------');
     firebase.initializeApp({
         databaseURL: 'https://liste-de-course-6799d.firebaseio.com/',
     });

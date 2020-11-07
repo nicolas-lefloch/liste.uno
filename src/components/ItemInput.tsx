@@ -54,8 +54,13 @@ const ItemInput = (props: Props) => {
                     value={itemName}
                     onChange={(event) => setItemName(event.target.value)}
                     onPaste={(e) => setTimeout(
-                        () => { handlePaste((e.target as HTMLInputElement).value); }, 0,
+                        () => { handlePaste((e.target as HTMLTextAreaElement).value); }, 0,
                     )}
+                    onKeyPress={(e) => {
+                        if (e.key === 'Enter') {
+                            onSubmit(e);
+                        }
+                    }}
                 />
             </form>
             <button
