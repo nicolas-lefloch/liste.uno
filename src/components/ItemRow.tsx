@@ -33,7 +33,9 @@ const ItemRow = (props: Props) => {
                     )}
                     <span className="label">{item.name}</span>
                 </div>
-                <button type="button" className="icon negative" onClick={props.onDelete}>X</button>
+                <button type="button" className="circular ui icon button" onClick={props.onDelete}>
+                    <i className="close icon" />
+                </button>
             </li>
         );
     } else {
@@ -48,7 +50,9 @@ const ItemRow = (props: Props) => {
                     type="text"
                     value={item.name}
                 />
-                <button type="button" className="icon positive" onClick={() => { props.onToggleEdition(false); }}>V</button>
+                <button type="button" className="circular ui icon olive button" onClick={() => { props.onToggleEdition(false); }} title="Remove item">
+                    <i className="save icon" />
+                </button>
 
             </li>
         );

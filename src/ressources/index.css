@@ -12,13 +12,13 @@ code {
   monospace;
 }
 
-
 input[type="text"] {
   width: 80%;
   border-radius: 0.5em;
   border: 1px darkgrey solid;
   height: 2em;
   padding-left: 0.5rem;
+  font-size: 1em;
 }
 
 input.item{
@@ -64,6 +64,7 @@ li {
   justify-content: flex-start;
   padding: 0.5rem 1rem;
   align-items: center;
+  width: 100%;
 }
 
 
@@ -73,7 +74,7 @@ ol li:nth-child(odd) {
 ol li:nth-child(even) {
   background-color: #f0f0f0;
 }
-
+/*
 button {
   border-radius: 2em;
   border: 0;
@@ -88,6 +89,13 @@ button.icon {
   height: 2em;
   font-weight: bold;
   font-size: 0.6em;
+  background-color: cadetblue;
+  border-radius: 3em;
+  padding-top: 0.25em;
+}
+button.icon.big {
+  width: 4em;
+  height: 4em;
 }
 
 button.full{
@@ -106,98 +114,16 @@ button.positive {
 button.negative {
   background-color: cadetblue;
 }
+*/
 
-
-/* ICONS */
-.gg-mic {
-  box-sizing: border-box;
-  position: relative;
-  display: block;
-  transform: scale(3);
-  width: 16px;
-  height: 12px;
-  border-bottom-left-radius: 120px;
-  border-bottom-right-radius: 120px;
-  border: 2px solid;
-  border-top: 0;
-  margin-top: 3px
+h1 {
+  font-size: 3em;
 }
-.gg-mic::after,
-.gg-mic::before {
-  content: "";
-  display: block;
-  box-sizing: border-box;
-  position: absolute
-}
-.gg-mic::after {
-  border: 2px solid;
-  width: 8px;
-  height: 18px;
-  left: 2px;
-  top: -10px;
-  border-radius: 4px
-}
-.gg-mic::before {
-  width: 10px;
-  height: 4px;
-  top: 12px;
-  left: 1px;
-  border-right: 4px solid transparent;
-  box-shadow:
-          0 2px 0,
-          inset -2px 0 0
+button {
+  border : 0;
+  background-color: transparent;
 }
 
-.gg-play-button {
-  box-sizing: border-box;
-  position: relative;
-  display: block;
-  width: 66px;
-  height: 66px;
-  background-color: cadetblue;
-  border-radius: 2em;
-  color: white;
-  margin-top: 1em;
-}
-
-.gg-play-button::before {
-  content: "";
-  display: block;
-  box-sizing: border-box;
-  position: absolute;
-  width: 0;
-  height: 30px;
-  border-top: 15px solid transparent;
-  border-bottom: 15px solid transparent;
-  border-left: 18px solid;
-  top: 18px;
-  left: 27px
-}
-
-.gg-back-button {
-  box-sizing: border-box;
-  position: relative;
-  display: block;
-  width: 66px;
-  height: 66px;
-  background-color: cadetblue;
-  border-radius: 2em;
-  color: white;
-  margin-top: 1em;
-}
-.gg-back-button::before {
-  content: "";
-  display: block;
-  box-sizing: border-box;
-  position: absolute;
-  width: 0;
-  height: 30px;
-  border-top: 15px solid transparent;
-  border-bottom: 15px solid transparent;
-  border-right: 18px solid;
-  top: 18px;
-  left: 21px
-}
 
 .item-addition-explanation{
   color : green;

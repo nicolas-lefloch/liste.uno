@@ -57,16 +57,18 @@ const ItemInput = (props: Props) => {
                         () => { handlePaste((e.target as HTMLInputElement).value); }, 0,
                     )}
                 />
+                <button
+                    type="button"
+                    className="circular massive ui icon button"
+                    onClick={listening ? stopRecording : startRecording}
+                    disabled={!VoiceRecorder.voiceRecognitionIsSupported}
+                >
+                    {listening
+                        ? <i className="spinner loading  icon" />
+                        : <i className="microphone icon" />}
+                    {!VoiceRecorder.voiceRecognitionIsSupported && ' (unavailable - use Chrome)'}
+                </button>
             </form>
-            <button
-                type="button"
-                style={{ width: '120px', color: 'black' }}
-                onClick={listening ? stopRecording : startRecording}
-                disabled={!VoiceRecorder.voiceRecognitionIsSupported}
-            >
-                {listening ? 'Listening...' : 'Audio'}
-                {!VoiceRecorder.voiceRecognitionIsSupported && ' (unavailable - use Chrome)'}
-            </button>
         </>
     );
 };
