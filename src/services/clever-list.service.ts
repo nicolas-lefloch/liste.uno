@@ -9,8 +9,9 @@ export default class CleverListService {
     // }
 
     public static transcriptToItems(transcript: string) {
-        const res = transcript.split(/ (?=[0-9])| et | des | du | de la |(?= une? )/i)
+        const res = transcript.split(/ (?=[0-9])| et | des | du | de la |(?= une? )|\n/i)
             .map((s) => s.trim())
+            .filter((s) => !!s)
             .map((item) => item.replace(/^des |^du |^de la /i, ''))
             .map((item) => item.replace(/^une |^un /i, '1 '))
         // The speech recognition mistakes "deux" for "de"
