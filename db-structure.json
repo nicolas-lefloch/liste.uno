@@ -2,13 +2,27 @@
     "lists" : {
         "abzf" : {
             "current" : [{
-                "id" : 1,
+                "key" : "1",
                 "name" : "4 carottes",
-                "addition_explanation" : "(2+2)"
+                "addition_explanation" : "(2+2)",
+                "bought": true,
+                "boughtTime" : 1234567890,
+                "boughtLocation" : {
+                    "lat" : 43.12,
+                    "lon" : 1.7
+
+                }
             }],
             "archived" : [{
-                "id" : 2,
-                "name" :"4 pistaches"
+                "key" : "2",
+                "name" :"4 pistaches",
+                "bought": true,
+                "boughtTime" : 1234567890,
+                "boughtLocation" : {
+                    "lat" : 43.12,
+                    "lon" : 1.7
+                }
+
             }],
             "categories" : [
                 {

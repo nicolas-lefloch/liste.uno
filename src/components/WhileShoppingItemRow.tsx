@@ -1,5 +1,6 @@
 import React from 'react';
 import { Item } from '../datatypes/Item';
+import LocationService from '../services/LocationService';
 import ShoppingService from '../services/ShoppingList.service';
 
 interface Props {
@@ -8,9 +9,17 @@ interface Props {
 
 const WhileShoppingItemRow = (props: Props) => {
     const handleCheck = () => {
+        const itemWasJustBought = !props.item.bought;
+        const boughtData = itemWasJustBought ? {
+            bought: true,
+            boughtTime: new Date().getTime(),
+            boughtLocation: LocationService.getLocation(),
+
+        } : { bought: false };
+        console.log('sending', boughtData, { ...Object(boughtData.boughtLocation) });
         ShoppingService.updateItem({
             ...props.item,
-            bought: !props.item.bought,
+            ...boughtData,
         });
     };
     return (

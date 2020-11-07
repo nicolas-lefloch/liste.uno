@@ -1,7 +1,11 @@
+import { PositionRecord } from './PositionRecord';
+
 export interface Item {
     key? :string;
     name: string,
     additionExplanation? : string
     lastUpdate : number;
-    bought : boolean
+    bought : boolean;
+    boughtTime? : number;
+    boughtLocation? : PositionRecord;
 }
