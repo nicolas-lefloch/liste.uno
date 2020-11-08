@@ -16,12 +16,12 @@ import WhileShoppingList from './components/WhileShoppingList';
 import ShoppingListService from './services/ShoppingList.service';
 
 function WhileShoppingListChild() {
-    const { id } = useParams();
-    const usedID = ShoppingListService.init(id);
+    const { listID } = useParams<{listID:string}>();
+    ShoppingListService.setCurrentList(listID);
     return (
         <>
             <WhileShoppingList />
-            <Link to={`/list/${usedID}`}>
+            <Link to={`/list/${listID}`}>
                 <button type="button" className="circular big icon button" title="Editer la liste">
                     <FontAwesomeIcon icon={faEdit} />
                 </button>
@@ -31,12 +31,12 @@ function WhileShoppingListChild() {
 }
 
 function BuildShoppingListChild() {
-    const { id } = useParams();
-    const usedID = ShoppingListService.init(id);
+    const { listID } = useParams<{listID:string}>();
+    ShoppingListService.setCurrentList(listID);
     return (
         <>
             <BuildShoppingList />
-            <Link to={`/shop/${usedID}`}>
+            <Link to={`/shop/${listID}`}>
                 <button type="button" className="circular green big  icon button" title="Go shopping">
                     <FontAwesomeIcon icon={faShoppingCart} />
                 </button>
@@ -55,16 +55,16 @@ function App() {
                     <header className="App-header">
                         <h1>GEOSHOP</h1>
                         <Switch>
-                            <Route path="/shop/:id">
+                            <Route path="/shop/:listID">
                                 <WhileShoppingListChild />
                             </Route>
-                            <Route path="/list/:id">
+                            <Route path="/list/:listID">
                                 <BuildShoppingListChild />
                             </Route>
                             <Route path="/">
                                 <Redirect
                                     to={{
-                                        pathname: `/list/${ShoppingListService.init(undefined)}`,
+                                        pathname: `/list/${ShoppingListService.getDefaultListID()}`,
                                     }}
                                 />
                             </Route>
