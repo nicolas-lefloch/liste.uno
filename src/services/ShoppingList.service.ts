@@ -12,26 +12,48 @@ function saveLocally(shoppingList : Item[]) {
     localStorage.setItem('list', JSON.stringify(shoppingList));
 }
 
-function init() {
-    firebase.initializeApp({
-        databaseURL: 'https://liste-de-course-6799d.firebaseio.com/',
-    });
-    database = firebase.database();
-    listRef = database.ref('/lists/abzf/');
-    database.ref('/lists/abzf/current').on('value',
-        (snapshot) => {
-            const listValue = snapshot.val();
-            const itemList = listValue ? Object.entries(listValue).map(
-                ([key, item]) => ({ ...(item as Item), key }),
-            ) : [];
-            saveLocally(itemList);
-            listChange$.next(itemList);
-        });
+firebase.initializeApp({
+    databaseURL: 'https://liste-de-course-6799d.firebaseio.com/',
+});
+
+function generateID(length) {
+    const existingID = localStorage.getItem('existingID');
+    if (existingID !== null && existingID !== undefined) {
+        return existingID;
+    }
+
+    let result = '';
+    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    const charactersLength = characters.length;
+    for (let i = 0; i < length; i += 1) {
+        result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    }
+    localStorage.setItem('existingID', result);
+    return result;
 }
 
-init();
-
 export default class ShoppingService {
+    static init(dataID) : number {
+        let id = dataID;
+
+        if (id === null || id === undefined) {
+            id = generateID(8);
+        }
+
+        database = firebase.database();
+        listRef = database.ref(`/lists/${id}/`);
+        database.ref(`/lists/${id}/current`).on('value',
+            (snapshot) => {
+                const listValue = snapshot.val();
+                const itemList = listValue ? Object.entries(listValue).map(
+                    ([key, item]) => ({ ...(item as Item), key }),
+                ) : [];
+                saveLocally(itemList);
+                listChange$.next(itemList);
+            });
+        return id;
+    }
+
     static addItem(item: Item) : Item {
         let localList = this.getLocalList();
         // Duplicates handling

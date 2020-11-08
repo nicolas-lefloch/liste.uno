@@ -10,7 +10,6 @@ const WhileShoppingList = () => {
             (l) => setList(l),
         );
     });
-
     const itemList = list.map(
         (item) => (
             <WhileShoppingItemRow
