@@ -72,7 +72,12 @@ export default class ShoppingService {
 
     static removeItem(itemKey : string) {
         saveLocally(this.getLocalList().filter((i) => i.key !== itemKey));
-        ShoppingService.listRef.child('current').child(itemKey).remove();
+        const itemRef = ShoppingService.listRef.child(`current/${itemKey}`);
+        itemRef.once('value',
+            (snapshot) => {
+                ShoppingService.listRef.child('archived').push(snapshot.val());
+                itemRef.remove();
+            });
     }
 
     static updateItem(item : Item) {
