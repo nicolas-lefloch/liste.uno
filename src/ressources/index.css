@@ -236,3 +236,22 @@ label::before {
 }
 
 
+ol li button.category {
+  background-color: cadetblue;
+  width: 3rem;
+  height: 100%;
+  font-size: 2rem;
+  color: white;
+}
+
+.categoryList {
+  display: flex;
+  flex-direction: row;
+  justify-content: start;
+}
+
+.categoryList li{
+  padding-left: 1rem;
+}
+
+

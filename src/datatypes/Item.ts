@@ -1,4 +1,5 @@
 import { PositionRecord } from './PositionRecord';
+import { Category } from './Category';
 
 export interface Item {
     key? :string;
@@ -7,5 +8,6 @@ export interface Item {
     lastUpdate : number;
     bought : boolean;
     boughtTime? : number;
-    boughtLocation? : PositionRecord;
+    boughtLocation? : PositionRecord,
+    category: Category;
 }

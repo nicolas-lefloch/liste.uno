@@ -3,6 +3,7 @@ import { Subject } from 'rxjs';
 
 import { Item } from '../datatypes/Item';
 import CleverListService from './clever-list.service';
+import { Category } from '../datatypes/Category';
 
 function saveLocally(shoppingList : Item[]) {
     localStorage.setItem('list', JSON.stringify(shoppingList));

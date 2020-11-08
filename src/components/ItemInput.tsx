@@ -22,6 +22,7 @@ const ItemInput = (props: Props) => {
                 name: itemName,
                 lastUpdate: new Date().getTime(),
                 bought: false,
+                category: { name: '', image: '' },
             };
             props.onItemsOutput([newItem]);
             setItemName('');

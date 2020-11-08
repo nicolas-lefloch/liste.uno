@@ -8,7 +8,7 @@ export default class CleverListService {
     //     );
     // }
 
-    public static transcriptToItems(transcript: string) {
+    public static transcriptToItems(transcript: string) : Item[] {
         const res = transcript.split(/ (?=[0-9])| et | des | du | de la |(?= une? )|\n/i)
             .map((s) => s.trim())
             .filter((s) => !!s)
@@ -19,7 +19,9 @@ export default class CleverListService {
             .map((item) => item.replace(/^de /, '2 '))
             .map((s) => s.charAt(0).toUpperCase() + s.slice(1))
             .map(
-                (item) => ({ name: item, lastUpdate: new Date().getTime(), bought: false }),
+                (item) => ({
+                    name: item, lastUpdate: new Date().getTime(), bought: false, category: { name: '', image: '' },
+                }),
             );
         return res;
     }
@@ -64,6 +66,7 @@ export default class CleverListService {
             additionExplanation: explanation.replace('.', ','),
             lastUpdate: new Date().getTime(),
             bought: false,
+            category: { image: '', name: '' },
         };
         return {
             itemToRemove: matchingItem,
