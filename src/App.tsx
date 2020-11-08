@@ -1,5 +1,7 @@
 import React from 'react';
 import './ressources/App.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faShoppingCart, faEdit } from '@fortawesome/free-solid-svg-icons';
 import {
     BrowserRouter as Router,
     Switch,
@@ -20,8 +22,8 @@ function WhileShoppingListChild() {
         <>
             <WhileShoppingList />
             <Link to={`/list/${usedID}`}>
-                <button type="button" className="circular massive ui icon button" title="Go shopping">
-                    <i className="play icon" style={{ transform: 'rotate(180deg)' }} />
+                <button type="button" className="circular big icon button" title="Editer la liste">
+                    <FontAwesomeIcon icon={faEdit} />
                 </button>
             </Link>
         </>
@@ -35,8 +37,8 @@ function BuildShoppingListChild() {
         <>
             <BuildShoppingList />
             <Link to={`/shop/${usedID}`}>
-                <button type="button" className="circular green massive ui icon button" title="Go shopping">
-                    <i className="play icon" />
+                <button type="button" className="circular green big  icon button" title="Go shopping">
+                    <FontAwesomeIcon icon={faShoppingCart} />
                 </button>
             </Link>
         </>

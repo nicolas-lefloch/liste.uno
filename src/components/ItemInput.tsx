@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { faMicrophone, faSpinner } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import VoiceRecorder from '../services/voice-recorder.service';
 
 import { Item } from '../datatypes/Item';
@@ -63,13 +65,13 @@ const ItemInput = (props: Props) => {
                 />
                 <button
                     type="button"
-                    className="circular massive ui icon button"
+                    className="circular big icon button"
                     onClick={listening ? stopRecording : startRecording}
                     disabled={!VoiceRecorder.voiceRecognitionIsSupported}
                 >
                     {listening
-                        ? <i className="spinner loading  icon" />
-                        : <i className="microphone icon" />}
+                        ? <FontAwesomeIcon icon={faSpinner} spin />
+                        : <FontAwesomeIcon icon={faMicrophone} />}
                     {!VoiceRecorder.voiceRecognitionIsSupported && ' (unavailable - use Chrome)'}
                 </button>
             </form>

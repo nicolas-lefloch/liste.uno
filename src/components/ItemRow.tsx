@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { faTimes, faSave } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Item } from '../datatypes/Item';
 import ShoppingListService from '../services/ShoppingList.service';
 
@@ -34,7 +36,7 @@ const ItemRow = (props: Props) => {
                     <span className="label">{item.name}</span>
                 </div>
                 <button type="button" className="circular ui icon button" onClick={props.onDelete}>
-                    <i className="close icon" />
+                    <FontAwesomeIcon icon={faTimes} />
                 </button>
             </li>
         );
@@ -51,7 +53,7 @@ const ItemRow = (props: Props) => {
                     value={item.name}
                 />
                 <button type="button" className="circular ui icon olive button" onClick={() => { props.onToggleEdition(false); }} title="Remove item">
-                    <i className="save icon" />
+                    <FontAwesomeIcon icon={faSave} />
                 </button>
 
             </li>
