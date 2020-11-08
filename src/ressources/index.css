@@ -9,10 +9,18 @@ body {
 
 :focus { outline: none; }
 
+h1 {
+  font-size: 3em;
+  margin-bottom: 0;
+}
+
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
   monospace;
 }
+
+
+/*  INPUT */
 
 input[type="text"] {
   width: 80%;
@@ -25,11 +33,11 @@ input[type="text"] {
 
 input.item{
   height: 100%;
-  border-radius: 0em;
-  border: 0px darkgrey solid;
+  border-radius: 0;
+  border: 0;
   background-color: transparent;
   color:darkgrey;
-  font-size: 1.5em;
+  font-size: 2rem;
   font-weight: 600;
 }
 
@@ -41,8 +49,10 @@ input.item{
 .whileShoppingList {
   width: 60%;
   border-radius: 0.5em;
-  padding: 2rem 0;
+  padding: 6rem 0 2rem 0;
 }
+
+/* LIST */
 ol {
   list-style-type: none;
   color: dimgrey;
@@ -52,8 +62,40 @@ ol {
 
 li {
   justify-content: space-between;
+  height: 4rem;
 }
 
+
+ol li:nth-child(odd), ol li:nth-child(odd) button {
+  background-color: #e6e6e6;
+}
+ol li:nth-child(even), ol li:nth-child(even) button {
+  background-color: #f0f0f0;
+}
+
+
+/* CONTAINER */
+
+.app-header {
+  /* background-color: #282c34; */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  font-size: calc(10px + 2vmin);
+  color: cadetblue;
+}
+
+.app-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  font-size: calc(10px + 2vmin);
+  color: cadetblue;
+  margin-bottom: 2rem;
+}
 .button-container {
   display: flex;
   justify-content: space-between;
@@ -67,37 +109,44 @@ li {
   padding: 0.5rem 1rem;
   align-items: center;
   width: 100%;
+  height: 100%;
 }
 
-
-ol li:nth-child(odd) {
-  background-color: #e6e6e6;
-}
-ol li:nth-child(even) {
-  background-color: #f0f0f0;
+form.item-input {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
-textarea::placeholder {
-  text-align: center;
-  vertical-align: center;
+.item-addition-explanation{
+  color : green;
+  font-size: small;
+  display: block;
+  margin-bottom: 0;
 }
+
+/* TEXTAREA */
+
 
 textarea {
   border-radius: 0.5em;
   resize: none;
   height: calc(2 * 1.71428571rem);
-  width: 84%;
+  width: calc(100% - 3rem);
   font-size: 2rem;
   overflow: hidden;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  padding-left: 2rem;
+  line-height: 3rem;
+
 }
 
-h1 {
-  font-size: 3em;
-}
+/* BUTTON */
 
+button {
+  border: 0;
+}
 button:hover {
-  cursor: cell;
+  cursor: pointer;
 }
 button.icon {
   border : 0;
@@ -119,17 +168,6 @@ button.icon.big {
   font-size: 1.75rem;
 }
 
-form.item-input {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-.item-addition-explanation{
-  color : green;
-  font-size: small;
-  display: block;
-  margin-bottom: 0;
-}
 /* CHECKBOX */
 * {
   box-sizing: border-box;
@@ -141,8 +179,8 @@ form.item-input {
 
 input[type="checkbox"] {
   position: relative;
-  width: 1.5em;
-  height: 1.5em;
+  width: 1.5rem;
+  height: 1.5rem;
   color: #363839;
   border: 1px solid #bdc1c6;
   border-radius: 4px;
@@ -155,8 +193,8 @@ input[type="checkbox"]::before {
   position: absolute;
   content: '';
   display: block;
-  top: 0;
-  left: 5px;
+  top: 0.15rem;
+  left: 0.45rem;
   width: 8px;
   height: 14px;
   border-style: solid;
@@ -180,10 +218,12 @@ input[type="checkbox"]:checked ~label::before {
 label, .label {
   position: relative;
   cursor: pointer;
-  font-size: 1.5em;
+  font-size: 2rem;
   font-weight: 600;
   padding: 0 0.25em 0;
   user-select: none;
+  color: dimgrey;
+  font-family: Arial;
 }
 label::before {
   position: absolute;

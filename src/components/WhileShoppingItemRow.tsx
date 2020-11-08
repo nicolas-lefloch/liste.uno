@@ -24,9 +24,15 @@ const WhileShoppingItemRow = (props: Props) => {
     };
     return (
         <li>
-            <button type="button" className="item-container full">
-                <input type="checkbox" id={props.item.key} name={props.item.name} checked={props.item.bought} onChange={handleCheck} />
+            <button type="button" className="item-container full" onClick={handleCheck}>
+                <input
+                    type="checkbox"
+                    id={props.item.key}
+                    name={props.item.name}
+                    checked={props.item.bought}
+                />
                 <label
+                    className="label"
                     htmlFor={String(props.item.key)}
                     data-content={props.item.name}
                 >
