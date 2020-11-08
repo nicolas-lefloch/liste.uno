@@ -52,8 +52,14 @@ function App() {
                 {/* A <Switch> looks through its children <Route>s and
             renders the first one that matches the current URL. */}
                 <div className="App">
-                    <header className="App-header">
-                        <h1>GEOSHOP</h1>
+                    <header className="app-header">
+                        <h1>
+                            LISTE
+                            <i style={{ color: 'darkslategrey' }}>.</i>
+                            UNO
+                        </h1>
+                    </header>
+                    <div className="app-container">
                         <Switch>
                             <Route path="/shop/:id">
                                 <WhileShoppingListChild />
@@ -69,7 +75,7 @@ function App() {
                                 />
                             </Route>
                         </Switch>
-                    </header>
+                    </div>
                 </div>
             </div>
         </Router>
