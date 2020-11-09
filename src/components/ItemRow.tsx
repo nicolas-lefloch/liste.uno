@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { FormEvent, useState } from 'react';
 import {
     faTimes, faSave, faQuestion, faAppleAlt, faBreadSlice, faEgg,
 } from '@fortawesome/free-solid-svg-icons';
@@ -17,7 +17,10 @@ interface Props {
 }
 
 const ItemRow = (props: Props) => {
-    const [item, setItem] = useState(props.item);
+    /** Current state of the input name */
+    const [innerItemName, setInnerItemName] = useState(props.item.name);
+
+    /** Wether the categories menu should be shown or not */
     const [showCategoryMenu, setShowCategoryMenu] = useState(false);
 
     const categories : Category[] = [{ name: 'Fruits et légumes', image: 'apple' }, { name: 'Boulangerie', image: 'bread' }, { name: 'Crèmerie', image: 'egg' }];
@@ -36,81 +39,87 @@ const ItemRow = (props: Props) => {
                 return faQuestion;
         }
     };
-    const handleKeyPress = (event: any) => {
-        if (event.code === 'Enter') {
-            props.onToggleEdition(false);
-            ShoppingListService.updateItem({
-                ...item,
-                additionExplanation: null,
-                lastUpdate: new Date().getTime(),
-            });
-        }
+
+    /** Calls the service to update the item when the name form is submitted */
+    const submitItemNameEdition = (event:FormEvent) => {
+        event.preventDefault();
+        props.onToggleEdition(false);
+        ShoppingListService.updateItem({
+            ...props.item,
+            name: innerItemName,
+            additionExplanation: null,
+            lastUpdate: new Date().getTime(),
+        });
     };
 
+    /** The list of available categories to assign, shown under the item */
     const categoriesList = categories.map((category) => (
         <li>
             <button
                 type="button"
                 className="category"
                 onClick={() => {
-                    item.category = category;
-                    setItem(item);
-                    setShowCategoryMenu(false);
+                    ShoppingListService.updateItem({
+                        ...props.item,
+                        lastUpdate: new Date().getTime(),
+                        category,
+                    });
                 }}
             >
                 <FontAwesomeIcon icon={getCategoryIcon(category)} />
             </button>
         </li>
     ));
-    let el;
-    if (!props.editable) {
-        el = (
+    return props.editable
+        ? (
+            <li className="button-container">
+                <form onSubmit={submitItemNameEdition}>
+                    <input
+                        className="item"
+                        onChange={(event) => setInnerItemName(event.target.value)}
+                        // eslint-disable-next-line jsx-a11y/no-autofocus
+                        autoFocus
+                        type="text"
+                        value={innerItemName}
+                    />
+                    <button
+                        type="submit"
+                        className="circular ui icon olive button"
+                        onClick={() => { props.onToggleEdition(false); }}
+                        title="Remove item"
+                    >
+                        <FontAwesomeIcon icon={faSave} />
+                    </button>
+                </form>
+
+            </li>
+        )
+        : (
             <>
                 <li className="button-container">
                     <button type="button" className="category" onClick={() => setShowCategoryMenu(!showCategoryMenu)}>
-                        <FontAwesomeIcon icon={getCategoryIcon(item.category)} />
+                        <FontAwesomeIcon icon={getCategoryIcon(props.item.category)} />
                     </button>
                     <div onDoubleClick={() => props.onToggleEdition(true)}>
-                        {item.additionExplanation && (
-                            <p className="item-addition-explanation">{item.additionExplanation}</p>
+                        {props.item.additionExplanation && (
+                            <p className="item-addition-explanation">{props.item.additionExplanation}</p>
                         )}
-                        <span className="label">{item.name}</span>
+                        <span className="label">{props.item.name}</span>
                     </div>
                     <button type="button" className="circular ui icon button" onClick={props.onDelete}>
                         <FontAwesomeIcon icon={faTimes} />
                     </button>
                 </li>
                 {showCategoryMenu
-                && (
-                    <div className="category-menu">
-                        <ol className="categoryList">
-                            {categoriesList}
-                        </ol>
-                    </div>
-                )}
+        && (
+            <div className="category-menu">
+                <ol className="categoryList">
+                    {categoriesList}
+                </ol>
+            </div>
+        )}
             </>
         );
-    } else {
-        el = (
-            <li className="button-container">
-                <input
-                    className="item"
-                    onKeyPress={handleKeyPress}
-                    onChange={(event) => setItem({ ...item, name: event.target.value })}
-                    // eslint-disable-next-line jsx-a11y/no-autofocus
-                    autoFocus
-                    type="text"
-                    value={item.name}
-                />
-                <button type="button" className="circular ui icon olive button" onClick={() => { props.onToggleEdition(false); }} title="Remove item">
-                    <FontAwesomeIcon icon={faSave} />
-                </button>
-
-            </li>
-        );
-    }
-
-    return el;
 };
 
 export default ItemRow;
