@@ -8,7 +8,8 @@ interface Props {
 }
 
 const WhileShoppingItemRow = (props: Props) => {
-    const handleCheck = () => {
+    const handleCheck = (event) => {
+        console.log(event);
         const itemWasJustBought = !props.item.bought;
         const boughtData = itemWasJustBought ? {
             bought: true,
@@ -24,21 +25,22 @@ const WhileShoppingItemRow = (props: Props) => {
     };
     return (
         <li>
-            <button type="button" className="item-container full" onClick={handleCheck}>
-                <input
-                    type="checkbox"
-                    id={props.item.key}
-                    name={props.item.name}
-                    checked={props.item.bought}
-                />
-                <label
-                    className="label"
-                    htmlFor={String(props.item.key)}
-                    data-content={props.item.name}
-                >
-                    {props.item.name}
-                </label>
-            </button>
+            {/* <button type="button" className="item-container full" onClick={handleCheck}> */}
+            <input
+                type="checkbox"
+                id={props.item.key}
+                name={props.item.name}
+                checked={props.item.bought}
+                onChange={handleCheck}
+            />
+            <label
+                className="label"
+                htmlFor={props.item.key}
+                // data-content={props.item.name}
+            >
+                {props.item.name}
+            </label>
+            {/* </button> */}
         </li>
     );
 };
