@@ -101,13 +101,13 @@ const ItemRow = (props: Props) => {
                     <button type="button" className="category" onClick={() => setShowCategoryMenu(!showCategoryMenu)}>
                         <FontAwesomeIcon icon={getCategoryIcon(props.item.category)} />
                     </button>
-                    <div onDoubleClick={() => props.onToggleEdition(true)}>
+                    <div onDoubleClick={() => props.onToggleEdition(true)} className="label">
                         {props.item.additionExplanation && (
                             <p className="item-addition-explanation">{props.item.additionExplanation}</p>
                         )}
                         <span className="label">{props.item.name}</span>
                     </div>
-                    <button type="button" className="circular ui icon button" onClick={props.onDelete}>
+                    <button type="button" className="circular icon small button" onClick={props.onDelete}>
                         <FontAwesomeIcon icon={faTimes} />
                     </button>
                 </li>
