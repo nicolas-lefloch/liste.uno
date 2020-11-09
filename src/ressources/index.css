@@ -62,7 +62,7 @@ ol {
 
 li {
   justify-content: space-between;
-  height: 4rem;
+  min-height: 4rem;
 }
 
 
@@ -247,7 +247,7 @@ ol li button.category {
 .categoryList {
   display: flex;
   flex-direction: row;
-  justify-content: start;
+  justify-content: flex-start;
 }
 
 .categoryList li{
