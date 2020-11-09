@@ -66,7 +66,7 @@ const ItemInput = (props: Props) => {
                 />
                 <button
                     type="button"
-                    className="circular big icon button"
+                    className="circular icon button"
                     onClick={listening ? stopRecording : startRecording}
                     disabled={!VoiceRecorder.voiceRecognitionIsSupported}
                 >

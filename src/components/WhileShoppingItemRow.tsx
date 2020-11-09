@@ -24,7 +24,7 @@ const WhileShoppingItemRow = (props: Props) => {
         });
     };
     return (
-        <li>
+        <li className="item-container full">
             {/* <button type="button" className="item-container full" onClick={handleCheck}> */}
             <input
                 type="checkbox"
@@ -36,7 +36,7 @@ const WhileShoppingItemRow = (props: Props) => {
             <label
                 className="label"
                 htmlFor={props.item.key}
-                // data-content={props.item.name}
+                data-content={props.item.name}
             >
                 {props.item.name}
             </label>

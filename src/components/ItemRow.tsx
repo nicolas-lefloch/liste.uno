@@ -70,13 +70,13 @@ const ItemRow = (props: Props) => {
                     <button type="button" className="category" onClick={() => setShowCategoryMenu(!showCategoryMenu)}>
                         <FontAwesomeIcon icon={getCategoryIcon(item.category)} />
                     </button>
-                    <div onDoubleClick={() => props.onToggleEdition(true)}>
+                    <div onDoubleClick={() => props.onToggleEdition(true)} className="label">
                         {item.additionExplanation && (
                             <p className="item-addition-explanation">{item.additionExplanation}</p>
                         )}
                         <span className="label">{item.name}</span>
                     </div>
-                    <button type="button" className="circular ui icon button" onClick={props.onDelete}>
+                    <button type="button" className="circular icon small button" onClick={props.onDelete}>
                         <FontAwesomeIcon icon={faTimes} />
                     </button>
                 </li>
@@ -102,7 +102,7 @@ const ItemRow = (props: Props) => {
                     type="text"
                     value={item.name}
                 />
-                <button type="button" className="circular ui icon olive button" onClick={() => { props.onToggleEdition(false); }} title="Remove item">
+                <button type="button" className="circular icon small button" onClick={() => { props.onToggleEdition(false); }} title="Remove item">
                     <FontAwesomeIcon icon={faSave} />
                 </button>
 
