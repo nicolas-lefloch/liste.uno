@@ -9,7 +9,7 @@ export default class QuantityComputingService {
     // }
 
     public static transcriptToItems(transcript: string) : Item[] {
-        const res = transcript.split(/ (?=[0-9])| et | des | du | de la |(?= une? )|\n/i)
+        const res = transcript.split(/ (?=[0-9])| et | des | du | de la |(?= une? )|(?= de )|\n/i)
             .map((s) => s.trim())
             .filter((s) => !!s)
             .map((item) => item.replace(/^des |^du |^de la /i, ''))
