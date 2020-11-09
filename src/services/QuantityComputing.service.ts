@@ -1,6 +1,6 @@
 import { Item } from '../datatypes/Item';
 
-export default class CleverListService {
+export default class QuantityComputingService {
     // public static regroupByName(existingItems: Item[], newItems: Item[]): Item[] {
     //     return newItems.reduce(
     //         (regroupedItem, newItem) => this.regroupOneItem(regroupedItem, newItem),
@@ -50,7 +50,7 @@ export default class CleverListService {
         if (!existingQuantity) {
             return {
                 itemToRemove: matchingItem,
-                itemToAdd: newItem,
+                itemToAdd: { ...newItem, category: matchingItem.category },
             };
         }
 
@@ -66,7 +66,7 @@ export default class CleverListService {
             additionExplanation: explanation.replace('.', ','),
             lastUpdate: new Date().getTime(),
             bought: false,
-            category: { image: '', name: '' },
+            category: matchingItem.category,
         };
         return {
             itemToRemove: matchingItem,
@@ -74,7 +74,7 @@ export default class CleverListService {
         };
     }
 
-    private static itemNameWithoutQuantity(item: Item):string {
+    public static itemNameWithoutQuantity(item: Item):string {
         const quantity = this.getQuantity(item);
         if (!quantity) {
             return item.name;

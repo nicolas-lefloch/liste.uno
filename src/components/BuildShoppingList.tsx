@@ -4,6 +4,7 @@ import ShoppingListService from '../services/ShoppingList.service';
 import { Item } from '../datatypes/Item';
 import ItemInput from './ItemInput';
 import ItemRow from './ItemRow';
+import CategorizationService from '../services/CategorizationService';
 
 const BuildShoppingList = () => {
     const [list, setList] = useState<Item[]>(ShoppingListService.getLocalList());
@@ -17,8 +18,18 @@ const BuildShoppingList = () => {
     }, []);
 
     const addItemsToList = (newItems : Item[]) => {
-        newItems.map(
-            (item) => ShoppingListService.addItem(item),
+        newItems.forEach(
+            (item) => {
+                const itemWithKey = ShoppingListService.addItem(item);
+                console.log(itemWithKey);
+                if (!itemWithKey.category) {
+                    CategorizationService.getPreferredCategory(itemWithKey).then((category) => {
+                        if (category) {
+                            ShoppingListService.updateItem({ ...itemWithKey, category });
+                        }
+                    });
+                }
+            },
         );
         setList(ShoppingListService.getLocalList());
     };

@@ -2,7 +2,7 @@ import firebase from 'firebase';
 import { Subject } from 'rxjs';
 
 import { Item } from '../datatypes/Item';
-import CleverListService from './clever-list.service';
+import QuantityComputingService from './QuantityComputing.service';
 
 function saveLocally(shoppingList : Item[]) {
     localStorage.setItem('list', JSON.stringify(shoppingList));
@@ -58,7 +58,10 @@ export default class ShoppingService {
     static addItem(item: Item) : Item {
         let localList = this.getLocalList();
         // Duplicates handling
-        const { itemToRemove, itemToAdd } = CleverListService.handleQuantities(localList, item);
+        const {
+            itemToRemove,
+            itemToAdd,
+        } = QuantityComputingService.handleQuantities(localList, item);
         if (itemToRemove) {
             ShoppingService.listRef.child('current').child(itemToRemove.key).remove();
             localList = localList.filter((i) => i.key !== itemToRemove.key);

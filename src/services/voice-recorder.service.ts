@@ -1,5 +1,5 @@
 import { Item } from '../datatypes/Item';
-import CleverListService from './clever-list.service';
+import QuantityComputingService from './QuantityComputing.service';
 
 const SpeechRecognition = window.SpeechRecognition || (window as any).webkitSpeechRecognition;
 const recognition = SpeechRecognition ? new SpeechRecognition() : undefined;
@@ -15,7 +15,7 @@ export default class VoiceRecorder {
             recognition.onresult = (event) => {
                 const { transcript } = event.results[0][0];
                 console.log(transcript);
-                resolve(CleverListService.transcriptToItems(transcript));
+                resolve(QuantityComputingService.transcriptToItems(transcript));
             };
             // will be called only if resolve did not happen (i.e. no result was outputed)
             recognition.onend = reject;

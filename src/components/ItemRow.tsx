@@ -8,6 +8,7 @@ import { IconDefinition } from '@fortawesome/fontawesome-common-types';
 import { Item } from '../datatypes/Item';
 import ShoppingListService from '../services/ShoppingList.service';
 import { Category } from '../datatypes/Category';
+import CategorizationService from '../services/CategorizationService';
 
 interface Props {
     item : Item;
@@ -23,7 +24,6 @@ const ItemRow = (props: Props) => {
     /** Wether the categories menu should be shown or not */
     const [showCategoryMenu, setShowCategoryMenu] = useState(false);
 
-    const categories : Category[] = [{ name: 'Fruits et légumes', image: 'apple' }, { name: 'Boulangerie', image: 'bread' }, { name: 'Crèmerie', image: 'egg' }];
     const getCategoryIcon = (category : Category) : IconDefinition => {
         if (category === undefined) {
             return faQuestion;
@@ -53,8 +53,8 @@ const ItemRow = (props: Props) => {
     };
 
     /** The list of available categories to assign, shown under the item */
-    const categoriesList = categories.map((category) => (
-        <li>
+    const categoriesList = CategorizationService.appCategories.map((category) => (
+        <li key={category.name}>
             <button
                 type="button"
                 className="category"
@@ -64,6 +64,7 @@ const ItemRow = (props: Props) => {
                         lastUpdate: new Date().getTime(),
                         category,
                     });
+                    CategorizationService.registerCategoryWasAssigned(category, props.item);
                 }}
             >
                 <FontAwesomeIcon icon={getCategoryIcon(category)} />

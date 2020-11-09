@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import VoiceRecorder from '../services/voice-recorder.service';
 
 import { Item } from '../datatypes/Item';
-import CleverListService from '../services/clever-list.service';
+import QuantityComputingService from '../services/QuantityComputing.service';
 
 interface Props {
     onItemsOutput: (items: Item[]) => void
@@ -22,7 +22,7 @@ const ItemInput = (props: Props) => {
                 name: itemName,
                 lastUpdate: new Date().getTime(),
                 bought: false,
-                category: { name: '', image: '' },
+                category: null,
             };
             props.onItemsOutput([newItem]);
             setItemName('');
@@ -44,7 +44,7 @@ const ItemInput = (props: Props) => {
     const handlePaste = (pastedText: string) => {
         console.log(pastedText.split('\n'));
 
-        props.onItemsOutput(CleverListService.transcriptToItems(pastedText));
+        props.onItemsOutput(QuantityComputingService.transcriptToItems(pastedText));
         setItemName('');
     };
 
