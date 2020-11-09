@@ -70,7 +70,7 @@ export default class ShoppingService {
         localList.push(itemToAdd);
         saveLocally(localList);
         const { key } = ShoppingService.listRef.child('current').push(itemToAdd);
-        return { ...item, key };
+        return { ...itemToAdd, key };
     }
 
     static removeItem(itemKey : string) {

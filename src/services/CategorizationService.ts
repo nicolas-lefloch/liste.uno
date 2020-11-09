@@ -26,7 +26,7 @@ export default class CategorizationService {
                 (snapshot) => {
                     const snapshotValue = snapshot.val();
                     if (!snapshotValue) {
-                        resolve(undefined);
+                        resolve(null);
                     } else {
                         const categoryRanking = Object.keys(snapshotValue).map(
                             (category) => ({
