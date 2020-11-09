@@ -120,27 +120,6 @@ const ItemRow = (props: Props) => {
         )}
             </>
         );
-    } else {
-        el = (
-            <li className="button-container">
-                <input
-                    className="item"
-                    onKeyPress={handleKeyPress}
-                    onChange={(event) => setItem({ ...item, name: event.target.value })}
-                    // eslint-disable-next-line jsx-a11y/no-autofocus
-                    autoFocus
-                    type="text"
-                    value={item.name}
-                />
-                <button type="button" className="circular icon small button" onClick={() => { props.onToggleEdition(false); }} title="Remove item">
-                    <FontAwesomeIcon icon={faSave} />
-                </button>
-
-            </li>
-        );
-    }
-
-    return el;
 };
 
 export default ItemRow;
