@@ -74,7 +74,7 @@ const ItemRow = (props: Props) => {
     return props.editable
         ? (
             <li className="button-container">
-                <form onSubmit={submitItemNameEdition}>
+                <form onSubmit={submitItemNameEdition} target="">
                     <input
                         className="item"
                         onChange={(event) => setInnerItemName(event.target.value)}
@@ -86,7 +86,6 @@ const ItemRow = (props: Props) => {
                     <button
                         type="submit"
                         className="circular ui icon olive button"
-                        onClick={() => { props.onToggleEdition(false); }}
                         title="Remove item"
                     >
                         <FontAwesomeIcon icon={faSave} />
