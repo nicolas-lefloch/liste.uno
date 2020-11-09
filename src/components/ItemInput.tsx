@@ -19,7 +19,7 @@ const ItemInput = (props: Props) => {
         event.preventDefault();
         if (itemName !== '') {
             const newItem : Item = {
-                name: itemName,
+                name: itemName.trim(),
                 lastUpdate: new Date().getTime(),
                 bought: false,
                 category: null,
