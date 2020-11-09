@@ -20,7 +20,7 @@ export default class QuantityComputingService {
             .map((s) => s.charAt(0).toUpperCase() + s.slice(1))
             .map(
                 (item) => ({
-                    name: item, lastUpdate: new Date().getTime(), bought: false, category: { name: '', image: '' },
+                    name: item, lastUpdate: new Date().getTime(), bought: false, category: null,
                 }),
             );
         return res;
