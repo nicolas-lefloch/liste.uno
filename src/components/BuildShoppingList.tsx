@@ -58,7 +58,7 @@ const BuildShoppingList = () => {
 
     return (
         <>
-            <ItemInput placeholder="Ajouter un item" onItemsOutput={addItemsToList} />
+            <ItemInput onItemsOutput={addItemsToList} />
             <div className="editable-shopping-list">
                 <div className="vertical-bar" />
                 <ol>
