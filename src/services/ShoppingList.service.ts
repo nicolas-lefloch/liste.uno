@@ -2,6 +2,7 @@ import firebase from 'firebase';
 import { Subject } from 'rxjs';
 
 import { Item } from '../datatypes/Item';
+import LocationService from './LocationService';
 import QuantityComputingService from './QuantityComputing.service';
 
 function saveLocally(shoppingList : Item[]) {
@@ -34,6 +35,12 @@ export default class ShoppingService {
                 ) : [];
                 saveLocally(itemList);
                 ShoppingService.listChange$.next(itemList);
+            });
+        ShoppingService.listRef.child('location_enabled').once('value',
+            (snapshot) => {
+                if (snapshot.val()) {
+                    LocationService.startGeoTracking();
+                }
             });
         localStorage.setItem('defaultListID', listId);
     }

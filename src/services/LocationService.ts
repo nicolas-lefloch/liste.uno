@@ -1,21 +1,25 @@
 import { PositionRecord } from '../datatypes/PositionRecord';
 
-let position : globalThis.Position;
-navigator.geolocation.watchPosition((pos) => {
-    position = pos;
-});
-
 export default class LocationService {
+    private static position: globalThis.Position;
+
+    public static startGeoTracking() {
+        navigator.geolocation.watchPosition((pos) => {
+            LocationService.position = pos;
+        });
+    }
+
     public static getLocation() : PositionRecord {
-        return position ? {
-            accuracy: position.coords.accuracy,
-            lat: position.coords.latitude,
-            lon: position.coords.longitude,
-            timestamp: position.timestamp,
-            altitudeAccuracy: position.coords.altitudeAccuracy,
-            altitude: position.coords.altitude,
-            heading: position.coords.heading,
-            speed: position.coords.speed,
+        const pos = LocationService.position;
+        return pos ? {
+            accuracy: pos.coords.accuracy,
+            lat: pos.coords.latitude,
+            lon: pos.coords.longitude,
+            timestamp: pos.timestamp,
+            altitudeAccuracy: pos.coords.altitudeAccuracy,
+            altitude: pos.coords.altitude,
+            heading: pos.coords.heading,
+            speed: pos.coords.speed,
         } : null;
     }
 }
