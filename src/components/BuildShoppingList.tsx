@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-// import CleverListService from '../services/clever-list.service';
 import ShoppingListService from '../services/ShoppingList.service';
 import { Item } from '../datatypes/Item';
 import ItemInput from './ItemInput';
@@ -21,7 +20,6 @@ const BuildShoppingList = () => {
         newItems.forEach(
             (item) => {
                 const itemWithKey = ShoppingListService.addItem(item);
-                console.log(itemWithKey);
                 if (!itemWithKey.category) {
                     CategorizationService.getPreferredCategory(itemWithKey).then((category) => {
                         if (category) {

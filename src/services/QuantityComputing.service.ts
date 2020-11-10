@@ -32,7 +32,7 @@ export default class QuantityComputingService {
     } {
         const newItemName = this.itemNameWithoutQuantity(newItem);
         const matchingItem = existingItems.find(
-            (i) => this.itemNameWithoutQuantity(i) === newItemName,
+            (i) => QuantityComputingService.itemNameWithoutQuantity(i) === newItemName,
         );
         /*
          No matching item : the new item is not a duplicate
@@ -66,7 +66,7 @@ export default class QuantityComputingService {
             additionExplanation: explanation.replace('.', ','),
             lastUpdate: new Date().getTime(),
             bought: false,
-            category: matchingItem.category,
+            category: matchingItem.category || null,
         };
         return {
             itemToRemove: matchingItem,
