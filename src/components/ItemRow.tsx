@@ -1,14 +1,12 @@
 import React, { FormEvent, useState } from 'react';
 import {
-    faTimes, faSave, faQuestion, faAppleAlt, faBreadSlice, faEgg,
+    faTimes, faSave,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-// eslint-disable-next-line import/no-unresolved
-import { IconDefinition } from '@fortawesome/fontawesome-common-types';
 import { Item } from '../datatypes/Item';
 import ShoppingListService from '../services/ShoppingList.service';
-import { Category } from '../datatypes/Category';
 import CategorizationService from '../services/CategorizationService';
+import CategoryIcon from './CategoryIcon';
 
 interface Props {
     item : Item;
@@ -24,22 +22,6 @@ const ItemRow = (props: Props) => {
     /** Wether the categories menu should be shown or not */
     const [showCategoryMenu, setShowCategoryMenu] = useState(false);
 
-    const getCategoryIcon = (category : Category) : IconDefinition => {
-        if (category === undefined) {
-            return faQuestion;
-        }
-        switch (category.image) {
-            case 'apple':
-                return faAppleAlt;
-            case 'egg':
-                return faEgg;
-            case 'bread':
-                return faBreadSlice;
-            default:
-                return faQuestion;
-        }
-    };
-
     /** Calls the service to update the item when the name form is submitted */
     const submitItemNameEdition = (event:FormEvent) => {
         event.preventDefault();
@@ -53,11 +35,9 @@ const ItemRow = (props: Props) => {
     };
 
     /** The list of available categories to assign, shown under the item */
-    const categoriesList = CategorizationService.appCategories.map((category) => (
+    const categoriesList = CategorizationService.getAppCategories().map((category) => (
         <li key={category.name}>
-            <button
-                type="button"
-                className="category"
+            <CategoryIcon
                 onClick={() => {
                     ShoppingListService.updateItem({
                         ...props.item,
@@ -70,14 +50,13 @@ const ItemRow = (props: Props) => {
                         ShoppingListService.getDefaultListID(),
                     );
                 }}
-            >
-                <FontAwesomeIcon icon={getCategoryIcon(category)} />
-            </button>
+                category={category}
+            />
         </li>
     ));
     return props.editable
         ? (
-            <li className="button-container">
+            <li className="button-container item-row">
                 <form onSubmit={submitItemNameEdition} target="">
                     <input
                         className="item"
@@ -100,19 +79,24 @@ const ItemRow = (props: Props) => {
         )
         : (
             <>
-                <li className="button-container">
-                    <button type="button" className="category" onClick={() => setShowCategoryMenu(!showCategoryMenu)}>
-                        <FontAwesomeIcon icon={getCategoryIcon(props.item.category)} />
-                    </button>
+                <li className="button-container item-row">
+                    <CategoryIcon
+                        category={props.item.category}
+                        onClick={() => setShowCategoryMenu(!showCategoryMenu)}
+                    />
                     <div onDoubleClick={() => props.onToggleEdition(true)} className="label">
                         {props.item.additionExplanation && (
                             <p className="item-addition-explanation">{props.item.additionExplanation}</p>
                         )}
-                        <span className="label">{props.item.name}</span>
+                        <p>
+                            {props.item.name}
+                        </p>
                     </div>
-                    <button type="button" className="circular icon small button" onClick={props.onDelete}>
-                        <FontAwesomeIcon icon={faTimes} />
-                    </button>
+                    <div className="delete-container">
+                        <button type="button" className="circular icon small button" onClick={props.onDelete}>
+                            <FontAwesomeIcon icon={faTimes} />
+                        </button>
+                    </div>
                 </li>
                 {showCategoryMenu
         && (

@@ -1,7 +1,10 @@
 import firebase from 'firebase';
-import { Category } from '../datatypes/Category';
+import { Category, CategoryImage } from '../datatypes/Category';
 import { Item } from '../datatypes/Item';
 import QuantityComputingService from './QuantityComputing.service';
+import { ReactComponent as MilkIcon } from '../category-icons/milk.svg';
+import { ReactComponent as FruitsVegetableIcon } from '../category-icons/fruits-and-vegetables.svg';
+import { ReactComponent as BreadIcon } from '../category-icons/bread.svg';
 
 interface CategoryRankingForItem{
     [categoryName : string] : {
@@ -10,11 +13,39 @@ interface CategoryRankingForItem{
 }
 
 export default class CategorizationService {
-    static appCategories : Category[] = [
-        { name: 'Fruits et légumes', image: 'apple' },
-        { name: 'Boulangerie', image: 'bread' },
-        { name: 'Crèmerie', image: 'egg' },
+    private static appCategoriesImage : {category : Category, icon : CategoryImage}[] = [
+        {
+            category: { name: 'Fruits et légumes' },
+            icon: {
+                image: FruitsVegetableIcon,
+                type: 'SVGAsComponent',
+            },
+        },
+        {
+            category: { name: 'Boulangerie' },
+            icon: {
+                image: BreadIcon,
+                type: 'SVGAsComponent',
+            },
+        },
+        {
+            category: { name: 'Crèmerie' },
+            icon: {
+                image: MilkIcon,
+                type: 'SVGAsComponent',
+            },
+        },
     ];
+
+    public static getCategoryImage(category : Category) : CategoryImage {
+        return CategorizationService.appCategoriesImage.find(
+            (c) => c.category.name === category.name,
+        ).icon;
+    }
+
+    public static getAppCategories() : Category[] {
+        return this.appCategoriesImage.map((c) => ({ name: c.category.name }));
+    }
 
     static categoriesAssignmentsRef = firebase.database().ref('/categoriesAssignments')
 
@@ -72,7 +103,7 @@ export default class CategorizationService {
             }),
         );
         categoryRanking.sort((a, b) => (a.assignments < b.assignments ? 1 : -1));
-        return this.appCategories.find(
+        return CategorizationService.getAppCategories().find(
             (c) => c.name === categoryRanking[0].category,
         );
     }

@@ -32,7 +32,6 @@ input[type="text"] {
 }
 
 input.item{
-  height: 100%;
   border-radius: 0;
   border: 0;
   background-color: transparent;
@@ -46,6 +45,11 @@ input.item{
   border-radius: 0.5em;
   padding: 2rem 0;
 }
+
+.item-row{
+  border-bottom: 2px solid black;
+}
+
 .whileShoppingList {
   width: 95%;
   border-radius: 0.5em;
@@ -66,12 +70,6 @@ li {
 }
 
 
-ol li:nth-child(odd), ol li:nth-child(odd) button {
-  background-color: #e6e6e6;
-}
-ol li:nth-child(even), ol li:nth-child(even) button {
-  background-color: #f0f0f0;
-}
 
 
 /* CONTAINER */
@@ -163,13 +161,12 @@ button.icon {
 button.icon.circular {
   margin: 0.5rem;
   border-radius: 4rem;
-  color: white;
-  background-color: cadetblue;
+  color: black;
   width: 3rem;
   min-width: 3rem;
   height: 3rem;
   min-height: 3rem;
-  font-size: 1.5rem;
+  font-size: 2rem;
 
 }
 
@@ -178,7 +175,7 @@ button.icon.small {
   min-width: 2rem;
   height: 2rem;
   min-height: 2rem;
-  font-size: 1rem;
+  font-size: 1.5rem;
 
 }
 
@@ -241,7 +238,6 @@ input[type="checkbox"]:checked ~label::before {
 }
 
 label, .label {
-  height: 100%;
   width: 100%;
   text-align: left;
   flex-grow: 3;
@@ -267,8 +263,7 @@ label::before {
 
 
 ol li button.category {
-  background-color: cadetblue;
-  width: 3rem;
+  background-color: transparent;
   height: 100%;
   font-size: 2rem;
   color: white;
@@ -285,3 +280,21 @@ ol li button.category {
 }
 
 
+.item-row form{
+  width: 100%;
+  display: flex;
+}
+
+.item-row input{
+  flex-grow: 1;
+}
+
+.item-row{
+  align-items: stretch;
+}
+
+.delete-container{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
