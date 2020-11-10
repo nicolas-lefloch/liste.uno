@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { faMicrophone, faSpinner } from '@fortawesome/free-solid-svg-icons';
+import { faCheck, faMicrophone, faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import VoiceRecorderService from '../services/voice-recorder.service';
 
@@ -67,15 +67,27 @@ const ItemInput = (props: Props) => {
                         }
                     }}
                 />
-                <button
-                    type="button"
-                    className="circular icon button"
-                    onClick={listening ? stopRecording : startRecording}
-                >
-                    {listening
-                        ? <FontAwesomeIcon icon={faSpinner} spin />
-                        : <FontAwesomeIcon icon={faMicrophone} />}
-                </button>
+                {
+                    itemName ? (
+                        <button
+                            type="submit"
+                        >
+                            <FontAwesomeIcon icon={faCheck} />
+                        </button>
+
+                    )
+                        : (
+                            <button
+                                type="button"
+                                onClick={listening ? stopRecording : startRecording}
+                            >
+                                {listening
+                                    ? <FontAwesomeIcon icon={faSpinner} spin />
+                                    : <FontAwesomeIcon icon={faMicrophone} />}
+                            </button>
+
+                        )
+                }
             </form>
         </>
     );

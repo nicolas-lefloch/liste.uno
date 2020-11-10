@@ -12,8 +12,11 @@ interface Props{
 const CategoryIcon : React.FC<Props> = (props : Props) => {
     const getCategoryImage = () => {
         if (props.category) {
-            const CategoryImage = CategorizationService.getCategoryImage(props.category).image;
-            return (<CategoryImage width={props.size} height={props.size} />);
+            const matchingCategory = CategorizationService.getCategoryImage(props.category);
+            if (matchingCategory) {
+                const CategoryImage = matchingCategory.image;
+                return (<CategoryImage width={props.size} height={props.size} />);
+            }
         }
         return <FontAwesomeIcon icon={faQuestion} style={{ color: 'black', width: props.size, height: props.size }} />;
     };

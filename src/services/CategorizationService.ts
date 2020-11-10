@@ -2,9 +2,18 @@ import firebase from 'firebase';
 import { Category, CategoryImage } from '../datatypes/Category';
 import { Item } from '../datatypes/Item';
 import QuantityComputingService from './QuantityComputing.service';
-import { ReactComponent as MilkIcon } from '../category-icons/milk.svg';
-import { ReactComponent as FruitsVegetableIcon } from '../category-icons/fruits-and-vegetables.svg';
-import { ReactComponent as BreadIcon } from '../category-icons/bread.svg';
+import { ReactComponent as BeerIcon } from '../ressources/svg/beer-icon.svg';
+import { ReactComponent as BeverageIcon } from '../ressources/svg/beverage-icon.svg';
+import { ReactComponent as BreadIcon } from '../ressources/svg/bread-icon.svg';
+import { ReactComponent as ClothesIcon } from '../ressources/svg/clothes-icon.svg';
+import { ReactComponent as CreamIcon } from '../ressources/svg/cream-icon.svg';
+import { ReactComponent as DessertIcon } from '../ressources/svg/dessert-icon.svg';
+import { ReactComponent as FishIcon } from '../ressources/svg/fish-icon.svg';
+import { ReactComponent as FruitIcon } from '../ressources/svg/fruit-icon.svg';
+import { ReactComponent as HygieneIcon } from '../ressources/svg/hygiene-icon.svg';
+import { ReactComponent as HomeCleaningIcon } from '../ressources/svg/home-cleaning-icon.svg';
+import { ReactComponent as MeatIcon } from '../ressources/svg/meat-icon.svg';
+import { ReactComponent as WineIcon } from '../ressources/svg/wine-icon.svg';
 
 interface CategoryRankingForItem{
     [categoryName : string] : {
@@ -14,33 +23,24 @@ interface CategoryRankingForItem{
 
 export default class CategorizationService {
     private static appCategoriesImage : {category : Category, icon : CategoryImage}[] = [
-        {
-            category: { name: 'Fruits et légumes' },
-            icon: {
-                image: FruitsVegetableIcon,
-                type: 'SVGAsComponent',
-            },
-        },
-        {
-            category: { name: 'Boulangerie' },
-            icon: {
-                image: BreadIcon,
-                type: 'SVGAsComponent',
-            },
-        },
-        {
-            category: { name: 'Crèmerie' },
-            icon: {
-                image: MilkIcon,
-                type: 'SVGAsComponent',
-            },
-        },
+        { category: { name: 'Bières' }, icon: { type: 'SVGAsComponent', image: BeerIcon } },
+        { category: { name: 'Boissons' }, icon: { type: 'SVGAsComponent', image: BeverageIcon } },
+        { category: { name: 'Boulangerie' }, icon: { type: 'SVGAsComponent', image: BreadIcon } },
+        { category: { name: 'Vêtements' }, icon: { type: 'SVGAsComponent', image: ClothesIcon } },
+        { category: { name: 'Crèmerie' }, icon: { type: 'SVGAsComponent', image: CreamIcon } },
+        { category: { name: 'Desserts' }, icon: { type: 'SVGAsComponent', image: DessertIcon } },
+        { category: { name: 'Poissons' }, icon: { type: 'SVGAsComponent', image: FishIcon } },
+        { category: { name: 'Fruits et Légumes' }, icon: { type: 'SVGAsComponent', image: FruitIcon } },
+        { category: { name: 'Hygiène' }, icon: { type: 'SVGAsComponent', image: HygieneIcon } },
+        { category: { name: 'Produits ménager' }, icon: { type: 'SVGAsComponent', image: HomeCleaningIcon } },
+        { category: { name: 'Viande' }, icon: { type: 'SVGAsComponent', image: MeatIcon } },
+        { category: { name: 'Vin' }, icon: { type: 'SVGAsComponent', image: WineIcon } },
     ];
 
     public static getCategoryImage(category : Category) : CategoryImage {
         return CategorizationService.appCategoriesImage.find(
             (c) => c.category.name === category.name,
-        ).icon;
+        )?.icon;
     }
 
     public static getAppCategories() : Category[] {
