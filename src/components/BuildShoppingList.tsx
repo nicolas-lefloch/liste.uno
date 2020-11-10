@@ -57,12 +57,15 @@ const BuildShoppingList = () => {
     itemList.reverse();
 
     return (
-        <div className="itemList">
+        <>
             <ItemInput placeholder="Ajouter un item" onItemsOutput={addItemsToList} />
-            <ol>
-                {itemList}
-            </ol>
-        </div>
+            <div className="editable-shopping-list">
+                <div className="vertical-bar" />
+                <ol>
+                    {itemList}
+                </ol>
+            </div>
+        </>
     );
 };
 

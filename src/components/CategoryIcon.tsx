@@ -5,23 +5,22 @@ import { Category } from '../datatypes/Category';
 import CategorizationService from '../services/CategorizationService';
 
 interface Props{
-    onClick : () => void
-    category : Category
+    onClick : () => void;
+    category : Category;
+    size : number;
 }
 const CategoryIcon : React.FC<Props> = (props : Props) => {
-    console.log(props);
-    const size = 50;
     const getCategoryImage = () => {
         if (props.category) {
             const CategoryImage = CategorizationService.getCategoryImage(props.category).image;
-            return (<CategoryImage width={size} height={size} />);
+            return (<CategoryImage width={props.size} height={props.size} />);
         }
-        return <FontAwesomeIcon icon={faQuestion} style={{ color: 'black' }} />;
+        return <FontAwesomeIcon icon={faQuestion} style={{ color: 'black', width: props.size, height: props.size }} />;
     };
     return (
         <button
             type="button"
-            className="category"
+            className="category-icon"
             onClick={props.onClick}
         >
             {getCategoryImage()}

@@ -14,6 +14,7 @@ import {
 import BuildShoppingList from './components/BuildShoppingList';
 import WhileShoppingList from './components/WhileShoppingList';
 import ShoppingListService from './services/ShoppingList.service';
+import { ReactComponent as MainLogo } from './ressources/svg/logo-large.svg';
 
 function WhileShoppingPage() {
     const { listID } = useParams<{listID:string}>();
@@ -48,11 +49,9 @@ function BuildingListPage() {
 function App() {
     return (
         <Router>
-            <header className="app-header">
+            <header>
                 <h1>
-                    LISTE
-                    <i style={{ color: 'darkslategrey' }}>.</i>
-                    UNO
+                    <MainLogo />
                 </h1>
             </header>
             <Switch>

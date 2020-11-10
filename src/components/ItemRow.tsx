@@ -38,6 +38,7 @@ const ItemRow = (props: Props) => {
     const categoriesList = CategorizationService.getAppCategories().map((category) => (
         <li key={category.name}>
             <CategoryIcon
+                size={40}
                 onClick={() => {
                     ShoppingListService.updateItem({
                         ...props.item,
@@ -56,10 +57,9 @@ const ItemRow = (props: Props) => {
     ));
     return props.editable
         ? (
-            <li className="button-container item-row">
-                <form onSubmit={submitItemNameEdition} target="">
+            <li>
+                <form onSubmit={submitItemNameEdition}>
                     <input
-                        className="item"
                         onChange={(event) => setInnerItemName(event.target.value)}
                         // eslint-disable-next-line jsx-a11y/no-autofocus
                         autoFocus
@@ -68,7 +68,6 @@ const ItemRow = (props: Props) => {
                     />
                     <button
                         type="submit"
-                        className="circular ui icon olive button"
                         title="Remove item"
                     >
                         <FontAwesomeIcon icon={faSave} />
@@ -79,33 +78,36 @@ const ItemRow = (props: Props) => {
         )
         : (
             <>
-                <li className="button-container item-row">
-                    <CategoryIcon
-                        category={props.item.category}
-                        onClick={() => setShowCategoryMenu(!showCategoryMenu)}
-                    />
-                    <div onDoubleClick={() => props.onToggleEdition(true)} className="label">
-                        {props.item.additionExplanation && (
-                            <p className="item-addition-explanation">{props.item.additionExplanation}</p>
-                        )}
-                        <p>
-                            {props.item.name}
-                        </p>
+                <li>
+                    <div>
+                        <CategoryIcon
+                            category={props.item.category}
+                            onClick={() => setShowCategoryMenu(!showCategoryMenu)}
+                            size={40}
+                        />
+                        <div onDoubleClick={() => props.onToggleEdition(true)} className="item-label">
+                            {props.item.additionExplanation && (
+                                <p className="item-addition-explanation">{props.item.additionExplanation}</p>
+                            )}
+                            <p>
+                                {props.item.name}
+                            </p>
+                        </div>
+                        <div className="delete-button-container">
+                            <button type="button" onClick={props.onDelete}>
+                                <FontAwesomeIcon icon={faTimes} />
+                            </button>
+                        </div>
                     </div>
-                    <div className="delete-container">
-                        <button type="button" className="circular icon small button" onClick={props.onDelete}>
-                            <FontAwesomeIcon icon={faTimes} />
-                        </button>
-                    </div>
-                </li>
-                {showCategoryMenu
+                    {showCategoryMenu
         && (
-            <div className="category-menu">
+            <div className="category-choice-menu">
                 <ol className="categoryList">
                     {categoriesList}
                 </ol>
             </div>
         )}
+                </li>
             </>
         );
 };

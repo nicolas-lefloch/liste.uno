@@ -1,0 +1,103 @@
+body{
+    max-width: 600px;
+    padding : 0px 30px;
+    margin: auto;
+}
+
+header{
+    margin-top: 30px;
+    margin-bottom: 25px;
+}
+header > h1{
+    margin : 0px 25px;
+}
+
+/* Input item */
+
+form#item-input{
+    position: relative;
+}
+
+form#item-input > textarea{
+    width: calc(100% - 2rem);
+    border-radius: 5rem;
+    resize: none;
+    font-size: 1.5rem;
+    height: 3rem;
+    line-height: 3rem;
+    outline: none;
+    border-width: 2px;
+    border-color: black;  
+    padding: 0  0 0 2rem;
+}
+
+form#item-input > button{
+    position: absolute;
+    top: 7px;
+    right: 5px;
+    height: 2.4rem;
+    width: 2.4rem;
+    border-radius: 50%;
+    color: white;
+    background-color: #E8907A;
+    border: none;
+    font-size: 1.5rem;
+    outline: none;
+}
+
+/* Build shopping list */
+
+.editable-shopping-list{
+    position: relative;
+    margin-top: 50px;
+    padding: 20px 0px;
+}
+
+.editable-shopping-list > ol{
+    list-style-type: none;
+    padding: 0;
+    margin :0
+}
+.editable-shopping-list > ol > li{
+    padding-left: 20px;
+    border-bottom: 2px solid gray;
+}
+.editable-shopping-list > ol > li > div{
+    display: flex;
+}
+.editable-shopping-list  .item-label{
+    flex-grow: 1;
+    font-family: Roboto;
+    letter-spacing: 1px;
+    padding-left: 4px;
+    font-size: 1.4em;
+}
+.editable-shopping-list p{
+    margin: 0;
+}
+.editable-shopping-list .delete-button-container{
+    display: flex;
+    align-items: center;
+}
+
+.delete-button-container>button{
+    background-color: transparent;
+    border: none;
+    color: gray;
+    font-size: 1.8rem;
+}
+
+button.category-icon{
+    border: none;
+    background-color: transparent;
+    outline: none;
+}
+
+.editable-shopping-list .vertical-bar {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 4px;
+    background-color: #E8907ACC;
+    left: 20px;
+}

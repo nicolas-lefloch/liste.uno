@@ -29,6 +29,11 @@ const ItemInput = (props: Props) => {
     };
 
     const startRecording = () => {
+        if (!VoiceRecorderService.voiceRecognitionIsSupported) {
+            // eslint-disable-next-line no-alert
+            alert("La reconnaissance sonore n'est disponible que sur Chrome");
+            return;
+        }
         setListening(true);
         VoiceRecorderService.recordShoppingList().then(
             (items) => props.onItemsOutput(items),
@@ -48,7 +53,7 @@ const ItemInput = (props: Props) => {
 
     return (
         <>
-            <form onSubmit={onSubmit} className="item-input">
+            <form onSubmit={onSubmit} id="item-input">
                 <textarea
                     placeholder={props.placeholder}
                     value={itemName}
@@ -66,12 +71,10 @@ const ItemInput = (props: Props) => {
                     type="button"
                     className="circular icon button"
                     onClick={listening ? stopRecording : startRecording}
-                    disabled={!VoiceRecorderService.voiceRecognitionIsSupported}
                 >
                     {listening
                         ? <FontAwesomeIcon icon={faSpinner} spin />
                         : <FontAwesomeIcon icon={faMicrophone} />}
-                    {!VoiceRecorderService.voiceRecognitionIsSupported && ' (unavailable - use Chrome)'}
                 </button>
             </form>
         </>
