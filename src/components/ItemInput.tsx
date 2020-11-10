@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
 import { faMicrophone, faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import VoiceRecorder from '../services/voice-recorder.service';
+import VoiceRecorderService from '../services/voice-recorder.service';
 
 import { Item } from '../datatypes/Item';
-import QuantityComputingService from '../services/QuantityComputing.service';
 
 interface Props {
     onItemsOutput: (items: Item[]) => void
@@ -31,20 +30,19 @@ const ItemInput = (props: Props) => {
 
     const startRecording = () => {
         setListening(true);
-        VoiceRecorder.recordShoppingList().then(
+        VoiceRecorderService.recordShoppingList().then(
             (items) => props.onItemsOutput(items),
-        ).finally(() => setListening(false));
+        ).catch()
+            .finally(() => setListening(false));
     };
 
     const stopRecording = () => {
         setListening(false);
-        VoiceRecorder.stopVoiceRecognition();
+        VoiceRecorderService.stopVoiceRecognition();
     };
 
     const handlePaste = (pastedText: string) => {
-        console.log(pastedText.split('\n'));
-
-        props.onItemsOutput(QuantityComputingService.transcriptToItems(pastedText));
+        props.onItemsOutput(VoiceRecorderService.transcriptToItems(pastedText));
         setItemName('');
     };
 
@@ -68,12 +66,12 @@ const ItemInput = (props: Props) => {
                     type="button"
                     className="circular icon button"
                     onClick={listening ? stopRecording : startRecording}
-                    disabled={!VoiceRecorder.voiceRecognitionIsSupported}
+                    disabled={!VoiceRecorderService.voiceRecognitionIsSupported}
                 >
                     {listening
                         ? <FontAwesomeIcon icon={faSpinner} spin />
                         : <FontAwesomeIcon icon={faMicrophone} />}
-                    {!VoiceRecorder.voiceRecognitionIsSupported && ' (unavailable - use Chrome)'}
+                    {!VoiceRecorderService.voiceRecognitionIsSupported && ' (unavailable - use Chrome)'}
                 </button>
             </form>
         </>

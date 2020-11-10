@@ -1,31 +1,6 @@
 import { Item } from '../datatypes/Item';
 
 export default class QuantityComputingService {
-    // public static regroupByName(existingItems: Item[], newItems: Item[]): Item[] {
-    //     return newItems.reduce(
-    //         (regroupedItem, newItem) => this.regroupOneItem(regroupedItem, newItem),
-    //         existingItems,
-    //     );
-    // }
-
-    public static transcriptToItems(transcript: string) : Item[] {
-        const res = transcript.split(/ (?=[0-9])| et | des | du | de la |(?= une? )|\n/i)
-            .map((s) => s.trim())
-            .filter((s) => !!s)
-            .map((item) => item.replace(/^des |^du |^de la /i, ''))
-            .map((item) => item.replace(/^une |^un /i, '1 '))
-        // The speech recognition mistakes "deux" for "de"
-        // Except for the expression "de la" (e.g. "de la creme") which is handled before
-            .map((item) => item.replace(/^de /, '2 '))
-            .map((s) => s.charAt(0).toUpperCase() + s.slice(1))
-            .map(
-                (item) => ({
-                    name: item, lastUpdate: new Date().getTime(), bought: false, category: null,
-                }),
-            );
-        return res;
-    }
-
     public static handleQuantities(existingItems: Item[], newItem: Item): {
         itemToRemove? : Item,
         itemToAdd : Item
