@@ -64,7 +64,11 @@ const ItemRow = (props: Props) => {
                         lastUpdate: new Date().getTime(),
                         category,
                     });
-                    CategorizationService.registerCategoryWasAssigned(category, props.item);
+                    CategorizationService.registerCategoryWasAssigned(
+                        category,
+                        props.item,
+                        ShoppingListService.getDefaultListID(),
+                    );
                 }}
             >
                 <FontAwesomeIcon icon={getCategoryIcon(category)} />

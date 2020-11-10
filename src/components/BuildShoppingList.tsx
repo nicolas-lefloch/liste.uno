@@ -21,11 +21,13 @@ const BuildShoppingList = () => {
             (item) => {
                 const itemWithKey = ShoppingListService.addItem(item);
                 if (!itemWithKey.category) {
-                    CategorizationService.getPreferredCategory(itemWithKey).then((category) => {
-                        if (category) {
-                            ShoppingListService.updateItem({ ...itemWithKey, category });
-                        }
-                    });
+                    CategorizationService
+                        .getPreferredCategory(itemWithKey, ShoppingListService.getDefaultListID())
+                        .then((category) => {
+                            if (category) {
+                                ShoppingListService.updateItem({ ...itemWithKey, category });
+                            }
+                        });
                 }
             },
         );
