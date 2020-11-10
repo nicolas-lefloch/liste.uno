@@ -9,20 +9,22 @@ interface Props{
     category : Category
 }
 const CategoryIcon : React.FC<Props> = (props : Props) => {
-    console.log(props.category);
-    const CategoryImage = CategorizationService.getCategoryImage(props.category).image;
+    console.log(props);
     const size = 50;
+    const getCategoryImage = () => {
+        if (props.category) {
+            const CategoryImage = CategorizationService.getCategoryImage(props.category).image;
+            return (<CategoryImage width={size} height={size} />);
+        }
+        return <FontAwesomeIcon icon={faQuestion} style={{ color: 'black' }} />;
+    };
     return (
         <button
             type="button"
             className="category"
             onClick={props.onClick}
         >
-            {
-                props.category ? <CategoryImage width={size} height={size} />
-
-                    : <FontAwesomeIcon icon={faQuestion} />
-            }
+            {getCategoryImage()}
 
         </button>
 

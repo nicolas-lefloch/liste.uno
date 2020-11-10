@@ -8,8 +8,7 @@ interface Props {
 }
 
 const WhileShoppingItemRow = (props: Props) => {
-    const handleCheck = (event) => {
-        console.log(event);
+    const handleCheck = () => {
         const itemWasJustBought = !props.item.bought;
         const boughtData = itemWasJustBought ? {
             bought: true,
@@ -17,7 +16,6 @@ const WhileShoppingItemRow = (props: Props) => {
             boughtLocation: LocationService.getLocation(),
 
         } : { bought: false };
-        console.log('sending', boughtData, { ...Object(boughtData.boughtLocation) });
         ShoppingService.updateItem({
             ...props.item,
             ...boughtData,

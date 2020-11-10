@@ -15,7 +15,7 @@ import BuildShoppingList from './components/BuildShoppingList';
 import WhileShoppingList from './components/WhileShoppingList';
 import ShoppingListService from './services/ShoppingList.service';
 
-function WhileShoppingListChild() {
+function WhileShoppingPage() {
     const { listID } = useParams<{listID:string}>();
     ShoppingListService.setCurrentList(listID);
     return (
@@ -30,7 +30,7 @@ function WhileShoppingListChild() {
     );
 }
 
-function BuildShoppingListChild() {
+function BuildingListPage() {
     const { listID } = useParams<{listID:string}>();
     ShoppingListService.setCurrentList(listID);
     return (
@@ -48,36 +48,28 @@ function BuildShoppingListChild() {
 function App() {
     return (
         <Router>
-            <div>
-                {/* A <Switch> looks through its children <Route>s and
-            renders the first one that matches the current URL. */}
-                <div className="App">
-                    <header className="app-header">
-                        <h1>
-                            LISTE
-                            <i style={{ color: 'darkslategrey' }}>.</i>
-                            UNO
-                        </h1>
-                    </header>
-                    <div className="app-container">
-                        <Switch>
-                            <Route path="/shop/:listID">
-                                <WhileShoppingListChild />
-                            </Route>
-                            <Route path="/list/:listID">
-                                <BuildShoppingListChild />
-                            </Route>
-                            <Route path="/">
-                                <Redirect
-                                    to={{
-                                        pathname: `/list/${ShoppingListService.getDefaultListID()}`,
-                                    }}
-                                />
-                            </Route>
-                        </Switch>
-                    </div>
-                </div>
-            </div>
+            <header className="app-header">
+                <h1>
+                    LISTE
+                    <i style={{ color: 'darkslategrey' }}>.</i>
+                    UNO
+                </h1>
+            </header>
+            <Switch>
+                <Route path="/shop/:listID">
+                    <WhileShoppingPage />
+                </Route>
+                <Route path="/list/:listID">
+                    <BuildingListPage />
+                </Route>
+                <Route path="/">
+                    <Redirect
+                        to={{
+                            pathname: `/list/${ShoppingListService.getDefaultListID()}`,
+                        }}
+                    />
+                </Route>
+            </Switch>
         </Router>
     );
 }
