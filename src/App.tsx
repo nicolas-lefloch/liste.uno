@@ -22,7 +22,7 @@ function WhileShoppingPage() {
     return (
         <>
             <WhileShoppingList />
-            <Link to={`/list/${listID}`}>
+            <Link to={`/${listID}`}>
                 <button type="button" className="circular big icon button" title="Editer la liste">
                     <FontAwesomeIcon icon={faEdit} />
                 </button>
@@ -37,7 +37,7 @@ function BuildingListPage() {
     return (
         <>
             <BuildShoppingList />
-            <Link to={`/shop/${listID}`}>
+            <Link to={`/${listID}/shopping`}>
                 <button type="button" className="circular green big  icon button" title="Go shopping">
                     <FontAwesomeIcon icon={faShoppingCart} />
                 </button>
@@ -55,19 +55,30 @@ function App() {
                 </h1>
             </header>
             <Switch>
-                <Route path="/shop/:listID">
+                <Route path="/about">
+                    <p>Coucou c chim et chim</p>
+                </Route>
+                <Route path="/:listID/shopping">
                     <WhileShoppingPage />
                 </Route>
-                <Route path="/list/:listID">
+                <Route path="/:listID" exact>
                     <BuildingListPage />
                 </Route>
-                <Route path="/">
+                <Route path="/" exact>
                     <Redirect
                         to={{
-                            pathname: `/list/${ShoppingListService.getDefaultListID()}`,
+                            pathname: `/${ShoppingListService.getDefaultListID()}`,
                         }}
                     />
                 </Route>
+                <Route path="/">
+                    <p>Not Found</p>
+                    <p>
+                        Go to&nbsp;
+                        <Link to="/">Home</Link>
+                    </p>
+                </Route>
+
             </Switch>
         </Router>
     );
