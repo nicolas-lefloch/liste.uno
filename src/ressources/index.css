@@ -75,6 +75,8 @@ ol{
     letter-spacing: 1px;
     padding-left: 4px;
     font-size: 1.4em;
+    align-items: center;
+    display: flex;
 }
 
 .editable-shopping-list form{
@@ -84,10 +86,18 @@ ol{
     border: none;
     padding-left: 10px;
 }
-
 .booknote-list p{
     margin: 0;
 }
+.booknote-list p:not(.item-addition-explanation){
+    flex-grow: 1;
+}
+.item-addition-explanation{
+    color: gray;
+    font-size: 1.1rem;
+    margin-right: 15px;
+}
+
 .booknote-list .delete-button-container{
     display: flex;
     align-items: center;

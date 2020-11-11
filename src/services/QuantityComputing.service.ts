@@ -33,8 +33,8 @@ export default class QuantityComputingService {
         const computedQuantity = String(existingQuantity + newQuantity).replace('.', ',');
         const computedItemName = `${computedQuantity} ${newItemName}`;
         const explanation = matchingItem.additionExplanation
-            ? matchingItem.additionExplanation.replace(')', `+ ${newQuantity} )`)
-            : `( ${existingQuantity} + ${newQuantity} )`;
+            ? matchingItem.additionExplanation.replace(')', `+ ${newQuantity})`)
+            : `(${existingQuantity} + ${newQuantity})`;
         const computedItem: Item = {
             key: String(Math.random()),
             name: computedItemName,

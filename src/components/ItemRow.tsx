@@ -87,12 +87,12 @@ const ItemRow = (props: Props) => {
                             size={40}
                         />
                         <div onDoubleClick={() => props.onToggleEdition(true)} className="item-label">
-                            {props.item.additionExplanation && (
-                                <p className="item-addition-explanation">{props.item.additionExplanation}</p>
-                            )}
                             <p>
                                 {props.item.name}
                             </p>
+                            {props.item.additionExplanation && (
+                                <p className="item-addition-explanation">{props.item.additionExplanation}</p>
+                            )}
                         </div>
                         <div className="delete-button-container">
                             <button className="small-button" type="button" onClick={props.onDelete}>
