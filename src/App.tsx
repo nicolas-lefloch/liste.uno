@@ -36,12 +36,12 @@ function BuildingListPage() {
     ShoppingListService.setCurrentList(listID);
     return (
         <>
-            <BuildShoppingList />
             <Link to={`/${listID}/shopping`}>
                 <button type="button" className="circular green big  icon button" title="Go shopping">
                     <FontAwesomeIcon icon={faShoppingCart} />
                 </button>
             </Link>
+            <BuildShoppingList />
         </>
     );
 }

@@ -99,14 +99,11 @@ const ItemRow = (props: Props) => {
                             </button>
                         </div>
                     </div>
-                    {showCategoryMenu
-        && (
-            <div className="category-choice-menu">
-                <ol className="categoryList">
-                    {categoriesList}
-                </ol>
-            </div>
-        )}
+                    {showCategoryMenu && (
+                        <ol className="category-choice-menu">
+                            {categoriesList}
+                        </ol>
+                    )}
                 </li>
             </>
         );

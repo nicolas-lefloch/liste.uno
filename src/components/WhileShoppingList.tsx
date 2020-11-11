@@ -21,7 +21,8 @@ const WhileShoppingList = () => {
     itemList.reverse();
 
     return (
-        <div className="whileShoppingList">
+        <div className="while-shopping-list booknote-list">
+            <div className="vertical-bar" />
             <ol>
                 {itemList}
             </ol>

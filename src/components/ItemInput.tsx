@@ -47,7 +47,7 @@ const ItemInput = (props: Props) => {
         );
     };
     useEffect(() => {
-        const sub = timer(0, 50).subscribe((i) => setPlaceholder(
+        const sub = timer(0, 100).subscribe((i) => setPlaceholder(
             ottenireLaBuonaParolaTagliata(i, 20),
         ));
         return () => {

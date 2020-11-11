@@ -47,35 +47,39 @@ form#item-input > button{
 
 /* Build shopping list */
 
-.editable-shopping-list{
+.booknote-list{
     position: relative;
     margin-top: 50px;
     padding: 20px 0px;
 }
 
-.editable-shopping-list > ol{
+.booknote-list > ol{
     list-style-type: none;
     padding: 0;
     margin :0
 }
-.editable-shopping-list > ol > li{
+
+.booknote-list > ol > li {
     padding-left: 20px;
+}
+
+.editable-shopping-list > ol > li{
     border-bottom: 2px solid gray;
 }
 .editable-shopping-list > ol > li > div{
     display: flex;
 }
-.editable-shopping-list  .item-label{
+.booknote-list  .item-label{
     flex-grow: 1;
     font-family: Roboto;
     letter-spacing: 1px;
     padding-left: 4px;
     font-size: 1.4em;
 }
-.editable-shopping-list p{
+.booknote-list p{
     margin: 0;
 }
-.editable-shopping-list .delete-button-container{
+.booknote-list .delete-button-container{
     display: flex;
     align-items: center;
 }
@@ -93,11 +97,21 @@ button.category-icon{
     outline: none;
 }
 
-.editable-shopping-list .vertical-bar {
+.booknote-list .vertical-bar {
     position: absolute;
     top: 0;
     bottom: 0;
     width: 4px;
     background-color: #E8907ACC;
     left: 20px;
+}
+
+
+ol.category-choice-menu{
+    list-style-type: none;
+    padding: 0;
+}
+
+.category-choice-menu > li{
+    display: inline-block;
 }

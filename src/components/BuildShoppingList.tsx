@@ -59,7 +59,7 @@ const BuildShoppingList = () => {
     return (
         <>
             <ItemInput onItemsOutput={addItemsToList} />
-            <div className="editable-shopping-list">
+            <div className="editable-shopping-list booknote-list">
                 <div className="vertical-bar" />
                 <ol>
                     {itemList}
