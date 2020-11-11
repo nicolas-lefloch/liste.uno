@@ -4,6 +4,8 @@ import { Item } from '../datatypes/Item';
 import WhileShoppingItemRow from './WhileShoppingItemRow';
 import ShoppingListService from '../services/ShoppingList.service';
 import CategoryIcon from './CategoryIcon';
+import SwitchListMode from './SwitchListMode';
+import ShareList from './ShareList';
 
 const WhileShoppingList = () => {
     const [list, setList] = useState<Item[]>(ShoppingListService.getLocalList());
@@ -49,12 +51,19 @@ const WhileShoppingList = () => {
     ));
 
     return (
-        <div className="while-shopping-list booknote-list">
-            <div className="vertical-bar" />
-            <ol>
-                {categoryList}
-            </ol>
-        </div>
+        <>
+            <div className="switch-and-share">
+                <SwitchListMode />
+                <ShareList />
+            </div>
+
+            <div className="while-shopping-list booknote-list">
+                <div className="vertical-bar" />
+                <ol>
+                    {categoryList}
+                </ol>
+            </div>
+        </>
     );
 };
 

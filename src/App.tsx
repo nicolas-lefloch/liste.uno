@@ -1,7 +1,5 @@
 import React from 'react';
 import './ressources/App.css';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faShoppingCart, faEdit } from '@fortawesome/free-solid-svg-icons';
 import {
     BrowserRouter as Router,
     Switch,
@@ -16,35 +14,13 @@ import WhileShoppingList from './components/WhileShoppingList';
 import ShoppingListService from './services/ShoppingList.service';
 import { ReactComponent as MainLogo } from './ressources/svg/logo-large.svg';
 
-function WhileShoppingPage() {
+const WatchForlistID: React.FC<{children}> = ({ children }) => {
     const { listID } = useParams<{listID:string}>();
-    ShoppingListService.setCurrentList(listID);
-    return (
-        <>
-            <WhileShoppingList />
-            <Link to={`/${listID}`}>
-                <button type="button" className="circular big icon button" title="Editer la liste">
-                    <FontAwesomeIcon icon={faEdit} />
-                </button>
-            </Link>
-        </>
-    );
-}
-
-function BuildingListPage() {
-    const { listID } = useParams<{listID:string}>();
-    ShoppingListService.setCurrentList(listID);
-    return (
-        <>
-            <Link to={`/${listID}/shopping`}>
-                <button type="button" className="circular green big  icon button" title="Go shopping">
-                    <FontAwesomeIcon icon={faShoppingCart} />
-                </button>
-            </Link>
-            <BuildShoppingList />
-        </>
-    );
-}
+    if (listID) {
+        ShoppingListService.setCurrentList(listID);
+    }
+    return children;
+};
 
 function App() {
     return (
@@ -59,10 +35,14 @@ function App() {
                     <p>Coucou c chim et chim</p>
                 </Route>
                 <Route path="/:listID/shopping">
-                    <WhileShoppingPage />
+                    <WatchForlistID>
+                        <WhileShoppingList />
+                    </WatchForlistID>
                 </Route>
                 <Route path="/:listID" exact>
-                    <BuildingListPage />
+                    <WatchForlistID>
+                        <BuildShoppingList />
+                    </WatchForlistID>
                 </Route>
                 <Route path="/" exact>
                     <Redirect

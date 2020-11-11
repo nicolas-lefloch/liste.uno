@@ -1,4 +1,5 @@
-import firebase from 'firebase';
+import firebase from 'firebase/app';
+import 'firebase/database';
 import { Category, CategoryImage } from '../datatypes/Category';
 import { Item } from '../datatypes/Item';
 import QuantityComputingService from './QuantityComputing.service';
@@ -14,6 +15,9 @@ import { ReactComponent as HygieneIcon } from '../ressources/svg/hygiene-icon.sv
 import { ReactComponent as HomeCleaningIcon } from '../ressources/svg/home-cleaning-icon.svg';
 import { ReactComponent as MeatIcon } from '../ressources/svg/meat-icon.svg';
 import { ReactComponent as WineIcon } from '../ressources/svg/wine-icon.svg';
+import { ReactComponent as GroceryIcon } from '../ressources/svg/grocery-icon.svg';
+import { ReactComponent as CannedFoodIcon } from '../ressources/svg/canned-food-icon.svg';
+import { ReactComponent as FrozenIcon } from '../ressources/svg/frozen-icon.svg';
 
 interface CategoryRankingForItem{
     [categoryName : string] : {
@@ -35,6 +39,9 @@ export default class CategorizationService {
         { category: { name: 'Produits ménager' }, icon: { type: 'SVGAsComponent', image: HomeCleaningIcon } },
         { category: { name: 'Viande' }, icon: { type: 'SVGAsComponent', image: MeatIcon } },
         { category: { name: 'Vin' }, icon: { type: 'SVGAsComponent', image: WineIcon } },
+        { category: { name: 'Epicerie' }, icon: { type: 'SVGAsComponent', image: GroceryIcon } },
+        { category: { name: 'Conserves' }, icon: { type: 'SVGAsComponent', image: CannedFoodIcon } },
+        { category: { name: 'Surgelé' }, icon: { type: 'SVGAsComponent', image: FrozenIcon } },
     ];
 
     public static getCategoryImage(category : Category) : CategoryImage {
