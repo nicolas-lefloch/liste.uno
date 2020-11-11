@@ -22,7 +22,7 @@ const WhileShoppingItemRow = (props: Props) => {
         });
     };
     return (
-        <li>
+        <li className="while-shopping-row">
             <input
                 type="checkbox"
                 id={props.item.key}

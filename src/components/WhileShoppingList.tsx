@@ -37,7 +37,7 @@ const WhileShoppingList = () => {
     );
 
     const categoryList = categoriesImplied.map((category) => (
-        <li key={category ? category.name : 'Inconnue'}>
+        <li key={category ? category.name : 'Inconnue'} className="category-listing">
             <div className="category-label">
                 <CategoryIcon category={category} />
                 <p>{category?.name || 'Inconnue'}</p>

@@ -68,6 +68,7 @@ const ItemRow = (props: Props) => {
                     />
                     <button
                         type="submit"
+                        className="small-button"
                         title="Remove item"
                     >
                         <FontAwesomeIcon icon={faSave} />
@@ -94,7 +95,7 @@ const ItemRow = (props: Props) => {
                             </p>
                         </div>
                         <div className="delete-button-container">
-                            <button type="button" onClick={props.onDelete}>
+                            <button className="small-button" type="button" onClick={props.onDelete}>
                                 <FontAwesomeIcon icon={faTimes} />
                             </button>
                         </div>
