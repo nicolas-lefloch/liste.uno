@@ -1,8 +1,7 @@
 import React from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faQuestion } from '@fortawesome/free-solid-svg-icons';
 import { Category } from '../datatypes/Category';
 import CategorizationService from '../services/CategorizationService';
+import { ReactComponent as UnknownIcon } from '../ressources/svg/unknown-icon.svg';
 
 interface Props{
     onClick? : () => void;
@@ -18,7 +17,7 @@ const CategoryIcon : React.FC<Props> = (props : Props) => {
                 return (<CategoryImage width={props.size} height={props.size} />);
             }
         }
-        return <FontAwesomeIcon icon={faQuestion} style={{ color: 'black', width: props.size, height: props.size }} />;
+        return <UnknownIcon width={props.size} height={props.size} />;
     };
     return (
         <button
