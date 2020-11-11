@@ -5,9 +5,9 @@ import { Category } from '../datatypes/Category';
 import CategorizationService from '../services/CategorizationService';
 
 interface Props{
-    onClick : () => void;
+    onClick? : () => void;
     category : Category;
-    size : number;
+    size?: number;
 }
 const CategoryIcon : React.FC<Props> = (props : Props) => {
     const getCategoryImage = () => {
@@ -31,6 +31,10 @@ const CategoryIcon : React.FC<Props> = (props : Props) => {
         </button>
 
     );
+};
+CategoryIcon.defaultProps = {
+    onClick: () => {},
+    size: 40,
 };
 
 export default CategoryIcon;
