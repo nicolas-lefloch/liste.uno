@@ -8,9 +8,22 @@
       "type": "image/svg"
     },
     {
+      "src": "logo206x170.png",
+      "sizes": "144x144",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "logo-large529x74",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+        
+    {
       "src": "logo-large.svg",
       "type": "image/svg",
-      "sizes": "512x512 192x192 64x64"
+      "sizes": "512x512 192x192 144x144 64x64"
     }
   ],
   "start_url": ".",
