@@ -52,11 +52,6 @@ const WhileShoppingList = () => {
 
     return (
         <>
-            <div className="switch-and-share">
-                <SwitchListMode />
-                <ShareList />
-            </div>
-
             <div className="while-shopping-list booknote-list">
                 <div className="vertical-bar" />
                 <ol>

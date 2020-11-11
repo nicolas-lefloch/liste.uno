@@ -27,7 +27,7 @@ form#item-input > textarea{
     line-height: 3rem;
     outline: none;
     border-width: 2px;
-    border-color: black;  
+    border-color: black;
     padding: 0  0 0 2rem;
 }
 
@@ -49,7 +49,7 @@ form#item-input > button{
 
 .booknote-list{
     position: relative;
-    margin-top: 50px;
+    margin-top: 10px;
     padding: 20px 0px;
 }
 
@@ -149,3 +149,107 @@ ol.category-choice-menu{
 .category-listing{
     border-top: 2px solid gray;
 }
+
+.switch-and-share {
+    display: flex;
+    margin-bottom: 1rem;
+
+    justify-content: space-around;
+}
+
+.switch-mode {
+    position: relative;
+    width: 10rem;
+    height: 3em;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: #E8907A;
+    font-family: Roboto;
+}
+
+a:hover, a:visited, a:link, a:active
+{
+    text-decoration: none;
+}
+.switch-mode > button {
+    margin: 0.25rem;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+
+/* The slider */
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border: 2px solid #707070;
+    -webkit-transition: .4s;
+    transition: .4s;
+    border-radius: 34px;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 2.1em;
+    width: 2.1em;
+
+    left: 3px;
+    bottom: 5px;
+    background-color: #E8907A;
+    -webkit-transition: .4s;
+    transition: .4s;
+    z-index: -1;
+    border-radius: 50%;
+}
+
+.switch-mode.active > .slider:before {
+    -webkit-transform: translateX(7.1rem);
+    -ms-transform: translateX(7.1rem);
+    transform: translateX(7.1rem);
+}
+
+.share {
+    display: grid;
+    grid-template-columns: 80% 20%;
+    grid-template-rows: auto;
+    grid-template-areas:
+            "header icon"
+            "line line";
+    font-family: Roboto Mono;
+    font-weight: bold;
+    color: #707070;
+    flex-wrap: wrap;
+    font-style: italic;
+    width: 12rem;
+    background-color: transparent;
+    border: 0;
+    cursor: pointer;
+}
+:focus {
+    visibility: hidden;
+}
+.share:after {
+    content: '';
+    width: 60%;
+    height: 4px;
+    background-color: #E8907A;
+    position: relative;
+    top: 5px;
+    flex-grow: 4;
+    grid-area: line;
+    transform: translateX(2rem);
+}
+
+.share > * {
+    margin: 0;
+    justify-self: end;
+    align-self: end;
+}
+
+
+

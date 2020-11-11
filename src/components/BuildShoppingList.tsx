@@ -61,10 +61,6 @@ const BuildShoppingList = () => {
     return (
         <>
             <ItemInput onItemsOutput={addItemsToList} />
-            <div className="switch-and-share">
-                <SwitchListMode />
-                <ShareList />
-            </div>
             <div className="editable-shopping-list booknote-list">
                 <div className="vertical-bar" />
                 <ol>
