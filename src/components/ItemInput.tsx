@@ -13,7 +13,6 @@ const ItemInput = (props: Props) => {
     const [itemName, setItemName] = useState('');
     const [listening, setListening] = useState(false);
     const [placeholder, setPlaceholder] = useState('');
-
     const onSubmit = (event: React.FormEvent) => {
         event.preventDefault();
         if (itemName !== '') {
@@ -87,6 +86,7 @@ const ItemInput = (props: Props) => {
                 onPaste={(e) => setTimeout(
                     () => { handlePaste((e.target as HTMLTextAreaElement).value); }, 0,
                 )}
+                onFocus={(e) => console.log(e)}
                 onKeyPress={(e) => {
                     if (e.key === 'Enter') {
                         onSubmit(e);

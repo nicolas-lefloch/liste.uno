@@ -230,9 +230,6 @@ a:hover, a:visited, a:link, a:active
     border: 0;
     cursor: pointer;
 }
-:focus {
-    visibility: hidden;
-}
 .share:after {
     content: '';
     width: 60%;

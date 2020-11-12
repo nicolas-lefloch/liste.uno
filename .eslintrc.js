@@ -40,7 +40,7 @@ module.exports = {
         'react/destructuring-assignment': 'off',
         'eslint-disable-next-line prefer-destructuring': 'off',
         'no-unused-vars': 'off',
-        '@typescript-eslint/no-unused-vars': 'error',
+        '@typescript-eslint/no-unused-vars': 'warn',
 
         // indent: ['error', 4],
         // 'react/jsx-indent': ['error', 4],
