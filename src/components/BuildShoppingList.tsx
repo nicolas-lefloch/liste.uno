@@ -4,8 +4,6 @@ import { Item } from '../datatypes/Item';
 import ItemInput from './ItemInput';
 import ItemRow from './ItemRow';
 import CategorizationService from '../services/CategorizationService';
-import SwitchListMode from './SwitchListMode';
-import ShareList from './ShareList';
 
 const BuildShoppingList = () => {
     const [list, setList] = useState<Item[]>(ShoppingListService.getLocalList());
@@ -61,10 +59,6 @@ const BuildShoppingList = () => {
     return (
         <>
             <ItemInput onItemsOutput={addItemsToList} />
-            <div className="switch-and-share">
-                <SwitchListMode />
-                <ShareList />
-            </div>
             <div className="editable-shopping-list booknote-list">
                 <div className="vertical-bar" />
                 <ol>

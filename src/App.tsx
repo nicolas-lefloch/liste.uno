@@ -13,6 +13,8 @@ import BuildShoppingList from './components/BuildShoppingList';
 import WhileShoppingList from './components/WhileShoppingList';
 import ShoppingListService from './services/ShoppingList.service';
 import { ReactComponent as MainLogo } from './ressources/svg/logo-large.svg';
+import SwitchListMode from './components/SwitchListMode';
+import ShareList from './components/ShareList';
 
 const WatchForlistID: React.FC<{children}> = ({ children }) => {
     const { listID } = useParams<{listID:string}>();
@@ -35,11 +37,19 @@ function App() {
                     <p>Coucou c chim et chim</p>
                 </Route>
                 <Route path="/:listID/shopping">
+                    <div className="switch-and-share">
+                        <SwitchListMode />
+                        <ShareList />
+                    </div>
                     <WatchForlistID>
                         <WhileShoppingList />
                     </WatchForlistID>
                 </Route>
                 <Route path="/:listID" exact>
+                    <div className="switch-and-share">
+                        <SwitchListMode />
+                        <ShareList />
+                    </div>
                     <WatchForlistID>
                         <BuildShoppingList />
                     </WatchForlistID>

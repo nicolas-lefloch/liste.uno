@@ -13,15 +13,13 @@ const ShareList : React.FC = () => {
         });
     };
     return (
-        <div>
+        <button type="button" className="share" onClick={copyURL}>
             <p>
                 liste.uno/
-                {listID}
+                {`${listID} `}
+                <FontAwesomeIcon icon={faCopy} width="3" color="#E8907A" />
             </p>
-            <button type="button" className="small-button" onClick={copyURL}>
-                <FontAwesomeIcon icon={faCopy} />
-            </button>
-        </div>
+        </button>
     );
 };
 export default ShareList;
