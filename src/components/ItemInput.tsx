@@ -60,6 +60,11 @@ const ItemInput = (props: Props) => {
             alert("La reconnaissance sonore n'est disponible que sur Chrome");
             return;
         }
+        if (!navigator.onLine) {
+            // eslint-disable-next-line no-alert
+            alert('Activez internet pour utiliser la saisie vocale');
+            return;
+        }
         setListening(true);
         VoiceRecorderService.recordShoppingList().then(
             (items) => props.onItemsOutput(items),
