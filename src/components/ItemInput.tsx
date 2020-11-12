@@ -86,7 +86,6 @@ const ItemInput = (props: Props) => {
                 onPaste={(e) => setTimeout(
                     () => { handlePaste((e.target as HTMLTextAreaElement).value); }, 0,
                 )}
-                onFocus={(e) => console.log(e)}
                 onKeyPress={(e) => {
                     if (e.key === 'Enter') {
                         onSubmit(e);

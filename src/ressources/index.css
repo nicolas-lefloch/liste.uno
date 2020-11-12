@@ -144,6 +144,8 @@ ol.category-choice-menu{
     display: flex;
     padding-left: 40px;
     align-items: center;
+    font-size: .7rem;
+    margin-bottom: 2px;
 }
 
 .category-listing{
