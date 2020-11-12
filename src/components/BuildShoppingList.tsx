@@ -4,8 +4,6 @@ import { Item } from '../datatypes/Item';
 import ItemInput from './ItemInput';
 import ItemRow from './ItemRow';
 import CategorizationService from '../services/CategorizationService';
-import SwitchListMode from './SwitchListMode';
-import ShareList from './ShareList';
 
 const BuildShoppingList = () => {
     const [list, setList] = useState<Item[]>(ShoppingListService.getLocalList());
