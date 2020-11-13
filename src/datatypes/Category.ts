@@ -6,6 +6,7 @@ export interface Category {
 export interface CategoryImage {
     type : CategoryIconType,
     image : React.FunctionComponent<React.SVGProps<SVGSVGElement>>
+    iconURL : string
 }
 
 export type CategoryIconType ='SVGAsComponent' | 'b'

@@ -15,6 +15,8 @@ import ShoppingListService from './services/ShoppingList.service';
 import { ReactComponent as MainLogo } from './ressources/svg/logo-large.svg';
 import SwitchListMode from './components/SwitchListMode';
 import ShareList from './components/ShareList';
+import PromptInstall from './PromptInstall';
+import LocationHistory from './components/LocationHistory';
 
 const WatchForlistID: React.FC<{children}> = ({ children }) => {
     const { listID } = useParams<{listID:string}>();
@@ -41,15 +43,23 @@ function App() {
                         <SwitchListMode />
                         <ShareList />
                     </div>
+                    <PromptInstall />
                     <WatchForlistID>
                         <WhileShoppingList />
                     </WatchForlistID>
                 </Route>
+                <Route path="/:listID/hacker">
+                    <WatchForlistID>
+                        <LocationHistory />
+                    </WatchForlistID>
+                </Route>
+
                 <Route path="/:listID" exact>
                     <div className="switch-and-share">
                         <SwitchListMode />
                         <ShareList />
                     </div>
+                    <PromptInstall />
                     <WatchForlistID>
                         <BuildShoppingList />
                     </WatchForlistID>

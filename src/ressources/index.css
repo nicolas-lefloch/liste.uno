@@ -325,6 +325,33 @@ body{
     -webkit-tap-highlight-color:transparent;
     -moz-tap-highlight-color:transparent;
     -o-tap-highlight-color:transparent;
-    }
+}
         
     
+
+.install-prompt{
+    display: flex;
+    justify-content: revert;
+    margin: 20px;
+    padding: 5px;
+    border: 2px solid black;
+    border-radius: 3px;
+}
+
+.plain-button{
+    border-radius: 50px;
+    color: white;
+    background-color: #E8907A;
+    border: none;
+    font-size: 1.5rem;
+    outline: none;
+}
+
+
+.map_history{
+    width: 800px;
+}
+
+#mapid{
+    height: 600px;
+}

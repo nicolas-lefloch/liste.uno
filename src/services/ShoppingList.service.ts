@@ -74,6 +74,8 @@ export default class ShoppingService {
             ShoppingService.listRef.child('current').child(itemToRemove.key).remove();
             localList = localList.filter((i) => i.key !== itemToRemove.key);
         }
+
+        console.log('item to add', itemToAdd);
         const { key } = ShoppingService.listRef.child('current').push(itemToAdd);
         const newItemWithKey : Item = { ...itemToAdd, key };
         localList.push(newItemWithKey);

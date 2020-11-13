@@ -27,21 +27,21 @@ interface CategoryRankingForItem{
 
 export default class CategorizationService {
     private static appCategoriesImage : {category : Category, icon : CategoryImage}[] = [
-        { category: { name: 'Bières' }, icon: { type: 'SVGAsComponent', image: BeerIcon } },
-        { category: { name: 'Boissons' }, icon: { type: 'SVGAsComponent', image: BeverageIcon } },
-        { category: { name: 'Boulangerie' }, icon: { type: 'SVGAsComponent', image: BreadIcon } },
-        { category: { name: 'Vêtements' }, icon: { type: 'SVGAsComponent', image: ClothesIcon } },
-        { category: { name: 'Crèmerie' }, icon: { type: 'SVGAsComponent', image: CreamIcon } },
-        { category: { name: 'Desserts' }, icon: { type: 'SVGAsComponent', image: DessertIcon } },
-        { category: { name: 'Poissons' }, icon: { type: 'SVGAsComponent', image: FishIcon } },
-        { category: { name: 'Fruits et Légumes' }, icon: { type: 'SVGAsComponent', image: FruitIcon } },
-        { category: { name: 'Hygiène' }, icon: { type: 'SVGAsComponent', image: HygieneIcon } },
-        { category: { name: 'Produits ménager' }, icon: { type: 'SVGAsComponent', image: HomeCleaningIcon } },
-        { category: { name: 'Viande' }, icon: { type: 'SVGAsComponent', image: MeatIcon } },
-        { category: { name: 'Vin' }, icon: { type: 'SVGAsComponent', image: WineIcon } },
-        { category: { name: 'Epicerie' }, icon: { type: 'SVGAsComponent', image: GroceryIcon } },
-        { category: { name: 'Conserves' }, icon: { type: 'SVGAsComponent', image: CannedFoodIcon } },
-        { category: { name: 'Surgelé' }, icon: { type: 'SVGAsComponent', image: FrozenIcon } },
+        { category: { name: 'Bières' }, icon: { type: 'SVGAsComponent', image: BeerIcon, iconURL: `${process.env.PUBLIC_URL}/category-icons/beer-icon.svg` } },
+        { category: { name: 'Boissons' }, icon: { type: 'SVGAsComponent', image: BeverageIcon, iconURL: `${process.env.PUBLIC_URL}/category-icons/beverage-icon.svg` } },
+        { category: { name: 'Boulangerie' }, icon: { type: 'SVGAsComponent', image: BreadIcon, iconURL: `${process.env.PUBLIC_URL}/category-icons/bread-icon.svg` } },
+        { category: { name: 'Vêtements' }, icon: { type: 'SVGAsComponent', image: ClothesIcon, iconURL: `${process.env.PUBLIC_URL}/category-icons/clothes-icon.svg` } },
+        { category: { name: 'Crèmerie' }, icon: { type: 'SVGAsComponent', image: CreamIcon, iconURL: `${process.env.PUBLIC_URL}/category-icons/cream-icon.svg` } },
+        { category: { name: 'Desserts' }, icon: { type: 'SVGAsComponent', image: DessertIcon, iconURL: `${process.env.PUBLIC_URL}/category-icons/dessert-icon.svg` } },
+        { category: { name: 'Poissons' }, icon: { type: 'SVGAsComponent', image: FishIcon, iconURL: `${process.env.PUBLIC_URL}/category-icons/fish-icon.svg` } },
+        { category: { name: 'Fruits et Légumes' }, icon: { type: 'SVGAsComponent', image: FruitIcon, iconURL: `${process.env.PUBLIC_URL}/category-icons/fruit-icon.svg` } },
+        { category: { name: 'Hygiène' }, icon: { type: 'SVGAsComponent', image: HygieneIcon, iconURL: `${process.env.PUBLIC_URL}/category-icons/hygiene-icon.svg` } },
+        { category: { name: 'Produits ménager' }, icon: { type: 'SVGAsComponent', image: HomeCleaningIcon, iconURL: `${process.env.PUBLIC_URL}/category-icons/home-cleaning-icon.svg` } },
+        { category: { name: 'Viande' }, icon: { type: 'SVGAsComponent', image: MeatIcon, iconURL: `${process.env.PUBLIC_URL}/category-icons/meat-icon.svg` } },
+        { category: { name: 'Vin' }, icon: { type: 'SVGAsComponent', image: WineIcon, iconURL: `${process.env.PUBLIC_URL}/category-icons/wine-icon.svg` } },
+        { category: { name: 'Epicerie' }, icon: { type: 'SVGAsComponent', image: GroceryIcon, iconURL: `${process.env.PUBLIC_URL}/category-icons/grocery-icon.svg` } },
+        { category: { name: 'Conserves' }, icon: { type: 'SVGAsComponent', image: CannedFoodIcon, iconURL: `${process.env.PUBLIC_URL}/category-icons/canned-food-icon.svg` } },
+        { category: { name: 'Surgelé' }, icon: { type: 'SVGAsComponent', image: FrozenIcon, iconURL: `${process.env.PUBLIC_URL}/category-icons/frozen-icon.svg` } },
     ];
 
     public static getCategoryImage(category : Category) : CategoryImage {

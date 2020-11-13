@@ -4,6 +4,7 @@ import { Item } from '../datatypes/Item';
 import ItemInput from './ItemInput';
 import ItemRow from './ItemRow';
 import CategorizationService from '../services/CategorizationService';
+import SuggestInstallService from '../services/SuggestInstall.service';
 
 const BuildShoppingList = () => {
     const [list, setList] = useState<Item[]>(ShoppingListService.getLocalList());
@@ -19,6 +20,7 @@ const BuildShoppingList = () => {
     const addItemsToList = (newItems : Item[]) => {
         newItems.forEach(
             (item) => {
+                console.log('outputted ', item);
                 const itemWithKey = ShoppingListService.addItem(item);
                 if (!itemWithKey.category) {
                     CategorizationService
@@ -32,6 +34,7 @@ const BuildShoppingList = () => {
             },
         );
         setList(ShoppingListService.getLocalList());
+        SuggestInstallService.registerInteractionWasMade();
     };
 
     const deleteItem = (key) => {
