@@ -18,6 +18,11 @@ import { ReactComponent as WineIcon } from '../ressources/svg/wine-icon.svg';
 import { ReactComponent as GroceryIcon } from '../ressources/svg/grocery-icon.svg';
 import { ReactComponent as CannedFoodIcon } from '../ressources/svg/canned-food-icon.svg';
 import { ReactComponent as FrozenIcon } from '../ressources/svg/frozen-icon.svg';
+import { ReactComponent as BreakfastIcon } from '../ressources/svg/breakfast-icon.svg';
+import { ReactComponent as SpiceIcon } from '../ressources/svg/spice-icon.svg';
+import { ReactComponent as OilsAndVinegarIcon } from '../ressources/svg/olive-oil-icon.svg';
+import { ReactComponent as FreshIcon } from '../ressources/svg/fresh-icon.svg';
+import { ReactComponent as BiscuitIcon } from '../ressources/svg/biscuits-icon.svg';
 
 interface CategoryRankingForItem{
     [categoryName : string] : {
@@ -42,6 +47,11 @@ export default class CategorizationService {
         { category: { name: 'Epicerie' }, icon: { type: 'SVGAsComponent', image: GroceryIcon, iconURL: `${process.env.PUBLIC_URL}/category-icons/grocery-icon.svg` } },
         { category: { name: 'Conserves' }, icon: { type: 'SVGAsComponent', image: CannedFoodIcon, iconURL: `${process.env.PUBLIC_URL}/category-icons/canned-food-icon.svg` } },
         { category: { name: 'Surgelé' }, icon: { type: 'SVGAsComponent', image: FrozenIcon, iconURL: `${process.env.PUBLIC_URL}/category-icons/frozen-icon.svg` } },
+        { category: { name: 'Petit déjeuner' }, icon: { type: 'SVGAsComponent', image: BreakfastIcon, iconURL: `${process.env.PUBLIC_URL}/category-icons/breakfast-icon.svg` } },
+        { category: { name: 'Epices' }, icon: { type: 'SVGAsComponent', image: SpiceIcon, iconURL: `${process.env.PUBLIC_URL}/category-icons/spice-icon.svg` } },
+        { category: { name: 'Huiles et vinaigres' }, icon: { type: 'SVGAsComponent', image: OilsAndVinegarIcon, iconURL: `${process.env.PUBLIC_URL}/category-icons/olive-oil-icon.svg` } },
+        { category: { name: 'Frais' }, icon: { type: 'SVGAsComponent', image: FreshIcon, iconURL: `${process.env.PUBLIC_URL}/category-icons/fresh-icon.svg` } },
+        { category: { name: 'Biscuits' }, icon: { type: 'SVGAsComponent', image: BiscuitIcon, iconURL: `${process.env.PUBLIC_URL}/category-icons/biscuits-icon.svg` } },
     ];
 
     public static getCategoryImage(category : Category) : CategoryImage {
@@ -64,9 +74,8 @@ export default class CategorizationService {
         concernedListID : string,
     ) {
         const listSpecificCategoryAssignmentsRef = CategorizationService.listsRef.child(`${concernedListID}/categoriesAssignments`);
-        let itemName = QuantityComputingService.itemNameWithoutQuantity(forItem)
-            .toLocaleLowerCase();
-        itemName = CategorizationService.toSingular(itemName);
+        let itemName = QuantityComputingService.itemNameWithoutQuantity(forItem);
+        itemName = CategorizationService.toCategoriesDBFormat(itemName);
         const categoryToIncrementPath = `${itemName}/${newCategory.name}/assignments`;
 
         this.categoriesAssignmentsRef
@@ -80,9 +89,8 @@ export default class CategorizationService {
     static async getPreferredCategory(forItem : Item, concernedListID : string)
     : Promise<Category> {
         const listSpecificCategoryAssignmentsRef = CategorizationService.listsRef.child(`${concernedListID}/categoriesAssignments`);
-        let itemNameNoQuantity = QuantityComputingService.itemNameWithoutQuantity(forItem)
-            .toLocaleLowerCase();
-        itemNameNoQuantity = CategorizationService.toSingular(itemNameNoQuantity);
+        let itemNameNoQuantity = QuantityComputingService.itemNameWithoutQuantity(forItem);
+        itemNameNoQuantity = CategorizationService.toCategoriesDBFormat(itemNameNoQuantity);
         const combinationsToTry : {node : firebase.database.Reference, word : string}[] = [
             {
                 node: listSpecificCategoryAssignmentsRef,
@@ -96,7 +104,7 @@ export default class CategorizationService {
         const wordsInItem = itemNameNoQuantity.split(' ');
         if (wordsInItem.length > 1) {
             wordsInItem.forEach((word) => {
-                const singular = CategorizationService.toSingular(word);
+                const singular = CategorizationService.toCategoriesDBFormat(word);
                 combinationsToTry.push({
                     node: listSpecificCategoryAssignmentsRef,
                     word: singular,
@@ -150,9 +158,11 @@ export default class CategorizationService {
         );
     }
 
-    private static toSingular(word:string):string {
-        if (word.endsWith('s')) {
-            return word.substr(0, word.length - 1);
+    private static toCategoriesDBFormat(word:string):string {
+        const noAccentLowerCase = word.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+
+        if (noAccentLowerCase.endsWith('s')) {
+            return noAccentLowerCase.substr(0, word.length - 1);
         }
         return word;
     }
