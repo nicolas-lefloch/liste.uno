@@ -25,3 +25,5 @@ yarn-error.log*
 workspace.xml
 
 yarn.lock
+
+src/config.json

@@ -1,6 +1,7 @@
 import firebase from 'firebase/app';
 import 'firebase/database';
 import { Subject } from 'rxjs';
+import ConfigData from '../config.json';
 
 import { Item } from '../datatypes/Item';
 import LocationService from './LocationService';
@@ -10,7 +11,7 @@ function saveLocally(shoppingList : Item[]) {
     localStorage.setItem('list', JSON.stringify(shoppingList));
 }
 firebase.initializeApp({
-    databaseURL: 'https://liste-de-course-6799d.firebaseio.com/',
+    databaseURL: ConfigData.FIREBASE_URL,
 });
 
 export default class ShoppingService {
