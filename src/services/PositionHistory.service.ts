@@ -1,6 +1,5 @@
 import firebase from 'firebase/app';
 import ShoppingService from './ShoppingList.service';
-import { PositionRecord } from '../datatypes/PositionRecord';
 import { Item } from '../datatypes/Item';
 
 class PositionHistoryService {

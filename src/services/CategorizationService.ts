@@ -64,8 +64,10 @@ export default class CategorizationService {
         concernedListID : string,
     ) {
         const listSpecificCategoryAssignmentsRef = CategorizationService.listsRef.child(`${concernedListID}/categoriesAssignments`);
-
-        const categoryToIncrementPath = `${QuantityComputingService.itemNameWithoutQuantity(forItem).toLocaleLowerCase()}/${newCategory.name}/assignments`;
+        let itemName = QuantityComputingService.itemNameWithoutQuantity(forItem)
+            .toLocaleLowerCase();
+        itemName = CategorizationService.toSingular(itemName);
+        const categoryToIncrementPath = `${itemName}/${newCategory.name}/assignments`;
 
         this.categoriesAssignmentsRef
             .child(categoryToIncrementPath)
@@ -75,26 +77,59 @@ export default class CategorizationService {
             .set(firebase.database.ServerValue.increment(1));
     }
 
-    static getPreferredCategory(forItem : Item, concernedListID : string) : Promise<Category> {
+    static async getPreferredCategory(forItem : Item, concernedListID : string)
+    : Promise<Category> {
         const listSpecificCategoryAssignmentsRef = CategorizationService.listsRef.child(`${concernedListID}/categoriesAssignments`);
-        const itemNameNoQuantity = QuantityComputingService.itemNameWithoutQuantity(forItem)
+        let itemNameNoQuantity = QuantityComputingService.itemNameWithoutQuantity(forItem)
             .toLocaleLowerCase();
+        itemNameNoQuantity = CategorizationService.toSingular(itemNameNoQuantity);
+        const combinationsToTry : {node : firebase.database.Reference, word : string}[] = [
+            {
+                node: listSpecificCategoryAssignmentsRef,
+                word: itemNameNoQuantity,
+            },
+            {
+                node: CategorizationService.categoriesAssignmentsRef,
+                word: itemNameNoQuantity,
+            },
+        ];
+        const wordsInItem = itemNameNoQuantity.split(' ');
+        if (wordsInItem.length > 1) {
+            wordsInItem.forEach((word) => {
+                const singular = CategorizationService.toSingular(word);
+                combinationsToTry.push({
+                    node: listSpecificCategoryAssignmentsRef,
+                    word: singular,
+                });
+                combinationsToTry.push({
+                    node: CategorizationService.categoriesAssignmentsRef,
+                    word: singular,
+                });
+            });
+        }
+        // eslint-disable-next-line no-restricted-syntax
+        for (const combination of combinationsToTry) {
+            // Can disable the rule because calls are not independant
+            // eslint-disable-next-line no-await-in-loop
+            const category = await CategorizationService
+                .getPreferredCategorry(combination.word, combination.node);
+            if (category) {
+                return category;
+            }
+        }
+        return null;
+    }
 
+    private static getPreferredCategorry(
+        pattern : string,
+        categoryNode:firebase.database.Reference,
+    ) : Promise<Category> {
         return new Promise((resolve) => {
-            listSpecificCategoryAssignmentsRef.child(itemNameNoQuantity).once('value',
+            categoryNode.child(pattern).once('value',
                 (listCategoryRanking) => {
                     const preferredCategoryOnList = CategorizationService
                         .getMostUsedCategory(listCategoryRanking.val() as CategoryRankingForItem);
-                    if (preferredCategoryOnList) {
-                        resolve(preferredCategoryOnList);
-                    } else {
-                        CategorizationService.categoriesAssignmentsRef.child(itemNameNoQuantity).once('value',
-                            (appCategoryRanking) => resolve(
-                                this.getMostUsedCategory(
-                                    appCategoryRanking.val() as CategoryRankingForItem,
-                                ),
-                            ));
-                    }
+                    resolve(preferredCategoryOnList);
                 });
         });
     }
@@ -113,5 +148,12 @@ export default class CategorizationService {
         return CategorizationService.getAppCategories().find(
             (c) => c.name === categoryRanking[0].category,
         );
+    }
+
+    private static toSingular(word:string):string {
+        if (word.endsWith('s')) {
+            return word.substr(0, word.length - 1);
+        }
+        return word;
     }
 }
