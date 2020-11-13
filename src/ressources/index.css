@@ -148,6 +148,8 @@ ol.category-choice-menu{
     align-items: center;
     font-size: .7rem;
     margin-bottom: 2px;
+    padding-top: 10px;
+    padding-bottom: 10px;
 }
 
 .category-listing{
@@ -316,3 +318,13 @@ input[type="checkbox"]:checked ~label::before {
 
 }
 
+
+
+
+body{
+    -webkit-tap-highlight-color:transparent;
+    -moz-tap-highlight-color:transparent;
+    -o-tap-highlight-color:transparent;
+    }
+        
+    
