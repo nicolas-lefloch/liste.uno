@@ -27,3 +27,4 @@ workspace.xml
 yarn.lock
 
 src/config.json
+.firebase
