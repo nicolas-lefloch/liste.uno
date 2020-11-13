@@ -9,7 +9,6 @@ import QuantityComputingService from './QuantityComputing.service';
 function saveLocally(shoppingList : Item[]) {
     localStorage.setItem('list', JSON.stringify(shoppingList));
 }
-
 firebase.initializeApp({
     databaseURL: 'https://liste-de-course-6799d.firebaseio.com/',
 });
@@ -74,11 +73,11 @@ export default class ShoppingService {
             ShoppingService.listRef.child('current').child(itemToRemove.key).remove();
             localList = localList.filter((i) => i.key !== itemToRemove.key);
         }
-
-        localList.push(itemToAdd);
-        saveLocally(localList);
         const { key } = ShoppingService.listRef.child('current').push(itemToAdd);
-        return { ...itemToAdd, key };
+        const newItemWithKey : Item = { ...itemToAdd, key };
+        localList.push(newItemWithKey);
+        saveLocally(localList);
+        return newItemWithKey;
     }
 
     static removeItem(itemKey : string) {
