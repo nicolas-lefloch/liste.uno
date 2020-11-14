@@ -15,7 +15,7 @@ import ShoppingListService from './services/ShoppingList.service';
 import { ReactComponent as MainLogo } from './ressources/svg/logo-large.svg';
 import SwitchListMode from './components/SwitchListMode';
 import ShareList from './components/ShareList';
-import PromptInstall from './PromptInstall';
+import PromptInstall from './components/PromptInstall';
 import LocationHistory from './components/LocationHistory';
 
 const WatchForlistID: React.FC<{children}> = ({ children }) => {
