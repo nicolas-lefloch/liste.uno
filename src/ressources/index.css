@@ -21,7 +21,9 @@ header > h1{
 form#item-input{
     position: relative;
 }
-
+input[type=text] {
+    height: 45px;
+}
 form#item-input > textarea{
     width: calc(100% - 2rem);
     border-radius: 5rem;

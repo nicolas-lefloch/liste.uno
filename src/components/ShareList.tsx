@@ -9,7 +9,7 @@ const ShareList : React.FC = () => {
     const copyURL = () => {
         navigator.clipboard.writeText(`https://liste.uno/${listID}`).then(() => {
             // eslint-disable-next-line no-alert
-            alert('je fais le toast');
+            alert('Lien copié dans le presse-papier.');
         });
     };
     return (

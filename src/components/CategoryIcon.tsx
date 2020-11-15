@@ -23,6 +23,7 @@ const CategoryIcon : React.FC<Props> = (props : Props) => {
         <button
             type="button"
             className="category-icon"
+            title={props.category != null ? props.category.name : ''}
             onClick={props.onClick}
         >
             {getCategoryImage()}

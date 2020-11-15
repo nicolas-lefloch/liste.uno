@@ -43,6 +43,11 @@ const BuildShoppingList = () => {
         ShoppingListService.removeItem(key);
     };
 
+    const deleteAllItems = () => {
+        list.map(
+            (item) => deleteItem(item.key),
+        );
+    };
     const itemList = list.map(
         (item) => (
             <ItemRow
@@ -68,6 +73,7 @@ const BuildShoppingList = () => {
                     {itemList}
                 </ol>
             </div>
+            <button type="button" onClick={deleteAllItems}>Vider la liste</button>
         </>
     );
 };
