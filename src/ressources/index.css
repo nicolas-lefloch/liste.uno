@@ -428,3 +428,9 @@ button.remove-all {
     letter-spacing: 1px;
     
 }
+.empty-list {
+    margin-left: 3rem;
+    font-family: 'Roboto', serif;
+    color: #707070;
+    font-style: italic;
+}

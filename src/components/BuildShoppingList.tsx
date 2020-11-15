@@ -73,6 +73,9 @@ const BuildShoppingList = () => {
                 <div className="vertical-bar" />
                 <ol>
                     {itemList}
+                    {!itemList.length
+                        ? (<span className="empty-list"> Liste vide. Que voulez-vous acheter ?</span>)
+                        : ''}
                 </ol>
             </div>
             <button className="remove-all" type="button" onClick={deleteAllItems}>
