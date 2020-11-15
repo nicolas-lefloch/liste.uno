@@ -7,6 +7,8 @@ import { Item } from '../datatypes/Item';
 import ShoppingListService from '../services/ShoppingList.service';
 import CategorizationService from '../services/CategorizationService';
 import CategoryIcon from './CategoryIcon';
+import { Category } from '../datatypes/Category';
+import { useSnackbar } from '../utilities/SnackBar';
 
 interface Props {
     item : Item;
@@ -34,23 +36,37 @@ const ItemRow = (props: Props) => {
         });
     };
 
+    const triggerSnackBar = useSnackbar();
+
+    const onCategoryAssigned = (category : Category) => {
+        ShoppingListService.updateItem({
+            ...props.item,
+            lastUpdate: new Date().getTime(),
+            category,
+        });
+        CategorizationService.registerCategoryWasAssigned(
+            category,
+            props.item,
+            ShoppingListService.getDefaultListID(),
+        );
+        triggerSnackBar(
+            <>
+                <CategoryIcon
+                    size={50}
+                    category={category}
+                />
+                {category.name}
+            </>,
+            1000,
+        );
+    };
+
     /** The list of available categories to assign, shown under the item */
     const categoriesList = CategorizationService.getAppCategories().map((category) => (
         <li key={category.name}>
             <CategoryIcon
                 size={40}
-                onClick={() => {
-                    ShoppingListService.updateItem({
-                        ...props.item,
-                        lastUpdate: new Date().getTime(),
-                        category,
-                    });
-                    CategorizationService.registerCategoryWasAssigned(
-                        category,
-                        props.item,
-                        ShoppingListService.getDefaultListID(),
-                    );
-                }}
+                onClick={() => onCategoryAssigned(category)}
                 category={category}
             />
         </li>

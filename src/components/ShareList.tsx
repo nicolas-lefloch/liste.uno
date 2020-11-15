@@ -3,13 +3,14 @@ import { useParams } from 'react-router-dom';
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCopy } from '@fortawesome/free-solid-svg-icons';
+import { useSnackbar } from '../utilities/SnackBar';
 
 const ShareList : React.FC = () => {
     const { listID } = useParams<{listID:string}>();
+    const triggerSnackBar = useSnackbar();
     const copyURL = () => {
         navigator.clipboard.writeText(`https://liste.uno/${listID}`).then(() => {
-            // eslint-disable-next-line no-alert
-            alert('Lien copié dans le presse-papier.');
+            triggerSnackBar('Lien copié, partagez-le à vos partenaires de courses', 3000);
         });
     };
     return (
