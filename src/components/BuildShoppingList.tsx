@@ -72,16 +72,19 @@ const BuildShoppingList = () => {
             <div className="editable-shopping-list booknote-list">
                 <div className="vertical-bar" />
                 <ol>
-                    {itemList}
-                    {!itemList.length
-                        ? (<span className="empty-list"> Liste vide. Que voulez-vous acheter ?</span>)
-                        : ''}
+                    {itemList.length ? itemList
+                        : <span className="empty-list"> Liste vide. Que voulez-vous acheter ?</span>}
                 </ol>
             </div>
-            <button className="remove-all" type="button" onClick={deleteAllItems}>
-                Vider la liste
-                <div className="icon-circle"><FontAwesomeIcon icon={faTrash} color="white" /></div>
-            </button>
+            {
+                !!itemList.length
+            && (
+                <button className="remove-all" type="button" onClick={deleteAllItems}>
+                    Vider la liste
+                    <div className="icon-circle"><FontAwesomeIcon icon={faTrash} color="white" /></div>
+                </button>
+            )
+            }
         </>
     );
 };
