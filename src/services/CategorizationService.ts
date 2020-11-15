@@ -132,6 +132,7 @@ export default class CategorizationService {
         pattern : string,
         categoryNode:firebase.database.Reference,
     ) : Promise<Category> {
+        console.log(`asking for ${pattern} to ${categoryNode}`);
         return new Promise((resolve) => {
             categoryNode.child(pattern).once('value',
                 (listCategoryRanking) => {
@@ -164,6 +165,6 @@ export default class CategorizationService {
         if (noAccentLowerCase.endsWith('s')) {
             return noAccentLowerCase.substr(0, word.length - 1);
         }
-        return word;
+        return noAccentLowerCase;
     }
 }
