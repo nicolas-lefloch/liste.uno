@@ -409,3 +409,10 @@ button.remove-all {
     justify-content: center;
     margin: auto;
 }
+
+.empty-list {
+    margin-left: 3rem;
+    font-family: 'Roboto', serif;
+    color: #707070;
+    font-style: italic;
+}
