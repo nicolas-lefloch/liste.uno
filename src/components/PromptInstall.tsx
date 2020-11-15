@@ -1,7 +1,7 @@
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useState } from 'react';
-import SuggestInstallService from './services/SuggestInstall.service';
+import SuggestInstallService from '../services/SuggestInstall.service';
 
 const PromptInstall = () => {
     const [showPrompt, setShowPrompt] = useState(false);
@@ -9,11 +9,11 @@ const PromptInstall = () => {
     return showPrompt ? (
         <div className="install-prompt">
             <p>
-                Installez l&apos;application pour pouvoir faire vos courses sans connexion internet
+                Installez l&apos;application pour pouvoir faire vos courses sans connexion internet.
             </p>
-            <button className="plain-button" type="button" onClick={SuggestInstallService.onInstallAgreed}>Installler Liste.Uno</button>
+            <button className="plain-button" type="button" onClick={SuggestInstallService.onInstallAgreed}>Installer</button>
             <button
-                className="small-button"
+                className="small-button close"
                 type="button"
                 onClick={() => {
                     setShowPrompt(false);

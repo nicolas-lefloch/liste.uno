@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
 
 
 body{
@@ -73,7 +74,7 @@ ol{
 }
 .booknote-list  .item-label, .editable-shopping-list form input, .category-label{
     flex-grow: 1;
-    font-family: Roboto;
+    font-family: 'Roboto', serif;
     letter-spacing: 1px;
     padding-left: 4px;
     font-size: 1.4em;
@@ -163,6 +164,9 @@ ol.category-choice-menu{
     justify-content: space-around;
 }
 
+.slider:hover {
+    border-color: #E8907A;
+}
 .switch-mode {
     position: relative;
     width: 10rem;
@@ -171,7 +175,9 @@ ol.category-choice-menu{
     align-items: center;
     justify-content: space-between;
     color: #E8907A;
-    font-family: Roboto;
+    font-family: 'Roboto', serif;
+    transition: color 300ms linear, color 1s linear;
+
 }
 
 a:hover, a:visited, a:link, a:active
@@ -226,7 +232,7 @@ a:hover, a:visited, a:link, a:active
     grid-template-areas:
             "header icon"
             "line line";
-    font-family: Roboto Mono;
+    font-family: 'Roboto Mono', serif;
     font-weight: bold;
     color: #707070;
     flex-wrap: wrap;
@@ -238,14 +244,14 @@ a:hover, a:visited, a:link, a:active
 }
 .share:after {
     content: '';
-    width: 60%;
+    width: 55%;
     height: 4px;
     background-color: #E8907A;
     position: relative;
     top: 5px;
     flex-grow: 4;
     grid-area: line;
-    transform: translateX(2rem);
+    transform: translateX(1.2rem);
 }
 
 .share > * {
@@ -318,24 +324,22 @@ input[type="checkbox"]:checked ~label::before {
 
 }
 
-
-
-
 body{
     -webkit-tap-highlight-color:transparent;
     -moz-tap-highlight-color:transparent;
     -o-tap-highlight-color:transparent;
 }
-        
-    
 
 .install-prompt{
     display: flex;
     justify-content: revert;
     margin: 20px;
-    padding: 5px;
-    border: 2px solid black;
-    border-radius: 3px;
+    padding: 5px 5px 5px 1.5rem;
+    border: 2px solid #E8907A;
+    border-radius: 10px;
+    font-family: 'Roboto', serif;
+    color: #707070;
+    font-size: 1.2rem;
 }
 
 .plain-button{
@@ -343,11 +347,28 @@ body{
     color: white;
     background-color: #E8907A;
     border: none;
-    font-size: 1.5rem;
+    font-size: 1rem;
     outline: none;
+    font-family: 'Roboto Mono', serif;
+    align-self: center;
+    padding: 1em;
+    font-weight: bold;
 }
+button.close {
+    align-self: flex-start;
+}
+button.small-button:hover  {
+    color: #E8907A;
 
-
+}
+.plain-button:hover {
+    background-color: white;
+    border: 2px solid #E8907A;
+    color: #E8907A;
+}
+button {
+    cursor: pointer;
+}
 .map_history{
     width: 800px;
 }
