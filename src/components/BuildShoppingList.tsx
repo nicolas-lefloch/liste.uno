@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from 'react';
+import { faTrash } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import ShoppingListService from '../services/ShoppingList.service';
 import { Item } from '../datatypes/Item';
 import ItemInput from './ItemInput';
@@ -73,7 +75,10 @@ const BuildShoppingList = () => {
                     {itemList}
                 </ol>
             </div>
-            <button type="button" onClick={deleteAllItems}>Vider la liste</button>
+            <button className="remove-all" type="button" onClick={deleteAllItems}>
+                Vider la liste
+                <div className="icon-circle"><FontAwesomeIcon icon={faTrash} color="white" /></div>
+            </button>
         </>
     );
 };

@@ -378,3 +378,34 @@ button {
 #mapid{
     height: 600px;
 }
+
+.icon-circle {
+    background-color: #E8907A;
+    border-radius: 2rem;
+    width: 2em;
+    height: 2em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 1rem;
+}
+
+button.remove-all:hover {
+    border-color: #E8907A;
+    color: #707070;
+}
+button.remove-all {
+    border-radius: 50px;
+    color: #E8907A;
+    background-color: white;
+    border: 2px solid #707070;
+    font-size: 1rem;
+    outline: none;
+    font-family: 'Roboto Mono', serif;
+    padding: 0.25em 0.75em;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: auto;
+}
