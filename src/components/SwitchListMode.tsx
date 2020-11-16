@@ -11,13 +11,13 @@ const SwitchListMode = () => {
     return (
         <Link to={`/${listID}/${!isShopping ? 'shopping' : ''}`}>
             <div className={!isShopping ? 'switch-mode active' : 'switch-mode'}>
-                <span className="slider round" />
-                <button type="button" className="small-button">
-                    <FontAwesomeIcon icon={faShoppingCart} color={isShopping ? 'white' : '#707070'} />
+                <span className="slider" />
+                <button type="button" className={`small-button ${isShopping ? 'active-mode' : ''}`}>
+                    <FontAwesomeIcon icon={faEdit} />
                 </button>
-                {isShopping ? 'Course' : 'Edition'}
-                <button type="button" className="small-button">
-                    <FontAwesomeIcon icon={faEdit} color={isShopping ? '#707070' : 'white'} />
+                {isShopping ? 'Edition' : 'Course'}
+                <button type="button" className={`small-button ${isShopping ? '' : 'active-mode'}`}>
+                    <FontAwesomeIcon icon={faShoppingCart} />
                 </button>
             </div>
         </Link>

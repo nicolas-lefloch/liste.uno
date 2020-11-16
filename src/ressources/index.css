@@ -178,18 +178,11 @@ ol.category-choice-menu{
     justify-content: space-between;
     color: #E8907A;
     font-family: 'Roboto', serif;
-    transition: color 300ms linear, color 1s linear;
-
 }
 
 a:hover, a:visited, a:link, a:active
 {
     text-decoration: none;
-}
-.switch-mode > button {
-    margin: 0.25rem;
-    -webkit-transition: .4s;
-    transition: .4s;
 }
 
 /* The slider */
@@ -201,8 +194,6 @@ a:hover, a:visited, a:link, a:active
     right: 0;
     bottom: 0;
     border: 2px solid #707070;
-    -webkit-transition: .4s;
-    transition: .4s;
     border-radius: 34px;
 }
 
@@ -215,16 +206,20 @@ a:hover, a:visited, a:link, a:active
     left: 3px;
     bottom: 5px;
     background-color: #E8907A;
-    -webkit-transition: .4s;
-    transition: .4s;
+    transition: .1s;
     z-index: -1;
     border-radius: 50%;
 }
 
 .switch-mode.active > .slider:before {
-    -webkit-transform: translateX(7.1rem);
-    -ms-transform: translateX(7.1rem);
     transform: translateX(7.1rem);
+}
+.switch-mode button{
+    margin : 0px 6px;
+    font-size: 1.2rem;
+}
+.switch-mode button.active-mode{
+    color: white
 }
 
 .share {
