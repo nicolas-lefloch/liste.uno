@@ -13,24 +13,31 @@ const SnackbarContext = React.createContext({
 
 const SnackBar = () => {
     const { snack, duration, triggerSnack } = useContext(SnackbarContext);
+    const [showing, setShowing] = useState(false);
     useEffect(() => {
-        let isLastSnack = true;
-        if (snack && duration) {
-            setTimeout(() => {
-                if (isLastSnack) {
-                    triggerSnack(null, 0);
-                }
-            }, duration);
+        if (!snack) {
+            return () => {};
         }
+        let isLastSnack = true;
+        setShowing(true);
+        setTimeout(() => {
+            if (isLastSnack) {
+                setShowing(false);
+                setTimeout(() => {
+                    if (isLastSnack) {
+                        triggerSnack(null, 0);
+                    }
+                }, 1000);
+            }
+        }, duration);
         return () => { isLastSnack = false; };
-    }, [snack, duration]);
-    return snack
-        ? (
-            <div className="snackbar">
-                {snack}
-            </div>
-        )
-        : null;
+    },
+    [snack, duration]);
+    return (
+        <div className={`snackbar ${showing ? 'visible' : ''}`}>
+            {snack}
+        </div>
+    );
 };
 
 interface Props{

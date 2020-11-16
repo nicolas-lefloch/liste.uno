@@ -5,12 +5,18 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCopy } from '@fortawesome/free-solid-svg-icons';
 import { useSnackbar } from '../utilities/SnackBar';
 
-const ShareList : React.FC = () => {
-    const { listID } = useParams<{listID:string}>();
+const ShareList: React.FC = () => {
+    const { listID } = useParams<{ listID: string }>();
     const triggerSnackBar = useSnackbar();
     const copyURL = () => {
         navigator.clipboard.writeText(`https://liste.uno/${listID}`).then(() => {
-            triggerSnackBar('Lien copié, partagez-le à vos partenaires de courses', 3000);
+            triggerSnackBar((
+                <p>
+                    Lien de votre liste copié
+                    <br />
+                    Partagez-le pour faire vos courses à plusieurs.
+                </p>
+            ), 3000);
         });
     };
     return (

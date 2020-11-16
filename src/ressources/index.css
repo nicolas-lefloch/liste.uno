@@ -413,12 +413,12 @@ button.remove-all {
 
 .snackbar{
     position: fixed;
-    bottom: 10px;
     left: 50%;
     transform: translate(-50%, 0);
     background-color: rgba(0, 0, 0, .8);
-    padding: 4px;
+    padding: 4px 20px;
     min-width: 20%;
+    min-height: 3rem;
     border-radius: 4px;
     display: flex;
     align-items: center;
@@ -426,7 +426,14 @@ button.remove-all {
     justify-content: center;
     font-family: 'Roboto';
     letter-spacing: 1px;
-    
+    bottom: -20px;
+    opacity: 0;
+    transition: opacity ease-out .3s, bottom  10s;
+}
+.snackbar.visible{
+    bottom: 10px;
+    transition: bottom ease-out .1s;
+    opacity: 1;
 }
 .empty-list {
     margin-left: 3rem;
