@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect } from 'react';
 import L from 'leaflet';
 import PositionHistoryService from '../services/PositionHistory.service';
 import CategorizationService from '../services/CategorizationService';
@@ -17,7 +17,9 @@ const LocationHistory: React.FC = () => {
             items.forEach((item) => {
                 L.marker([item.boughtLocation.lat, item.boughtLocation.lon], {
                     icon: L.icon({
-                        iconUrl: CategorizationService.getCategoryImage(item.category).iconURL,
+                        iconUrl: item.category
+                            ? CategorizationService.getCategoryImage(item.category).iconURL
+                            : `${process.env.PUBLIC_URL}/category-icons/unknown-icon.svg`,
                         iconSize: [38, 95],
                     }),
                 })

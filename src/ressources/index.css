@@ -367,7 +367,7 @@ button {
     cursor: pointer;
 }
 .map_history{
-    width: 800px;
+    width: 100%;
 }
 
 #mapid{
