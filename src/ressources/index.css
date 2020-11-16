@@ -206,7 +206,7 @@ a:hover, a:visited, a:link, a:active
     left: 3px;
     bottom: 5px;
     background-color: #E8907A;
-    transition: .1s;
+    transition: cubic-bezier(0.18, 0.89, 0.32, 1.28) .1s ;
     z-index: -1;
     border-radius: 50%;
 }
