@@ -15,7 +15,7 @@ const SwitchListMode = () => {
                 <button type="button" className={`small-button ${isShopping ? '' : 'active-mode'}`}>
                     <FontAwesomeIcon icon={faEdit} />
                 </button>
-                {isShopping ? 'Edition' : 'Course'}
+                {isShopping ? 'Course' : 'Edition'}
                 <button type="button" className={`small-button ${isShopping ? 'active-mode' : ''}`}>
                     <FontAwesomeIcon icon={faShoppingCart} />
                 </button>
