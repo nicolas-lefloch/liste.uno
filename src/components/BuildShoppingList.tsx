@@ -11,6 +11,7 @@ import SuggestInstallService from '../services/SuggestInstall.service';
 const BuildShoppingList = () => {
     const [list, setList] = useState<Item[]>(ShoppingListService.getLocalList());
     const [editedItemKey, setEditedItemKey] = useState<string>();
+    const [askingEmptyListConfirm, setAskingEmptyListConfirm] = useState(false);
     useEffect(() => {
         ShoppingListService.getListChangeListener().subscribe(
             (l) => {
@@ -49,6 +50,7 @@ const BuildShoppingList = () => {
         list.map(
             (item) => deleteItem(item.key),
         );
+        setAskingEmptyListConfirm(false);
     };
     const itemList = list.map(
         (item) => (
@@ -79,8 +81,16 @@ const BuildShoppingList = () => {
             {
                 !!itemList.length
             && (
-                <button className="remove-all" type="button" onClick={deleteAllItems}>
-                    Vider la liste
+                <button
+                    className={`remove-all ${askingEmptyListConfirm ? 'really' : ''}`}
+                    type="button"
+                    onClick={() => (askingEmptyListConfirm
+                        ? deleteAllItems() : setAskingEmptyListConfirm(true))}
+                    onBlur={() => setAskingEmptyListConfirm(false)}
+                >
+                    {askingEmptyListConfirm
+                        ? 'Vraiment ?'
+                        : 'Vider la liste'}
                     <div className="icon-circle"><FontAwesomeIcon icon={faTrash} color="white" /></div>
                 </button>
             )

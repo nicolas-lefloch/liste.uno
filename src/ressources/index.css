@@ -404,6 +404,11 @@ button.remove-all {
     justify-content: center;
     margin: auto;
 }
+button.remove-all.really{
+    color : white;
+    background-color: #E8907A;
+    border-color: #E8907A;
+}
 
 
 .snackbar{
