@@ -1,6 +1,9 @@
 /* eslint-disable no-undef */
 import React, { useContext, useEffect, useState } from 'react';
 
+/**
+ * Create snackback React context
+ */
 const SnackbarContext = React.createContext({
     snack: null,
     duration: 1000,
@@ -10,7 +13,10 @@ const SnackbarContext = React.createContext({
     duration : number,
     triggerSnack : (str: JSX.Element | string | null, duration: number)=>void
 });
-
+/**
+ * Snackbar React component
+ * @constructor
+ */
 const SnackBar = () => {
     const { snack, duration, triggerSnack } = useContext(SnackbarContext);
     const [showing, setShowing] = useState(false);
@@ -18,6 +24,7 @@ const SnackBar = () => {
         if (!snack) {
             return () => {};
         }
+        // make sure that several successive snackbars do not stop interrupt last one
         let isLastSnack = true;
         setShowing(true);
         setTimeout(() => {
@@ -44,11 +51,18 @@ interface Props{
     children : any
 }
 export const SnackBarProvider: React.FC<Props> = (props:Props) => {
-    const [snack, setSnack] = useState(null as JSX.Element | null | string);
+    const [snack, setSnack] = useState(null);
     const [duration, setDuration] = useState(1000);
+    // init snackbar context
     const value = {
         snack,
         duration,
+        // init hooks return to trigger snackbar display
+        /**
+         * trigger snackbar
+         * @param el element to display in snackbar
+         * @param d duration
+         */
         triggerSnack: (el: JSX.Element | string | null, d: number) => {
             setSnack(el);
             setDuration(d);

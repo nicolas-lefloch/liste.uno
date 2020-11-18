@@ -1,6 +1,12 @@
 import { Item } from '../datatypes/Item';
 
 export default class QuantityComputingService {
+    /**
+     * Check if item already have been registered in the existing list
+     * Compute the resulting quantities
+     * @param existingItems existing items
+     * @param newItem new item
+     */
     public static handleQuantities(existingItems: Item[], newItem: Item): {
         itemToRemove? : Item,
         itemToAdd : Item
@@ -49,6 +55,11 @@ export default class QuantityComputingService {
         };
     }
 
+    /**
+     * Cut of the quantity in item name
+     * @param item
+     * @return item name without quantity
+     */
     public static itemNameWithoutQuantity(item: Item):string {
         const quantity = this.getQuantity(item);
         if (!quantity) {
@@ -64,6 +75,11 @@ export default class QuantityComputingService {
         return itemNameWithoutQuantity;
     }
 
+    /**
+     * Get quantity in item name
+     * @param item
+     * @return item quantity
+     */
     private static getQuantity(item: Item) {
         const quantity = item.name.match(/^[0-9|,]+/);
         if (!quantity) {

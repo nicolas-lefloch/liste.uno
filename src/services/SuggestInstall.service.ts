@@ -37,6 +37,9 @@ export default class SuggestInstallService {
 
     static onceAppShouldBeSuggested : () => void
 
+    /**
+     * Register user interaction to suggest them to install PWA
+     */
     static registerInteractionWasMade() {
         SuggestInstallService.interactions += 1;
         if (this.interactions > 2 && !localStorage.getItem('installation_refused')) {
