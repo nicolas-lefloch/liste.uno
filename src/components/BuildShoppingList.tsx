@@ -5,6 +5,7 @@ import ShoppingListService from '../services/ShoppingList.service';
 import { Item } from '../datatypes/Item';
 import ItemInput from './ItemInput';
 import ItemRow from './ItemRow';
+import FrequentArticles from './FrequentArticles';
 import CategorizationService from '../services/CategorizationService';
 import SuggestInstallService from '../services/SuggestInstall.service';
 
@@ -16,7 +17,8 @@ import SuggestInstallService from '../services/SuggestInstall.service';
 const BuildShoppingList = () => {
     const [list, setList] = useState<Item[]>(ShoppingListService.getLocalList());
     const [editedItemKey, setEditedItemKey] = useState<string>();
-    const [askingEmptyListConfirm, setAskingEmptyListConfirm] = useState(false);
+    const [showingReally, setShowingReally] = useState(false);
+    const [showFrequentArticles, setShowFrequentArticles] = useState(false);
     useEffect(() => {
         ShoppingListService.getListChangeListener().subscribe(
             (l) => {
@@ -32,7 +34,6 @@ const BuildShoppingList = () => {
     const addItemsToList = (newItems : Item[]) => {
         newItems.forEach(
             (item) => {
-                // serialization
                 const itemWithKey = ShoppingListService.addItem(item);
                 if (!itemWithKey.category) {
                 // get preferred category when item has no category
@@ -61,7 +62,7 @@ const BuildShoppingList = () => {
         list.forEach(
             (item) => deleteItem(item.key),
         );
-        setAskingEmptyListConfirm(false);
+        setShowingReally(false);
     };
     const itemList = list.map(
         (item) => (
@@ -77,6 +78,10 @@ const BuildShoppingList = () => {
         ),
     );
 
+    const toggleFrequentArticles = () => {
+        setShowFrequentArticles(!showFrequentArticles);
+    };
+
     itemList.reverse();
 
     return (
@@ -89,22 +94,37 @@ const BuildShoppingList = () => {
                         : <span className="empty-list"> Liste vide. Que voulez-vous acheter ?</span>}
                 </ol>
             </div>
-            {
-                !!itemList.length
+            <div className="list-actions">
+                {
+                    !!itemList.length
             && (
                 <button
-                    className={`remove-all ${askingEmptyListConfirm ? 'really' : ''}`}
+                    className={`list-action-button ${showingReally ? 'really' : ''}`}
                     type="button"
-                    onClick={() => (askingEmptyListConfirm
-                        ? deleteAllItems() : setAskingEmptyListConfirm(true))}
-                    onBlur={() => setAskingEmptyListConfirm(false)}
+                    onClick={() => (showingReally
+                        ? deleteAllItems() : setShowingReally(true))}
+                    onBlur={() => setShowingReally(false)}
                 >
-                    {askingEmptyListConfirm
+                    {showingReally
                         ? 'Vraiment ?'
                         : 'Vider la liste'}
                     <div className="icon-circle"><FontAwesomeIcon icon={faTrash} color="white" /></div>
                 </button>
             )
+                }
+                <button className="list-action-button" type="button" onClick={toggleFrequentArticles}>
+                    Articles Fréquents
+                </button>
+
+            </div>
+            {
+                showFrequentArticles
+                && (
+                    <FrequentArticles
+                        onItemOuput={(item) => addItemsToList([item])}
+                        itemsAlreadyInList={list}
+                    />
+                )
             }
         </>
     );

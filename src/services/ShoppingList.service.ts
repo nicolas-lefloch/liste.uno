@@ -1,5 +1,6 @@
 import firebase from 'firebase/app';
 import 'firebase/database';
+import { stringify } from 'querystring';
 import { Subject } from 'rxjs';
 import ConfigData from '../config.json';
 
@@ -46,6 +47,14 @@ export default class ShoppingService {
                 if (snapshot.val()) {
                     LocationService.startGeoTracking();
                 }
+            });
+        ShoppingService.listRef.child('archived').once('value',
+            (snapshot) => {
+                const archivedItems = snapshot.val();
+                const itemList = archivedItems ? Object.entries(archivedItems).map(
+                    ([key, item]) => ({ ...(item as Item), key }),
+                ) : [];
+                localStorage.setItem('archivedItems', JSON.stringify(itemList));
             });
         localStorage.setItem('defaultListID', listId);
     }
@@ -98,7 +107,10 @@ export default class ShoppingService {
         const itemRef = ShoppingService.listRef.child(`current/${itemKey}`);
         itemRef.once('value',
             (snapshot) => {
-                ShoppingService.listRef.child('archived').push(snapshot.val());
+                const val :Item = snapshot.val();
+                if (val.bought) {
+                    ShoppingService.listRef.child('archived').push(val);
+                }
                 itemRef.remove();
             });
     }
@@ -116,5 +128,37 @@ export default class ShoppingService {
 
     static getLocalList() : Item[] {
         return localStorage.getItem('list') ? JSON.parse(localStorage.getItem('list')) : [];
+    }
+
+    static getFrequentArticles(maxArticles : number, excludeItems : Item[]) : Item[] {
+        const archivedItemsStr = localStorage.getItem('archivedItems');
+        if (!archivedItemsStr) {
+            return [];
+        }
+        const archivedItems:Item[] = JSON.parse(archivedItemsStr);
+        const itemsNoQuantity : Item[] = archivedItems
+            .map((item) => ({
+                category: item.category ? item.category : null,
+                name: QuantityComputingService.itemNameWithoutQuantity(item),
+                bought: false,
+                lastUpdate: new Date().getTime(),
+            }));
+        const itemOccurences : {[id : string] : {item : Item, count : number}} = itemsNoQuantity.reduce(
+            (acc, curr) => {
+                if (acc[curr.name]) {
+                    acc[curr.name].count += 1;
+                } else {
+                    acc[curr.name] = { item: curr, count: 1 };
+                }
+                return acc;
+            },
+            {},
+        );
+        const sorted = Object.entries(itemOccurences).sort((a, b) => b[1].count - a[1].count)
+            .map((a) => a[1].item);
+        const withoutExcluded = sorted.filter((item) => excludeItems.find(
+            (i) => QuantityComputingService.itemNameWithoutQuantity(i) === item.name,
+        ) === undefined);
+        return withoutExcluded.slice(0, maxArticles);
     }
 }

@@ -385,11 +385,16 @@ button {
     margin-left: 1rem;
 }
 
-button.remove-all:hover {
+
+.list-actions{
+    display: flex;
+    justify-content: space-evenly;
+}
+button.list-action-button:hover {
     border-color: #E8907A;
     color: #707070;
 }
-button.remove-all {
+button.list-action-button {
     border-radius: 50px;
     color: #E8907A;
     background-color: white;
@@ -402,9 +407,8 @@ button.remove-all {
     display: flex;
     align-items: center;
     justify-content: center;
-    margin: auto;
 }
-button.remove-all.really{
+button.list-action-button.really{
     color : white;
     background-color: #E8907A;
     border-color: #E8907A;
@@ -440,4 +444,21 @@ button.remove-all.really{
     font-family: 'Roboto', serif;
     color: #707070;
     font-style: italic;
+}
+
+li.frequent-article{
+    display: flex;
+    font-family: 'Roboto';
+}
+li.frequent-article > p{
+    flex-grow: 1;
+}
+
+li.frequent-article > button.add-item-button{
+    background-color: #E8907A;
+    color : white;
+    border-radius: 40px;
+    width: 40px;
+    height: 40px;
+    border: none;
 }
