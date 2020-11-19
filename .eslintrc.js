@@ -41,6 +41,9 @@ module.exports = {
         'eslint-disable-next-line prefer-destructuring': 'off',
         'no-unused-vars': 'off',
         '@typescript-eslint/no-unused-vars': 'warn',
+        'max-len': [1, 150, 4, {
+            comments: 160,
+        }],
 
         // indent: ['error', 4],
         // 'react/jsx-indent': ['error', 4],
