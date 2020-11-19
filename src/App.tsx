@@ -37,9 +37,6 @@ function App() {
                     </h1>
                 </header>
                 <Switch>
-                    <Route path="/about">
-                        <p>Coucou c chim et chim</p>
-                    </Route>
                     <Route path="/:listID/shopping">
                         <div className="switch-and-share">
                             <SwitchListMode />
@@ -55,7 +52,6 @@ function App() {
                             <LocationHistory />
                         </WatchForlistID>
                     </Route>
-
                     <Route path="/:listID" exact>
                         <div className="switch-and-share">
                             <SwitchListMode />

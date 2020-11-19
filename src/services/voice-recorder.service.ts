@@ -6,9 +6,13 @@ const recognition = SpeechRecognition ? new SpeechRecognition() : undefined;
 if (recognition) {
     recognition.lang = 'fr-FR';
 }
+
 export default class VoiceRecorderService {
     static voiceRecognitionIsSupported = !!recognition;
 
+    /**
+     * Trigger speech to text and returns a Promise that resolves to a list of item to create.
+     */
     static recordShoppingList(): Promise<Item[]> {
         return new Promise((resolve, reject) => {
             recognition.onresult = (event) => {
@@ -23,6 +27,10 @@ export default class VoiceRecorderService {
         });
     }
 
+    /**
+     * Transcript a string message into a list of items.
+     * @param transcript from Speech to text
+     */
     public static transcriptToItems(transcript: string) : Item[] {
         const res = transcript.split(/ (?=[0-9])| et | des | du | de la |(?= une? )|\n/i)
             .map((s) => s.trim())
@@ -40,6 +48,10 @@ export default class VoiceRecorderService {
         return res;
     }
 
+    /**
+     * Force voice recognition to stop.
+     * used when user click mic button again
+     */
     static stopVoiceRecognition() {
         recognition.onend = () => { };
         recognition.stop();

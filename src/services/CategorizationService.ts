@@ -64,10 +64,16 @@ export default class CategorizationService {
         return this.appCategoriesImage.map((c) => ({ name: c.category.name }));
     }
 
-    static categoriesAssignmentsRef = firebase.database().ref('/categoriesAssignments')
+    static categoriesAssignmentsRef = firebase.database().ref('/categoriesAssignments');
 
-    static listsRef = firebase.database().ref('/lists')
+    static listsRef = firebase.database().ref('/lists');
 
+    /**
+     * Trigger when user asig  a category in category list
+     * @param newCategory
+     * @param forItem
+     * @param concernedListID
+     */
     static registerCategoryWasAssigned(
         newCategory : Category,
         forItem : Item,

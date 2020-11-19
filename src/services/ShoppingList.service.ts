@@ -19,6 +19,10 @@ export default class ShoppingService {
 
     static listRef : firebase.database.Reference;
 
+    /**
+     * connect database to list by listId
+     * @param listId id of the list
+     */
     static setCurrentList(listId : string) {
         if (ShoppingService.listRef) {
             ShoppingService.listRef.off();
@@ -46,19 +50,25 @@ export default class ShoppingService {
         localStorage.setItem('defaultListID', listId);
     }
 
+    /**
+     * Get potential list ID store in local storage
+     */
     static getDefaultListID():string {
         const existingID = localStorage.getItem('defaultListID');
         return existingID || ShoppingService.generateRandomId();
     }
 
+    /**
+     * Generate a pronounceable 4 chars id
+     */
     private static generateRandomId() :string {
-        const consonnants = 'bcdfghjklmnpqrstvxz';
+        const consonants = 'bcdfghjklmnpqrstvxz';
         const vowels = 'aeiou';
         const randomChar = (characters:string) => characters.charAt(
             Math.floor(Math.random() * characters.length),
         );
         const res = [...Array(4).keys()].map(
-            (i) => (i % 2 === 0 ? randomChar(consonnants) : randomChar(vowels)),
+            (i) => (i % 2 === 0 ? randomChar(consonants) : randomChar(vowels)),
         ).join('');
         return res;
     }

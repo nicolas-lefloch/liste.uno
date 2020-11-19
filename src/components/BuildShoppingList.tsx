@@ -8,6 +8,11 @@ import ItemRow from './ItemRow';
 import CategorizationService from '../services/CategorizationService';
 import SuggestInstallService from '../services/SuggestInstall.service';
 
+/**
+ * Main view of app
+ * Edition of a shopping list
+ * @constructor
+ */
 const BuildShoppingList = () => {
     const [list, setList] = useState<Item[]>(ShoppingListService.getLocalList());
     const [editedItemKey, setEditedItemKey] = useState<string>();
@@ -20,16 +25,22 @@ const BuildShoppingList = () => {
         );
     }, []);
 
+    /**
+     * Add items to list when they are pushed by ItemInput component
+     * @param newItems item list
+     */
     const addItemsToList = (newItems : Item[]) => {
         newItems.forEach(
             (item) => {
-                console.log('outputted ', item);
+                // serialization
                 const itemWithKey = ShoppingListService.addItem(item);
                 if (!itemWithKey.category) {
+                // get preferred category when item has no category
                     CategorizationService
                         .getPreferredCategory(itemWithKey, ShoppingListService.getDefaultListID())
                         .then((category) => {
                             if (category) {
+                                // serialization
                                 ShoppingListService.updateItem({ ...itemWithKey, category });
                             }
                         });
@@ -47,7 +58,7 @@ const BuildShoppingList = () => {
     };
 
     const deleteAllItems = () => {
-        list.map(
+        list.forEach(
             (item) => deleteItem(item.key),
         );
         setAskingEmptyListConfirm(false);
