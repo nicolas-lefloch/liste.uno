@@ -47,7 +47,7 @@ const ItemRow = (props: Props) => {
         CategorizationService.registerCategoryWasAssigned(
             category,
             props.item,
-            ShoppingListService.getDefaultListID(),
+            ShoppingListService.getCurrentListID(),
         );
         triggerSnackBar(
             <>

@@ -4,12 +4,10 @@ import { Subject } from 'rxjs';
 import ConfigData from '../config.json';
 
 import { Item } from '../datatypes/Item';
+import { ShoppingList } from '../datatypes/ShoppingList';
 import LocationService from './LocationService';
 import QuantityComputingService from './QuantityComputing.service';
 
-function saveLocally(shoppingList : Item[]) {
-    localStorage.setItem('list', JSON.stringify(shoppingList));
-}
 firebase.initializeApp({
     databaseURL: ConfigData.FIREBASE_URL,
 });
@@ -18,6 +16,21 @@ export default class ShoppingService {
     static listChange$ : Subject<Item[]>;
 
     static listRef : firebase.database.Reference;
+
+    static saveLocally(shoppingList : Item[]) {
+        const currentListID = ShoppingService.getCurrentListID();
+        const listMap = ShoppingService.getListMap();
+        listMap[currentListID] = { id: currentListID, name: currentListID, list: shoppingList };
+        localStorage.setItem('listMap', JSON.stringify(listMap));
+    }
+
+    static getListMap() :{[listId : string] : ShoppingList} {
+        const existingListMap = localStorage.getItem('listMap');
+        if (existingListMap) {
+            return JSON.parse(existingListMap) as {[listId : string] : ShoppingList};
+        }
+        return {};
+    }
 
     /**
      * connect database to list by listId
@@ -29,16 +42,17 @@ export default class ShoppingService {
         }
         ShoppingService.listRef = firebase.database().ref(`/lists/${listId}/`);
         if (this.listChange$) {
-            this.listChange$.complete();
+        //    this.listChange$.complete();
+        } else {
+            ShoppingService.listChange$ = new Subject();
         }
-        ShoppingService.listChange$ = new Subject();
         ShoppingService.listRef.child('current').on('value',
             (snapshot) => {
                 const listValue = snapshot.val();
                 const itemList = listValue ? Object.entries(listValue).map(
                     ([key, item]) => ({ ...(item as Item), key }),
                 ) : [];
-                saveLocally(itemList);
+                ShoppingService.saveLocally(itemList);
                 ShoppingService.listChange$.next(itemList);
             });
         ShoppingService.listRef.child('location_enabled').once('value',
@@ -47,14 +61,17 @@ export default class ShoppingService {
                     LocationService.startGeoTracking();
                 }
             });
-        localStorage.setItem('defaultListID', listId);
+        localStorage.setItem('currentListID', listId);
+        console.log('do the next  ');
+        ShoppingService.listChange$.next(ShoppingService.getLocalList());
+        console.log(ShoppingService.getLocalList());
     }
 
     /**
      * Get potential list ID store in local storage
      */
-    static getDefaultListID():string {
-        const existingID = localStorage.getItem('defaultListID');
+    static getCurrentListID():string {
+        const existingID = localStorage.getItem('currentListID');
         return existingID || ShoppingService.generateRandomId();
     }
 
@@ -89,12 +106,12 @@ export default class ShoppingService {
         const { key } = ShoppingService.listRef.child('current').push(itemToAdd);
         const newItemWithKey : Item = { ...itemToAdd, key };
         localList.push(newItemWithKey);
-        saveLocally(localList);
+        ShoppingService.saveLocally(localList);
         return newItemWithKey;
     }
 
     static removeItem(itemKey : string) {
-        saveLocally(this.getLocalList().filter((i) => i.key !== itemKey));
+        ShoppingService.saveLocally(this.getLocalList().filter((i) => i.key !== itemKey));
         const itemRef = ShoppingService.listRef.child(`current/${itemKey}`);
         itemRef.once('value',
             (snapshot) => {
@@ -104,7 +121,7 @@ export default class ShoppingService {
     }
 
     static updateItem(item : Item) {
-        saveLocally(this.getLocalList().map(
+        ShoppingService.saveLocally(this.getLocalList().map(
             (it) => (it.key === item.key ? item : it),
         ));
         ShoppingService.listRef.child(`current/${item.key}`).update(item);
@@ -115,6 +132,11 @@ export default class ShoppingService {
     }
 
     static getLocalList() : Item[] {
-        return localStorage.getItem('list') ? JSON.parse(localStorage.getItem('list')) : [];
+        const currentListID = ShoppingService.getCurrentListID();
+        const listMap = ShoppingService.getListMap();
+        if (listMap[currentListID]) {
+            return listMap[currentListID].list;
+        }
+        return [];
     }
 }

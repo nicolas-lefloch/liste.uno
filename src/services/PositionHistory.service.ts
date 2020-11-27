@@ -3,7 +3,7 @@ import ShoppingService from './ShoppingList.service';
 import { Item } from '../datatypes/Item';
 
 class PositionHistoryService {
-    static listRef = firebase.database().ref(`/lists/${ShoppingService.getDefaultListID()}/archived`)
+    static listRef = firebase.database().ref(`/lists/${ShoppingService.getCurrentListID()}/archived`)
 
     static getAllPositionedItems():Promise<Item[]> {
         return new Promise((resolve) => {

@@ -5,7 +5,7 @@ import WhileShoppingItemRow from './WhileShoppingItemRow';
 import ShoppingListService from '../services/ShoppingList.service';
 import CategoryIcon from './CategoryIcon';
 
-const WhileShoppingList = () => {
+const WhileShoppingList : React.FC = () => {
     const [list, setList] = useState<Item[]>(ShoppingListService.getLocalList());
     useEffect(() => {
         ShoppingListService.getListChangeListener().subscribe(
