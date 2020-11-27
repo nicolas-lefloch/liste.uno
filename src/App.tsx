@@ -18,6 +18,7 @@ import ShareList from './components/ShareList';
 import PromptInstall from './components/PromptInstall';
 import LocationHistory from './components/LocationHistory';
 import { SnackBarProvider } from './utilities/SnackBar';
+import SwitchList from './components/SwitchList';
 
 const WatchForlistID: React.FC<{children}> = ({ children }) => {
     const { listID } = useParams<{listID:string}>();
@@ -65,7 +66,7 @@ function App() {
                     <Route path="/" exact>
                         <Redirect
                             to={{
-                                pathname: `/${ShoppingListService.getDefaultListID()}`,
+                                pathname: `/${ShoppingListService.getCurrentListID()}`,
                             }}
                         />
                     </Route>
@@ -78,6 +79,8 @@ function App() {
                     </Route>
 
                 </Switch>
+                <SwitchList />
+
             </Router>
         </SnackBarProvider>
 

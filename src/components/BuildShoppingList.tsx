@@ -13,14 +13,19 @@ import SuggestInstallService from '../services/SuggestInstall.service';
  * Edition of a shopping list
  * @constructor
  */
-const BuildShoppingList = () => {
+const BuildShoppingList : React.FC = () => {
+    console.log('bsl render');
     const [list, setList] = useState<Item[]>(ShoppingListService.getLocalList());
     const [editedItemKey, setEditedItemKey] = useState<string>();
     useEffect(() => {
+        console.log('subscribe to list change');
         ShoppingListService.getListChangeListener().subscribe(
             (l) => {
+                console.log('observable trigerret');
                 setList(l);
             },
+            (error) => console.log('error in listener ', error),
+            () => console.log('observable completed'),
         );
     }, []);
 
@@ -36,7 +41,7 @@ const BuildShoppingList = () => {
                 if (!itemWithKey.category) {
                 // get preferred category when item has no category
                     CategorizationService
-                        .getPreferredCategory(itemWithKey, ShoppingListService.getDefaultListID())
+                        .getPreferredCategory(itemWithKey, ShoppingListService.getCurrentListID())
                         .then((category) => {
                             if (category) {
                                 // serialization
