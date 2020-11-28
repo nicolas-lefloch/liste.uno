@@ -6,6 +6,8 @@ body{
     max-width: 600px;
     padding : 0px 30px;
     margin: auto;
+
+    border-top: 6px solid #E8907A;
 }
 
 header{
@@ -441,3 +443,60 @@ button.remove-all.really{
     color: #707070;
     font-style: italic;
 }
+
+
+/* switch list */
+
+.menuToggle button {
+    border-radius: 5em 5em 0em 0em;
+    width: 100px;
+    height: 50px;
+    background-color: #E8907A;
+    border: 0;
+    color: white;
+
+    position: relative;
+    top: -50px;
+    left: 50%;
+    transform: translateX(-50%);
+
+}
+
+
+
+.menuToggle {
+    position: absolute ;
+    border: 0;
+    border-top: 6px solid #E8907A;
+
+    width: 100%;
+    left: 0;
+    bottom: 30%;
+    margin-top: 3em;
+    transition: all 1s ease 0s;
+}
+
+
+.menuToggle button svg {
+    transform: rotate(90deg);
+}
+
+.menuToggle.active-mode button svg {
+    transform: rotate(-90deg);
+}
+.menuToggle input:checked ~ span {
+    transform: rotate(180deg);
+}
+
+.menuToggle.active-mode {
+    bottom: 0;
+    transition: all 1s ease 0s;
+    height: 0;
+
+}
+
+.menuToggle li::marker {
+    display: none;
+}
+
+
