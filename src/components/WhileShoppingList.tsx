@@ -1,30 +1,24 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Category } from '../datatypes/Category';
-import { Item } from '../datatypes/Item';
 import WhileShoppingItemRow from './WhileShoppingItemRow';
-import ShoppingListService from '../services/ShoppingList.service';
 import CategoryIcon from './CategoryIcon';
+import { useShoppingList } from '../services/ShoppingList.newservice';
 
-const WhileShoppingList : React.FC = () => {
-    const [list, setList] = useState<Item[]>(ShoppingListService.getLocalList());
-    useEffect(() => {
-        ShoppingListService.getListChangeListener().subscribe(
-            (l) => setList(l),
-        );
-    });
-    let categoriesImplied = list.map((i) => i.category).filter((c) => !!c);
-    // remove duplications
+const WhileShoppingList: React.FC = () => {
+    const { shoppingList } = useShoppingList();
+    let categoriesImplied = shoppingList.items.map((i) => i.category).filter((c) => !!c);
+
     categoriesImplied = categoriesImplied.filter(
         (c, index) => categoriesImplied.findIndex(
             (other) => other && other.name === c.name,
         ) === index,
     );
-    const someItemsAreUknown = list.find((i) => !i.category);
+    const someItemsAreUknown = shoppingList.items.find((i) => !i.category);
     if (someItemsAreUknown) {
         categoriesImplied = [...categoriesImplied, undefined];
     }
 
-    const generateItemsOfCategory = (category : Category) => list.filter(
+    const generateItemsOfCategory = (category: Category) => shoppingList.items.filter(
         (item) => (category
             ? (item.category && item.category.name === category.name) : !item.category),
     ).map(

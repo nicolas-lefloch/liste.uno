@@ -4,11 +4,11 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Item } from '../datatypes/Item';
-import ShoppingListService from '../services/ShoppingList.service';
 import CategorizationService from '../services/CategorizationService';
 import CategoryIcon from './CategoryIcon';
 import { Category } from '../datatypes/Category';
 import { useSnackbar } from '../utilities/SnackBar';
+import { useShoppingList } from '../services/ShoppingList.newservice';
 
 interface Props {
     item : Item;
@@ -18,6 +18,8 @@ interface Props {
 }
 
 const ItemRow = (props: Props) => {
+    const { updateItem, shoppingList } = useShoppingList();
+
     /** Current state of the input name */
     const [innerItemName, setInnerItemName] = useState(props.item.name);
 
@@ -28,7 +30,7 @@ const ItemRow = (props: Props) => {
     const submitItemNameEdition = (event:FormEvent) => {
         event.preventDefault();
         props.onToggleEdition(false);
-        ShoppingListService.updateItem({
+        updateItem({
             ...props.item,
             name: innerItemName,
             additionExplanation: null,
@@ -39,7 +41,7 @@ const ItemRow = (props: Props) => {
     const triggerSnackBar = useSnackbar();
 
     const onCategoryAssigned = (category : Category) => {
-        ShoppingListService.updateItem({
+        updateItem({
             ...props.item,
             lastUpdate: new Date().getTime(),
             category,
@@ -47,7 +49,7 @@ const ItemRow = (props: Props) => {
         CategorizationService.registerCategoryWasAssigned(
             category,
             props.item,
-            ShoppingListService.getCurrentListID(),
+            shoppingList.id,
         );
         triggerSnackBar(
             <>

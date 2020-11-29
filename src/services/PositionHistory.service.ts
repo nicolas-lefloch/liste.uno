@@ -1,9 +1,9 @@
 import firebase from 'firebase/app';
-import ShoppingService from './ShoppingList.service';
 import { Item } from '../datatypes/Item';
+import LocalStorageInterface from './LocalStorageInterface';
 
 class PositionHistoryService {
-    static listRef = firebase.database().ref(`/lists/${ShoppingService.getCurrentListID()}/archived`)
+    static listRef = firebase.database().ref(`/lists/${LocalStorageInterface.getCurrentListId()}/archived`)
 
     static getAllPositionedItems():Promise<Item[]> {
         return new Promise((resolve) => {

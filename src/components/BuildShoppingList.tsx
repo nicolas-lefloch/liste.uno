@@ -1,34 +1,22 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import ShoppingListService from '../services/ShoppingList.service';
 import { Item } from '../datatypes/Item';
 import ItemInput from './ItemInput';
 import ItemRow from './ItemRow';
 import CategorizationService from '../services/CategorizationService';
 import SuggestInstallService from '../services/SuggestInstall.service';
-
+import { useShoppingList } from '../services/ShoppingList.newservice';
 /**
  * Main view of app
  * Edition of a shopping list
  * @constructor
  */
 const BuildShoppingList : React.FC = () => {
-    console.log('bsl render');
-    const [list, setList] = useState<Item[]>(ShoppingListService.getLocalList());
+    const {
+        shoppingList, addItem, updateItem, removeItem,
+    } = useShoppingList();
     const [editedItemKey, setEditedItemKey] = useState<string>();
-    useEffect(() => {
-        console.log('subscribe to list change');
-        ShoppingListService.getListChangeListener().subscribe(
-            (l) => {
-                console.log('observable trigerret');
-                setList(l);
-            },
-            (error) => console.log('error in listener ', error),
-            () => console.log('observable completed'),
-        );
-    }, []);
-
     /**
      * Add items to list when they are pushed by ItemInput component
      * @param newItems item list
@@ -37,36 +25,28 @@ const BuildShoppingList : React.FC = () => {
         newItems.forEach(
             (item) => {
                 // serialization
-                const itemWithKey = ShoppingListService.addItem(item);
+                const itemWithKey = addItem(item);
                 if (!itemWithKey.category) {
                 // get preferred category when item has no category
                     CategorizationService
-                        .getPreferredCategory(itemWithKey, ShoppingListService.getCurrentListID())
+                        .getPreferredCategory(itemWithKey, shoppingList.id)
                         .then((category) => {
                             if (category) {
-                                // serialization
-                                ShoppingListService.updateItem({ ...itemWithKey, category });
+                                updateItem({ ...itemWithKey, category });
                             }
                         });
                 }
             },
         );
-        setList(ShoppingListService.getLocalList());
         SuggestInstallService.registerInteractionWasMade();
     };
 
-    const deleteItem = (key) => {
-        const newList = list.filter((e) => e.key !== key);
-        setList(newList);
-        ShoppingListService.removeItem(key);
-    };
-
     const deleteAllItems = () => {
-        list.forEach(
-            (item) => deleteItem(item.key),
+        shoppingList.items.forEach(
+            (item) => removeItem(item.key),
         );
     };
-    const itemList = list.map(
+    const itemList = shoppingList.items.map(
         (item) => (
             <ItemRow
                 key={item.key + item.lastUpdate}
@@ -75,7 +55,7 @@ const BuildShoppingList : React.FC = () => {
                 onToggleEdition={
                     (shouldEdit) => setEditedItemKey(shouldEdit ? item.key : undefined)
                 }
-                onDelete={() => deleteItem(item.key)}
+                onDelete={() => removeItem(item.key)}
             />
         ),
     );

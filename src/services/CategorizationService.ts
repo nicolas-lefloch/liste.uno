@@ -23,6 +23,13 @@ import { ReactComponent as SpiceIcon } from '../ressources/svg/spice-icon.svg';
 import { ReactComponent as OilsAndVinegarIcon } from '../ressources/svg/olive-oil-icon.svg';
 import { ReactComponent as FreshIcon } from '../ressources/svg/fresh-icon.svg';
 import { ReactComponent as BiscuitIcon } from '../ressources/svg/biscuits-icon.svg';
+import ConfigData from '../config.json';
+
+if (!firebase.apps.length) {
+    firebase.initializeApp({
+        databaseURL: ConfigData.FIREBASE_URL,
+    });
+}
 
 interface CategoryRankingForItem{
     [categoryName : string] : {
