@@ -9,7 +9,6 @@ import ConfigData from '../config.json';
 import LocationService from './LocationService';
 import LocalStorageInterface from './LocalStorageInterface';
 
-console.log('checking for app init, ', firebase.apps.length);
 if (!firebase.apps.length) {
     firebase.initializeApp({
         databaseURL: ConfigData.FIREBASE_URL,
@@ -27,15 +26,17 @@ const ShoppingListContext = React.createContext(null as ShoppingListContextDescr
 const getListRef = (listID: string) => firebase.database().ref(`/lists/${listID}/`);
 
 const setCurrentList = (newListID: string, onListUpdated: (itemList: Item[]) => void) => {
-    console.log('do the set current list');
+    /** Removes the subscription on the previous list */
+    getListRef(LocalStorageInterface.getCurrentListId()).child('current').off('value');
+
     const listRef = getListRef(newListID);
+    /** Subscribes only if the user is online at the time of set current list */
     listRef.child('current').on('value',
         (snapshot) => {
             const listValue = snapshot.val();
             const itemList = listValue ? Object.entries(listValue).map(
                 ([key, item]) => ({ ...(item as Item), key }),
             ) : [];
-            console.log('list update, will append : ', itemList.map((i) => i.name));
             onListUpdated(itemList);
             LocalStorageInterface.saveListItems(newListID, itemList);
         });
@@ -68,22 +69,17 @@ const removeItemInDB = (listID: string, itemKey: string,
         });
 };
 
-const addItemInDB = (listId: string, item: Item, existingList: Item[],
+const addItemInDB = (listId: string, item: Item,
     onLocalListUpdated: (shoppingList: ShoppingList) => void): Item => {
-    console.log('add to db : ', item);
-    // Duplicates handling
-    const {
-        itemToRemove,
-        itemToAdd,
-    } = QuantityComputingService.handleQuantities(existingList, item);
-    if (itemToRemove) {
-        removeItemInDB(listId, itemToRemove.key, () => { });
-    }
     /** Schedules the adding online, but immediately returns the key */
-    const { key } = getListRef(listId).child('current').push(itemToAdd);
-    const newItemWithKey: Item = { ...itemToAdd, key };
+    const { key } = getListRef(listId).child('current').push(item);
+    const newItemWithKey: Item = { ...item, key };
 
-    /** add online triggered the local update actually */
+    const items = LocalStorageInterface.getListItems(listId);
+    if (!items.find((i) => i.key === key)) {
+        items.push(newItemWithKey);
+        LocalStorageInterface.saveListItems(listId, items);
+    }
     onLocalListUpdated(LocalStorageInterface.getLists()[listId]);
     return newItemWithKey;
 };
@@ -106,6 +102,7 @@ export const ShoppingListProvider: React.FC<{ children }> = ({ children = null }
     /** Handle list change */
     const urlListID = (useParams<{ listID: string }>()).listID;
     const [listId, setListId] = useState<string>('');
+
     if (urlListID && urlListID !== listId) {
         setCurrentList(urlListID, setItemList);
         setListId(urlListID);
@@ -115,8 +112,19 @@ export const ShoppingListProvider: React.FC<{ children }> = ({ children = null }
         (shoppingList) => setItemList(shoppingList.items));
     const updateItem = (item: Item) => updateItemInDB(listId, item,
         (shoppingList) => setItemList(shoppingList.items));
-    const addItem = (item: Item) => addItemInDB(listId, item, itemList,
-        (shoppingList) => setItemList(shoppingList.items));
+    const addItem = (item: Item) => {
+        // Duplicates handling
+        const {
+            itemToRemove,
+            itemToAdd,
+        } = QuantityComputingService.handleQuantities(itemList, item);
+        if (itemToRemove) {
+            removeItemInDB(listId, itemToRemove.key, () => { });
+        }
+
+        return addItemInDB(listId, itemToAdd,
+            (shoppingList) => setItemList(shoppingList.items));
+    };
 
     const value: ShoppingListContextDescription = {
         shoppingList: {
