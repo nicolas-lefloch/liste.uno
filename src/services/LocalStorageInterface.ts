@@ -29,11 +29,33 @@ class LocalStorageInterface {
         return localLists[listId] ? localLists[listId].items : [];
     }
 
-    static getCurrentListId() {
-        return localStorage.getItem('currentListID');
+    /**
+     * Retrieve the current list id in local storage
+     * If no id exists (e.g. when the user first visits the website), a random id is generated
+     * Does not ensure the id is not already taken in the db
+     * (the user could land on a list belonging to another user)
+     */
+    static getCurrentListId(): string {
+        const existingID = localStorage.getItem('currentListID');
+        return existingID || LocalStorageInterface.generateRandomId();
     }
 
-    static setCurrentListId(listId:string) {
+    /**
+     * Generate a pronounceable 4 chars string
+     */
+    private static generateRandomId(): string {
+        const consonants = 'bcdfghjklmnpqrstvxz';
+        const vowels = 'aeiou';
+        const randomChar = (characters: string) => characters.charAt(
+            Math.floor(Math.random() * characters.length),
+        );
+        const res = [...Array(4).keys()].map(
+            (i) => (i % 2 === 0 ? randomChar(consonants) : randomChar(vowels)),
+        ).join('');
+        return res;
+    }
+
+    static setCurrentListId(listId: string) {
         localStorage.setItem('currentListID', listId);
     }
 }
