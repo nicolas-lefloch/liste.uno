@@ -6,12 +6,10 @@ import {
     Redirect,
     Route,
     Link,
-    useParams,
 } from 'react-router-dom';
 
 import BuildShoppingList from './components/BuildShoppingList';
 import WhileShoppingList from './components/WhileShoppingList';
-import ShoppingListService from './services/ShoppingList.service';
 import { ReactComponent as MainLogo } from './ressources/svg/logo-large.svg';
 import SwitchListMode from './components/SwitchListMode';
 import ShareList from './components/ShareList';
@@ -19,14 +17,8 @@ import PromptInstall from './components/PromptInstall';
 import LocationHistory from './components/LocationHistory';
 import { SnackBarProvider } from './utilities/SnackBar';
 import SwitchList from './components/SwitchList';
-
-const WatchForlistID: React.FC<{children}> = ({ children }) => {
-    const { listID } = useParams<{listID:string}>();
-    if (listID) {
-        ShoppingListService.setCurrentList(listID);
-    }
-    return children;
-};
+import { ShoppingListProvider } from './services/ShoppingList.newservice';
+import LocalStorageInterface from './services/LocalStorageInterface';
 
 function App() {
     return (
@@ -38,35 +30,34 @@ function App() {
                     </h1>
                 </header>
                 <Switch>
-                    <Route path="/:listID/shopping">
-                        <div className="switch-and-share">
-                            <SwitchListMode />
-                            <ShareList />
-                        </div>
-                        <PromptInstall />
-                        <WatchForlistID>
-                            <WhileShoppingList />
-                        </WatchForlistID>
+                    <Route path="/:listID">
+                        <ShoppingListProvider>
+                            <Route path="/:listID/shopping">
+                                <div className="switch-and-share">
+                                    <SwitchListMode />
+                                    <ShareList />
+                                </div>
+                                <PromptInstall />
+                                <WhileShoppingList />
+                            </Route>
+                            <Route path="/:listID/hacker">
+                                <LocationHistory />
+                            </Route>
+                            <Route path="/:listID" exact>
+                                <div className="switch-and-share">
+                                    <SwitchListMode />
+                                    <ShareList />
+                                </div>
+                                <PromptInstall />
+                                <BuildShoppingList />
+                            </Route>
+                        </ShoppingListProvider>
                     </Route>
-                    <Route path="/:listID/hacker">
-                        <WatchForlistID>
-                            <LocationHistory />
-                        </WatchForlistID>
-                    </Route>
-                    <Route path="/:listID" exact>
-                        <div className="switch-and-share">
-                            <SwitchListMode />
-                            <ShareList />
-                        </div>
-                        <PromptInstall />
-                        <WatchForlistID>
-                            <BuildShoppingList />
-                        </WatchForlistID>
-                    </Route>
+
                     <Route path="/" exact>
                         <Redirect
                             to={{
-                                pathname: `/${ShoppingListService.getCurrentListID()}`,
+                                pathname: `/${LocalStorageInterface.getCurrentListId()}`,
                             }}
                         />
                     </Route>

@@ -1,13 +1,14 @@
 import React from 'react';
 import { Item } from '../datatypes/Item';
 import LocationService from '../services/LocationService';
-import ShoppingService from '../services/ShoppingList.service';
+import { useShoppingList } from '../services/ShoppingList.newservice';
 
 interface Props {
     item: Item,
 }
 
 const WhileShoppingItemRow = (props: Props) => {
+    const { updateItem } = useShoppingList();
     const handleCheck = () => {
         const itemWasJustBought = !props.item.bought;
         const boughtData = itemWasJustBought ? {
@@ -16,7 +17,7 @@ const WhileShoppingItemRow = (props: Props) => {
             boughtLocation: LocationService.getLocation(),
 
         } : { bought: false };
-        ShoppingService.updateItem({
+        updateItem({
             ...props.item,
             ...boughtData,
         });

@@ -2,20 +2,20 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlay } from '@fortawesome/free-solid-svg-icons';
-import ShoppingService from '../services/ShoppingList.service';
+import LocalStorageInterface from '../services/LocalStorageInterface';
 
 const SwitchList : React.FC = () => {
-    const localListMap = ShoppingService.getListMap();
+    const localLists = LocalStorageInterface.getLists();
     // const [list, setList] = useState<Map<string, Item[]>>(localListMap);
     const [active, setActive] = useState(false);
 
-    const listJsx = Object.values(localListMap).map((v) => (
-        <li key={v.id}>
-            { v.id }
+    const listJsx = Object.values(localLists).map((list) => (
+        <li key={list.id}>
+            { list.name }
             {' '}
-            <Link to={`/${v.id}/`}>
+            <Link to={`/${list.id}/`}>
                 liste.uno/
-                {v.id}
+                {list.id}
             </Link>
         </li>
     ));
