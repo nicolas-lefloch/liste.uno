@@ -29,6 +29,11 @@ const setCurrentList = (newListID: string, onListUpdated: (itemList: Item[]) => 
     /** Removes the subscription on the previous list */
     getListRef(LocalStorageInterface.getCurrentListId()).child('current').off('value');
 
+    /** Immediately outputs the items from local storage
+     * If offline, it will be the unique call of onListUpdated
+     */
+    onListUpdated(LocalStorageInterface.getListItems(newListID));
+
     const listRef = getListRef(newListID);
     /** Subscribes only if the user is online at the time of set current list */
     listRef.child('current').on('value',
