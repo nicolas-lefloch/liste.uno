@@ -430,7 +430,6 @@ button.remove-all.really{
     min-width: 20%;
     min-height: 3rem;
     border-radius: 4px;
-    display: flex;
     align-items: center;
     color : white;
     justify-content: center;
@@ -438,10 +437,13 @@ button.remove-all.really{
     letter-spacing: 1px;
     bottom: -20px;
     opacity: 0;
-    transition: opacity ease-out .3s, bottom  10s;
+    visibility: hidden;
+    transition: opacity ease-out .3s, bottom  10s, visibility .3s;
 }
 .snackbar.visible{
+    display: flex;
     bottom: 10px;
+    visibility: visible;
     transition: bottom ease-out .1s;
     opacity: 1;
 }
