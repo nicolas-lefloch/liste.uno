@@ -9,6 +9,10 @@ body{
 
     border-top: 6px solid #E8907A;
 }
+#root {
+    margin-bottom: 3em;
+
+}
 
 header{
     margin-top: 30px;
@@ -224,22 +228,26 @@ a:hover, a:visited, a:link, a:active
     color: white
 }
 
+.share-button {
+    display: flex;
+    background-color: transparent;
+    border: 0;
+    cursor: pointer;
+    justify-content: space-around;
+    align-items: center;
+    width: 12em;
+}
+
 .share {
-    display: grid;
-    grid-template-columns: 80% 20%;
-    grid-template-rows: auto;
-    grid-template-areas:
-            "header icon"
-            "line line";
+    display: flex;
+    flex-direction: column;
     font-family: 'Roboto Mono', serif;
     font-weight: bold;
     color: #707070;
     flex-wrap: wrap;
     font-style: italic;
-    width: 12rem;
-    background-color: transparent;
-    border: 0;
-    cursor: pointer;
+    justify-content: center;
+    max-width: 14em;
 }
 .share:after {
     content: '';
@@ -426,7 +434,7 @@ button.remove-all.really{
     align-items: center;
     color : white;
     justify-content: center;
-    font-family: 'Roboto';
+    font-family: 'Roboto', serif;
     letter-spacing: 1px;
     bottom: -20px;
     opacity: 0;
@@ -447,7 +455,7 @@ button.remove-all.really{
 
 /* switch list */
 
-.menuToggle button {
+.menuToggle button.open-close {
     border-radius: 5em 5em 0em 0em;
     width: 100px;
     height: 50px;
@@ -465,23 +473,25 @@ button.remove-all.really{
 
 
 .menuToggle {
-    position: absolute ;
+    position: fixed ;
     border: 0;
     border-top: 6px solid #E8907A;
-
+    height: 50%;
     width: 100%;
     left: 0;
-    bottom: 30%;
+    bottom: 0;
     margin-top: 3em;
     transition: all 1s ease 0s;
+    background-color: white;
+
 }
 
 
-.menuToggle button svg {
+.menuToggle button.open-close svg {
     transform: rotate(90deg);
 }
 
-.menuToggle.active-mode button svg {
+.menuToggle.active-mode button.open-close svg {
     transform: rotate(-90deg);
 }
 .menuToggle input:checked ~ span {
@@ -491,12 +501,30 @@ button.remove-all.really{
 .menuToggle.active-mode {
     bottom: 0;
     transition: all 1s ease 0s;
+    padding-bottom: 0;
     height: 0;
-
 }
 
 .menuToggle li::marker {
     display: none;
+
 }
 
 
+.menuToggle ul li button {
+    color: #E8907A;
+    border: 0;
+    background-color: transparent;
+}
+.menuToggle ul li {
+    display: flex;
+    justify-content: space-evenly;
+    padding: 1em;
+    border-bottom: 2px solid #707070;
+
+}
+
+.menuToggle ul {
+    max-width: 600px;
+    margin: auto;
+}
