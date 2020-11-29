@@ -4,6 +4,7 @@ import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCopy } from '@fortawesome/free-solid-svg-icons';
 import { useSnackbar } from '../utilities/SnackBar';
+import ListURL from './ListURL';
 
 const ShareList: React.FC = () => {
     const { listID } = useParams<{ listID: string }>();
@@ -20,12 +21,9 @@ const ShareList: React.FC = () => {
         });
     };
     return (
-        <button type="button" className="share" onClick={copyURL}>
-            <p>
-                liste.uno/
-                {`${listID} `}
-                <FontAwesomeIcon icon={faCopy} width="3" color="#E8907A" />
-            </p>
+        <button type="button" className="share-button" onClick={copyURL}>
+            <ListURL listID={listID} />
+            <FontAwesomeIcon icon={faCopy} width="3" color="#E8907A" />
         </button>
     );
 };
