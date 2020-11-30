@@ -31,9 +31,9 @@ if (!firebase.apps.length) {
     });
 }
 
-interface CategoryRankingForItem{
-    [categoryName : string] : {
-        assignments : number
+interface CategoryRankingForItem {
+    [categoryName: string]: {
+        assignments: number
     }
 }
 
@@ -42,6 +42,7 @@ interface CategoryRankingForItem{
  * what category best fits an article
  */
 export default class CategorizationService {
+<<<<<<< HEAD
     /**
      * Correspondence table between categories name and their images
      * Image are not stored in the category object because we send the raw category object to db
@@ -135,16 +136,46 @@ export default class CategorizationService {
      * @param category The category
      */
     public static getCategoryImage(category : Category) : CategoryImage {
+=======
+    private static appCategoriesImage: { category: Category, icon: CategoryImage }[] = [
+        { category: { name: 'Bières' }, icon: { type: 'SVGAsComponent', image: BeerIcon, iconURL: `${process.env.PUBLIC_URL}/category-icons/beer-icon.svg` } },
+        { category: { name: 'Boissons' }, icon: { type: 'SVGAsComponent', image: BeverageIcon, iconURL: `${process.env.PUBLIC_URL}/category-icons/beverage-icon.svg` } },
+        { category: { name: 'Boulangerie' }, icon: { type: 'SVGAsComponent', image: BreadIcon, iconURL: `${process.env.PUBLIC_URL}/category-icons/bread-icon.svg` } },
+        { category: { name: 'Vêtements' }, icon: { type: 'SVGAsComponent', image: ClothesIcon, iconURL: `${process.env.PUBLIC_URL}/category-icons/clothes-icon.svg` } },
+        { category: { name: 'Crèmerie' }, icon: { type: 'SVGAsComponent', image: CreamIcon, iconURL: `${process.env.PUBLIC_URL}/category-icons/cream-icon.svg` } },
+        { category: { name: 'Desserts' }, icon: { type: 'SVGAsComponent', image: DessertIcon, iconURL: `${process.env.PUBLIC_URL}/category-icons/dessert-icon.svg` } },
+        { category: { name: 'Poissons' }, icon: { type: 'SVGAsComponent', image: FishIcon, iconURL: `${process.env.PUBLIC_URL}/category-icons/fish-icon.svg` } },
+        { category: { name: 'Fruits et Légumes' }, icon: { type: 'SVGAsComponent', image: FruitIcon, iconURL: `${process.env.PUBLIC_URL}/category-icons/fruit-icon.svg` } },
+        { category: { name: 'Hygiène' }, icon: { type: 'SVGAsComponent', image: HygieneIcon, iconURL: `${process.env.PUBLIC_URL}/category-icons/hygiene-icon.svg` } },
+        { category: { name: 'Produits ménager' }, icon: { type: 'SVGAsComponent', image: HomeCleaningIcon, iconURL: `${process.env.PUBLIC_URL}/category-icons/home-cleaning-icon.svg` } },
+        { category: { name: 'Viande' }, icon: { type: 'SVGAsComponent', image: MeatIcon, iconURL: `${process.env.PUBLIC_URL}/category-icons/meat-icon.svg` } },
+        { category: { name: 'Vin' }, icon: { type: 'SVGAsComponent', image: WineIcon, iconURL: `${process.env.PUBLIC_URL}/category-icons/wine-icon.svg` } },
+        { category: { name: 'Epicerie' }, icon: { type: 'SVGAsComponent', image: GroceryIcon, iconURL: `${process.env.PUBLIC_URL}/category-icons/grocery-icon.svg` } },
+        { category: { name: 'Conserves' }, icon: { type: 'SVGAsComponent', image: CannedFoodIcon, iconURL: `${process.env.PUBLIC_URL}/category-icons/canned-food-icon.svg` } },
+        { category: { name: 'Surgelé' }, icon: { type: 'SVGAsComponent', image: FrozenIcon, iconURL: `${process.env.PUBLIC_URL}/category-icons/frozen-icon.svg` } },
+        { category: { name: 'Petit déjeuner' }, icon: { type: 'SVGAsComponent', image: BreakfastIcon, iconURL: `${process.env.PUBLIC_URL}/category-icons/breakfast-icon.svg` } },
+        { category: { name: 'Epices' }, icon: { type: 'SVGAsComponent', image: SpiceIcon, iconURL: `${process.env.PUBLIC_URL}/category-icons/spice-icon.svg` } },
+        { category: { name: 'Huiles et vinaigres' }, icon: { type: 'SVGAsComponent', image: OilsAndVinegarIcon, iconURL: `${process.env.PUBLIC_URL}/category-icons/olive-oil-icon.svg` } },
+        { category: { name: 'Frais' }, icon: { type: 'SVGAsComponent', image: FreshIcon, iconURL: `${process.env.PUBLIC_URL}/category-icons/fresh-icon.svg` } },
+        { category: { name: 'Biscuits' }, icon: { type: 'SVGAsComponent', image: BiscuitIcon, iconURL: `${process.env.PUBLIC_URL}/category-icons/biscuits-icon.svg` } },
+    ];
+
+    public static getCategoryImage(category: Category): CategoryImage {
+>>>>>>> 59131a9... list choice menu toggled by bottom right button
         return CategorizationService.appCategoriesImage.find(
             (c) => c.category.name === category.name,
         )?.icon;
     }
 
+<<<<<<< HEAD
     /**
      * Returns all categories
      * Used in ItemRow when the user has to choose between all categories
      */
     public static getAppCategories() : Category[] {
+=======
+    public static getAppCategories(): Category[] {
+>>>>>>> 59131a9... list choice menu toggled by bottom right button
         return this.appCategoriesImage.map((c) => ({ name: c.category.name }));
     }
 
@@ -161,9 +192,9 @@ export default class CategorizationService {
      * then on the application-wide history
      */
     static registerCategoryWasAssigned(
-        newCategory : Category,
-        forItem : Item,
-        concernedListID : string,
+        newCategory: Category,
+        forItem: Item,
+        concernedListID: string,
     ) {
         const listSpecificCategoryAssignmentsRef = CategorizationService.listsRef
             .child(`${concernedListID}/categoriesAssignments`);
@@ -179,6 +210,7 @@ export default class CategorizationService {
             .set(firebase.database.ServerValue.increment(1));
     }
 
+<<<<<<< HEAD
     /**
      * Used when the user adds an item and a category should be predicted
      * @param forItem the item to which the category shall be predicted
@@ -195,6 +227,14 @@ export default class CategorizationService {
 
         // The list of words and nodes (node is either the application wide node or the  list category node)
         const combinationsToTry : {node : firebase.database.Reference, word : string}[] = [
+=======
+    static async getPreferredCategory(forItem: Item, concernedListID: string)
+        : Promise<Category> {
+        const listSpecificCategoryAssignmentsRef = CategorizationService.listsRef.child(`${concernedListID}/categoriesAssignments`);
+        let itemNameNoQuantity = QuantityComputingService.itemNameWithoutQuantity(forItem);
+        itemNameNoQuantity = CategorizationService.toCategoriesDBFormat(itemNameNoQuantity);
+        const combinationsToTry: { node: firebase.database.Reference, word: string }[] = [
+>>>>>>> 59131a9... list choice menu toggled by bottom right button
             {
                 node: listSpecificCategoryAssignmentsRef,
                 word: itemNameNoQuantity,
@@ -208,15 +248,17 @@ export default class CategorizationService {
         const wordsInItem = itemNameNoQuantity.split(' ');
         if (wordsInItem.length > 1) {
             wordsInItem.forEach((word) => {
-                const singular = CategorizationService.toCategoriesDBFormat(word);
-                combinationsToTry.push({
-                    node: listSpecificCategoryAssignmentsRef,
-                    word: singular,
-                });
-                combinationsToTry.push({
-                    node: CategorizationService.categoriesAssignmentsRef,
-                    word: singular,
-                });
+                if (word.trim()) {
+                    const singular = CategorizationService.toCategoriesDBFormat(word);
+                    combinationsToTry.push({
+                        node: listSpecificCategoryAssignmentsRef,
+                        word: singular,
+                    });
+                    combinationsToTry.push({
+                        node: CategorizationService.categoriesAssignmentsRef,
+                        word: singular,
+                    });
+                }
             });
         }
 
@@ -234,6 +276,7 @@ export default class CategorizationService {
         return null;
     }
 
+<<<<<<< HEAD
     /**
      * Guesses a category based on a word and a category assignment node
      * @param pattern The word from which the category should be guessed
@@ -243,6 +286,13 @@ export default class CategorizationService {
         pattern : string,
         categoryNode:firebase.database.Reference,
     ) : Promise<Category> {
+=======
+    private static getPreferredCategorry(
+        pattern: string,
+        categoryNode: firebase.database.Reference,
+    ): Promise<Category> {
+        console.log(`asking for ${pattern} to ${categoryNode}`);
+>>>>>>> 59131a9... list choice menu toggled by bottom right button
         return new Promise((resolve) => {
             categoryNode.child(pattern).once('value',
                 (listCategoryRanking) => {
@@ -253,11 +303,15 @@ export default class CategorizationService {
         });
     }
 
+<<<<<<< HEAD
     /**
      * Based on the category ranking for an item, finds the most used one
      * @param snapshotValue The category ranking
      */
     private static getMostUsedCategory(snapshotValue : CategoryRankingForItem) : Category {
+=======
+    private static getMostUsedCategory(snapshotValue: CategoryRankingForItem): Category {
+>>>>>>> 59131a9... list choice menu toggled by bottom right button
         if (!snapshotValue) {
             return null;
         }
@@ -273,12 +327,16 @@ export default class CategorizationService {
         );
     }
 
+<<<<<<< HEAD
     /**
      * Format a word so it fits the category db format
      * Removes accents, trailing 's', and lowercase
      * @param word The word to format
      */
     private static toCategoriesDBFormat(word:string):string {
+=======
+    private static toCategoriesDBFormat(word: string): string {
+>>>>>>> 59131a9... list choice menu toggled by bottom right button
         const noAccentLowerCase = word.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
 
         if (noAccentLowerCase.endsWith('s')) {
