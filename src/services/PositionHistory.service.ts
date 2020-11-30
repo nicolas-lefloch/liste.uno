@@ -3,7 +3,11 @@ import { Item } from '../datatypes/Item';
 import LocalStorageInterface from './LocalStorageInterface';
 
 class PositionHistoryService {
+<<<<<<< HEAD
     static listRef = firebase.database().ref(`/lists/${LocalStorageInterface.getCurrentListId()}/archived`)
+=======
+    static listRef = firebase.database().ref(`/lists/${ShoppingService.getCurrentListID()}/archived`)
+>>>>>>> 9de9b9c... add multilist support
 
     static getAllPositionedItems():Promise<Item[]> {
         return new Promise((resolve) => {
