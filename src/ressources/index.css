@@ -645,3 +645,13 @@ button.remove-all.really{
     text-decoration: line-through;
     color: rgba(0,0,0,.4)
 }
+
+
+button, a{
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.item-label{
+    user-select: none;
+}
