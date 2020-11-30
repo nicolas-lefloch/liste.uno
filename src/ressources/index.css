@@ -28,7 +28,7 @@ form#item-input{
     position: relative;
 }
 input[type=text] {
-    height: 45px;
+    height: 2em;
 }
 form#item-input > textarea{
     width: calc(100% - 2rem);
@@ -251,14 +251,14 @@ a:hover, a:visited, a:link, a:active
 }
 .share:after {
     content: '';
-    width: 55%;
+    width: 75%;
     height: 4px;
     background-color: #E8907A;
     position: relative;
     top: 5px;
     flex-grow: 4;
     grid-area: line;
-    transform: translateX(1.2rem);
+    transform: translateX(20%);
 }
 
 .share > * {
@@ -547,6 +547,15 @@ button.remove-all {
     background-color: transparent;
     transition: background-color ease .3s;
 }
+#list-choice ul li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5em;
+    border-bottom: 2px solid #707070;
+    font-family: 'Roboto Mono', serif;
+    font-weight: bold;
+}
 #list-choice-popup.opened #list-choice-popup-background{
     background-color: #0000004a;
 }
@@ -557,6 +566,16 @@ button.remove-all {
     z-index: 1;   
     height: 0;
     transition: height ease .3s;
+    border-radius: 3em 3em 0 0;
+    padding-top: 1em;
+}
+#list-choice ul li .active {
+    color: #E8907A;
+    font-weight: bolder;
+}
+#list-choice ul {
+    max-width: 600px;
+    margin: auto;
 }
 
 #list-choice-popup.opened #popup-content{
