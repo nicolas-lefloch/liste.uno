@@ -66,6 +66,10 @@ const ItemRow = (props: Props) => {
         );
     };
 
+    const doubleClickEditAdvice = () => {
+        triggerSnackBar('Double-clic pour éditer', 1000);
+    };
+
     /** The list of available categories to assign, shown under the item */
     const categoriesList = CategorizationService.getAppCategories().map((category) => (
         <li key={category.name}>
@@ -92,6 +96,7 @@ const ItemRow = (props: Props) => {
                                 // eslint-disable-next-line jsx-a11y/no-autofocus
                                 autoFocus
                                 type="text"
+                                onBlur={() => props.onToggleEdition(false)}
                                 value={innerItemName}
                                 size={1}
                             />
@@ -107,7 +112,10 @@ const ItemRow = (props: Props) => {
                     )
                     : (
                         <>
-                            <div onDoubleClick={() => props.onToggleEdition(true)} className={`item-label ${props.item.bought ? 'bought' : ''}`}>
+                            <div
+                                onDoubleClick={() => props.onToggleEdition(true)}
+                                className={`item-label ${props.item.bought ? 'bought' : ''}`}
+                            >
                                 <p>
                                     {props.item.name}
                                 </p>
