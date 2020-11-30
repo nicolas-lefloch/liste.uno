@@ -8,6 +8,7 @@ import { ShoppingList } from '../datatypes/ShoppingList';
 import ConfigData from '../config.json';
 import LocationService from './LocationService';
 import LocalStorageInterface from './LocalStorageInterface';
+import ListIndexService from './ListIndex.service';
 
 if (!firebase.apps.length) {
     firebase.initializeApp({

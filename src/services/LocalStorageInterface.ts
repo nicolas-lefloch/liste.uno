@@ -1,5 +1,6 @@
 import { Item } from '../datatypes/Item';
 import { ShoppingList } from '../datatypes/ShoppingList';
+import ListIndexService from './ListIndex.service';
 
 class LocalStorageInterface {
     static getLists() {
@@ -18,9 +19,10 @@ class LocalStorageInterface {
         const localLists = LocalStorageInterface.getLists();
         localLists[listId] = {
             id: listId,
-            name: localLists[listId] ? localLists[listId].name : listId,
+            name: localLists[listId] ? localLists[listId].name : '',
             items: itemList,
         };
+        console.log('saving list item ', localLists[listId].name);
         LocalStorageInterface.saveLists(localLists);
     }
 
@@ -57,6 +59,28 @@ class LocalStorageInterface {
 
     static setCurrentListId(listId: string) {
         localStorage.setItem('currentListID', listId);
+    }
+
+    static setCurrentListName(listName: string) {
+        const currentListId = LocalStorageInterface.getCurrentListId();
+        LocalStorageInterface.setListName(currentListId, listName);
+    }
+
+    static setListName(listId : string, listName: string) {
+        const localLists = LocalStorageInterface.getLists();
+        localLists[listId] = {
+            id: listId,
+            name: listName,
+            items: localLists[listId] ? localLists[listId].items : [],
+        };
+        LocalStorageInterface.saveLists(localLists);
+    }
+
+    static removeList(listId : string) {
+        const localLists = LocalStorageInterface.getLists();
+        delete localLists[listId];
+        LocalStorageInterface.saveLists(localLists);
+        return localLists;
     }
 }
 
