@@ -20,7 +20,7 @@ interface ShoppingListContextDescription {
     removeItem: (itemKey: string) => void;
     updateItem: (item: Item) => void;
     addItem: (item: Item) => Item;
-    getFrequentArticles:(maxArticles : number, excludeItems : Item[])=> Item[];
+    frequentArticles : Item[];
 }
 const ShoppingListContext = React.createContext(null as ShoppingListContextDescription);
 
@@ -168,12 +168,6 @@ export const ShoppingListProvider: React.FC<{ children }> = ({ children = null }
             (shoppingList) => setItemList(shoppingList.items));
     };
 
-    const getFrequentArticles = (maxArticles :number, excludeItems:Item[]) => {
-        const withoutExcluded = frequentArticles.filter((item) => excludeItems.find(
-            (i) => QuantityComputingService.itemNameWithoutQuantity(i) === item.name,
-        ) === undefined);
-        return withoutExcluded.slice(0, maxArticles);
-    };
 
     const value: ShoppingListContextDescription = {
         shoppingList: {
@@ -184,7 +178,7 @@ export const ShoppingListProvider: React.FC<{ children }> = ({ children = null }
         removeItem,
         updateItem,
         addItem,
-        getFrequentArticles,
+        frequentArticles,
     };
     return (
         <ShoppingListContext.Provider value={value}>

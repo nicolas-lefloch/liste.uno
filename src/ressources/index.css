@@ -589,7 +589,7 @@ button.list-action-button.really{
     background-color: white;
     z-index: 1;   
     height: 0;
-    overflow-y: scroll;
+    overflow-y: auto;
     padding: 30px 20px;
     box-shadow:  1px -6px 13px 4px #b9b9b99c;
     transition: height ease .3s;
@@ -678,4 +678,16 @@ li.frequent-article > button.add-item-button{
     width: 40px;
     height: 40px;
     border: none;
+}
+
+.see-more{
+    margin: 20px auto
+}
+
+.frequent-article-tip{
+    font-family: Roboto;
+    font-family: 'Roboto';
+    color: #707070;
+    text-align: center;
+    padding : 20px;
 }

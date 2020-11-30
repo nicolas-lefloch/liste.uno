@@ -32,7 +32,7 @@ function App() {
                 <Switch>
                     <Route path="/:listID">
                         <ShoppingListProvider>
-                            <Route path="shopping">
+                            <Route path="/:listID/shopping">
                                 <div className="switch-and-share">
                                     <SwitchListMode />
                                     <ShareList />
@@ -40,10 +40,10 @@ function App() {
                                 <PromptInstall />
                                 <WhileShoppingList />
                             </Route>
-                            <Route path="hacker">
+                            <Route path="/:listID/hacker">
                                 <LocationHistory />
                             </Route>
-                            <Route path="" exact>
+                            <Route path="/:listID" exact>
                                 <div className="switch-and-share">
                                     <SwitchListMode />
                                     <ShareList />

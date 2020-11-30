@@ -13,7 +13,7 @@ import { useShoppingList } from '../services/ShoppingList.newservice';
  * Edition of a shopping list
  * @constructor
  */
-const BuildShoppingList : React.FC = () => {
+const BuildShoppingList: React.FC = () => {
     const {
         shoppingList, addItem, updateItem, removeItem,
     } = useShoppingList();
@@ -24,13 +24,13 @@ const BuildShoppingList : React.FC = () => {
      * Add items to list when they are pushed by ItemInput component
      * @param newItems item list
      */
-    const addItemsToList = (newItems : Item[]) => {
+    const addItemsToList = (newItems: Item[]) => {
         newItems.forEach(
             (item) => {
                 // serialization
                 const itemWithKey = addItem(item);
                 if (!itemWithKey.category) {
-                // get preferred category when item has no category
+                    // get preferred category when item has no category
                     CategorizationService
                         .getPreferredCategory(itemWithKey, shoppingList.id)
                         .then((category) => {
@@ -83,35 +83,31 @@ const BuildShoppingList : React.FC = () => {
             <div className="list-actions">
                 {
                     !!itemList.length
-            && (
-                <button
-                    className={`list-action-button ${showingReally ? 'really' : ''}`}
-                    type="button"
-                    onClick={() => (showingReally
-                        ? deleteAllItems() : setShowingReally(true))}
-                    onBlur={() => setShowingReally(false)}
-                >
-                    {showingReally
-                        ? 'Vraiment ?'
-                        : 'Vider la liste'}
-                    <div className="icon-circle"><FontAwesomeIcon icon={faTrash} color="white" /></div>
-                </button>
-            )
+                    && (
+                        <button
+                            className={`list-action-button ${showingReally ? 'really' : ''}`}
+                            type="button"
+                            onClick={() => (showingReally
+                                ? deleteAllItems() : setShowingReally(true))}
+                            onBlur={() => setShowingReally(false)}
+                        >
+                            {showingReally
+                                ? 'Vraiment ?'
+                                : 'Vider la liste'}
+                            <div className="icon-circle"><FontAwesomeIcon icon={faTrash} color="white" /></div>
+                        </button>
+                    )
                 }
                 <button className="list-action-button" type="button" onClick={toggleFrequentArticles}>
                     Articles Fréquents
                 </button>
 
             </div>
-            {
-                showFrequentArticles
-                && (
-                    <FrequentArticles
-                        onItemOuput={(item) => addItemsToList([item])}
-                        itemsAlreadyInList={shoppingList.items}
-                    />
-                )
-            }
+            <FrequentArticles
+                onItemOuput={(item) => addItemsToList([item])}
+                itemsAlreadyInList={shoppingList.items}
+                opened={showFrequentArticles}
+            />
         </>
     );
 };
