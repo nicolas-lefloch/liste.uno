@@ -19,10 +19,9 @@ class LocalStorageInterface {
         const localLists = LocalStorageInterface.getLists();
         localLists[listId] = {
             id: listId,
-            name: localLists[listId] ? localLists[listId].name : '',
+            name: localLists[listId] ? localLists[listId].name : listId,
             items: itemList,
         };
-        console.log('saving list item ', localLists[listId].name);
         LocalStorageInterface.saveLists(localLists);
     }
 

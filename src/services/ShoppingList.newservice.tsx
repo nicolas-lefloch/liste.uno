@@ -108,7 +108,6 @@ export const ShoppingListProvider: React.FC<{ children }> = ({ children = null }
     /** Handle list change */
     const urlListID = (useParams<{ listID: string }>()).listID;
     const [listId, setListId] = useState<string>('');
-
     if (urlListID && urlListID !== listId) {
         setCurrentList(urlListID, setItemList);
         setListId(urlListID);
