@@ -8,7 +8,6 @@ import { ShoppingList } from '../datatypes/ShoppingList';
 import ConfigData from '../config.json';
 import LocationService from './LocationService';
 import LocalStorageInterface from './LocalStorageInterface';
-import ListIndexService from './ListIndex.service';
 
 if (!firebase.apps.length) {
     firebase.initializeApp({
@@ -84,6 +83,7 @@ const setCurrentList = (newListID: string, onListUpdated: (itemList: Item[]) => 
                 ([key, item]) => ({ ...(item as Item), key }),
             ) : [];
             const itemsArranged = sortFrequentArticles(itemList);
+            onFrequentArticlesFound(itemsArranged);
         });
 
     LocalStorageInterface.setCurrentListId(newListID);

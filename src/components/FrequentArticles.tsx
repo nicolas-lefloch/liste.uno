@@ -2,7 +2,7 @@ import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useEffect, useState } from 'react';
 import { Item } from '../datatypes/Item';
-import ShoppingService from '../services/ShoppingList.service';
+import { useShoppingList } from '../services/ShoppingList.newservice';
 import CategoryIcon from './CategoryIcon';
 
 interface Props{
@@ -12,8 +12,9 @@ interface Props{
 const FrequentArticles: React.FC<Props> = (props : Props) => {
     const [frequentArticles, setFrequentArticles] = useState<Item[]>([]);
     const [maxArticles, setMaxArticles] = useState(10);
+    const { getFrequentArticles } = useShoppingList();
     useEffect(() => {
-        setFrequentArticles(ShoppingService.getFrequentArticles(maxArticles, props.itemsAlreadyInList));
+        setFrequentArticles(getFrequentArticles(maxArticles, props.itemsAlreadyInList));
     }, [props.itemsAlreadyInList, maxArticles]);
 
     return (
