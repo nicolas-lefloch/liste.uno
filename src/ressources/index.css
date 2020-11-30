@@ -8,6 +8,10 @@ body{
     margin: auto;
     border-top: 6px solid #E8907A;
 }
+#root {
+    margin-bottom: 3em;
+
+}
 
 header{
     margin-top: 30px;
@@ -452,7 +456,7 @@ button.remove-all.really{
 
 /* switch list */
 
-.menuToggle button {
+.menuToggle button.open-close {
     border-radius: 5em 5em 0em 0em;
     width: 100px;
     height: 50px;
@@ -558,6 +562,12 @@ button.remove-all.really{
 }
 #list-choice-popup.opened #list-choice-popup-background{
     background-color: #0000004a;
+}
+.menuToggle ul li {
+    display: flex;
+    justify-content: space-evenly;
+    padding: 1em;
+    border-bottom: 2px solid #707070;
 }
 
 #popup-content{
