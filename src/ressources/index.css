@@ -5,13 +5,8 @@
 body{
     max-width: 600px;
     padding : 0px 30px;
-    margin: 0 auto;
-    position: relative;
+    margin: auto;
     border-top: 6px solid #E8907A;
-}
-#root {
-    margin-bottom: 3em;
-
 }
 
 header{
@@ -457,7 +452,7 @@ button.remove-all.really{
 
 /* switch list */
 
-.menuToggle button.open-close {
+.menuToggle button {
     border-radius: 5em 5em 0em 0em;
     width: 100px;
     height: 50px;
