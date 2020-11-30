@@ -571,7 +571,7 @@ button.remove-all.really{
     font-weight: bold;
 }
 #list-choice-popup.opened #list-choice-popup-background{
-    background-color: #0000004a;
+    background-color: #f7f7f7ad;
 }
 .menuToggle ul li {
     display: flex;
@@ -587,6 +587,7 @@ button.remove-all.really{
     height: 0;
     overflow-y: scroll;
     padding: 30px 20px;
+    box-shadow:  1px -6px 13px 4px #b9b9b99c;
     transition: height ease .3s;
     border-radius: 3em 3em 0 0;
     padding-top: 1em;
