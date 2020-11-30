@@ -31,14 +31,14 @@ if (!firebase.apps.length) {
     });
 }
 
-interface CategoryRankingForItem{
-    [categoryName : string] : {
-        assignments : number
+interface CategoryRankingForItem {
+    [categoryName: string]: {
+        assignments: number
     }
 }
 
 export default class CategorizationService {
-    private static appCategoriesImage : {category : Category, icon : CategoryImage}[] = [
+    private static appCategoriesImage: { category: Category, icon: CategoryImage }[] = [
         { category: { name: 'Bières' }, icon: { type: 'SVGAsComponent', image: BeerIcon, iconURL: `${process.env.PUBLIC_URL}/category-icons/beer-icon.svg` } },
         { category: { name: 'Boissons' }, icon: { type: 'SVGAsComponent', image: BeverageIcon, iconURL: `${process.env.PUBLIC_URL}/category-icons/beverage-icon.svg` } },
         { category: { name: 'Boulangerie' }, icon: { type: 'SVGAsComponent', image: BreadIcon, iconURL: `${process.env.PUBLIC_URL}/category-icons/bread-icon.svg` } },
@@ -61,13 +61,13 @@ export default class CategorizationService {
         { category: { name: 'Biscuits' }, icon: { type: 'SVGAsComponent', image: BiscuitIcon, iconURL: `${process.env.PUBLIC_URL}/category-icons/biscuits-icon.svg` } },
     ];
 
-    public static getCategoryImage(category : Category) : CategoryImage {
+    public static getCategoryImage(category: Category): CategoryImage {
         return CategorizationService.appCategoriesImage.find(
             (c) => c.category.name === category.name,
         )?.icon;
     }
 
-    public static getAppCategories() : Category[] {
+    public static getAppCategories(): Category[] {
         return this.appCategoriesImage.map((c) => ({ name: c.category.name }));
     }
 
@@ -82,9 +82,9 @@ export default class CategorizationService {
      * @param concernedListID
      */
     static registerCategoryWasAssigned(
-        newCategory : Category,
-        forItem : Item,
-        concernedListID : string,
+        newCategory: Category,
+        forItem: Item,
+        concernedListID: string,
     ) {
         const listSpecificCategoryAssignmentsRef = CategorizationService.listsRef.child(`${concernedListID}/categoriesAssignments`);
         let itemName = QuantityComputingService.itemNameWithoutQuantity(forItem);
@@ -99,12 +99,12 @@ export default class CategorizationService {
             .set(firebase.database.ServerValue.increment(1));
     }
 
-    static async getPreferredCategory(forItem : Item, concernedListID : string)
-    : Promise<Category> {
+    static async getPreferredCategory(forItem: Item, concernedListID: string)
+        : Promise<Category> {
         const listSpecificCategoryAssignmentsRef = CategorizationService.listsRef.child(`${concernedListID}/categoriesAssignments`);
         let itemNameNoQuantity = QuantityComputingService.itemNameWithoutQuantity(forItem);
         itemNameNoQuantity = CategorizationService.toCategoriesDBFormat(itemNameNoQuantity);
-        const combinationsToTry : {node : firebase.database.Reference, word : string}[] = [
+        const combinationsToTry: { node: firebase.database.Reference, word: string }[] = [
             {
                 node: listSpecificCategoryAssignmentsRef,
                 word: itemNameNoQuantity,
@@ -117,15 +117,17 @@ export default class CategorizationService {
         const wordsInItem = itemNameNoQuantity.split(' ');
         if (wordsInItem.length > 1) {
             wordsInItem.forEach((word) => {
-                const singular = CategorizationService.toCategoriesDBFormat(word);
-                combinationsToTry.push({
-                    node: listSpecificCategoryAssignmentsRef,
-                    word: singular,
-                });
-                combinationsToTry.push({
-                    node: CategorizationService.categoriesAssignmentsRef,
-                    word: singular,
-                });
+                if (word.trim()) {
+                    const singular = CategorizationService.toCategoriesDBFormat(word);
+                    combinationsToTry.push({
+                        node: listSpecificCategoryAssignmentsRef,
+                        word: singular,
+                    });
+                    combinationsToTry.push({
+                        node: CategorizationService.categoriesAssignmentsRef,
+                        word: singular,
+                    });
+                }
             });
         }
         // eslint-disable-next-line no-restricted-syntax
@@ -142,9 +144,9 @@ export default class CategorizationService {
     }
 
     private static getPreferredCategorry(
-        pattern : string,
-        categoryNode:firebase.database.Reference,
-    ) : Promise<Category> {
+        pattern: string,
+        categoryNode: firebase.database.Reference,
+    ): Promise<Category> {
         console.log(`asking for ${pattern} to ${categoryNode}`);
         return new Promise((resolve) => {
             categoryNode.child(pattern).once('value',
@@ -156,7 +158,7 @@ export default class CategorizationService {
         });
     }
 
-    private static getMostUsedCategory(snapshotValue : CategoryRankingForItem) : Category {
+    private static getMostUsedCategory(snapshotValue: CategoryRankingForItem): Category {
         if (!snapshotValue) {
             return null;
         }
@@ -172,7 +174,7 @@ export default class CategorizationService {
         );
     }
 
-    private static toCategoriesDBFormat(word:string):string {
+    private static toCategoriesDBFormat(word: string): string {
         const noAccentLowerCase = word.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
 
         if (noAccentLowerCase.endsWith('s')) {

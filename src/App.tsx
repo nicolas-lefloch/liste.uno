@@ -16,9 +16,9 @@ import ShareList from './components/ShareList';
 import PromptInstall from './components/PromptInstall';
 import LocationHistory from './components/LocationHistory';
 import { SnackBarProvider } from './utilities/SnackBar';
-import SwitchList from './components/SwitchList';
 import { ShoppingListProvider } from './services/ShoppingList.newservice';
 import LocalStorageInterface from './services/LocalStorageInterface';
+import OptionsMenu from './components/options-menu/OptionsMenu';
 
 function App() {
     return (
@@ -50,6 +50,7 @@ function App() {
                                 </div>
                                 <PromptInstall />
                                 <BuildShoppingList />
+                                <OptionsMenu />
                             </Route>
                         </ShoppingListProvider>
                     </Route>
@@ -70,7 +71,6 @@ function App() {
                     </Route>
 
                 </Switch>
-                <SwitchList />
 
             </Router>
         </SnackBarProvider>

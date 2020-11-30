@@ -5,8 +5,8 @@
 body{
     max-width: 600px;
     padding : 0px 30px;
-    margin: auto;
-
+    margin: 0 auto;
+    position: relative;
     border-top: 6px solid #E8907A;
 }
 #root {
@@ -469,51 +469,13 @@ button.remove-all {
 
 
 
-.menuToggle {
-    position: fixed ;
-    border: 0;
-    border-top: 6px solid #E8907A;
-    height: 50%;
-    width: 100%;
-    left: 0;
-    bottom: 0;
-    margin-top: 3em;
-    transition: all 1s ease 0s;
-    background-color: white;
 
-}
-
-
-.menuToggle button.open-close svg {
-    transform: rotate(90deg);
-}
-
-.menuToggle.active-mode button.open-close svg {
-    transform: rotate(-90deg);
-}
-.menuToggle input:checked ~ span {
-    transform: rotate(180deg);
-}
-
-.menuToggle.active-mode {
-    bottom: 0;
-    transition: all 1s ease 0s;
-    padding-bottom: 0;
-    height: 0;
-}
-
-.menuToggle li::marker {
-    display: none;
-
-}
-
-
-.menuToggle ul li button {
+#list-choice ul li button {
     color: #E8907A;
     border: 0;
     background-color: transparent;
 }
-.menuToggle ul li {
+#list-choice ul li {
     display: flex;
     justify-content: space-evenly;
     padding: 1em;
@@ -521,7 +483,82 @@ button.remove-all {
 
 }
 
-.menuToggle ul {
-    max-width: 600px;
+#list-choice ul {
     margin: auto;
+    list-style-type: none;
+}
+
+
+#option-buttons{
+    position: absolute;
+    bottom: 1.7rem;
+    right: 1.5rem;
+}
+
+.menu-button{
+    background-color: #E8907A;
+    color: white;
+    font-size: 1.5rem;
+    border-radius: 5rem;
+    height: 4rem;
+    width: 4rem;
+    border: none;
+    /* box-shadow: 4px 4px 10px 5px #cccccc9c; */
+    outline: none;
+}
+
+#options-menu-container{
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    pointer-events: none;
+    top: 0;
+}
+#options-menu{
+    position: relative;
+    height: 100%;
+    max-width: 660px;
+    margin: 0 auto;
+}
+#options-menu > *{
+    pointer-events: all;
+}
+
+#list-choice-popup{
+    visibility: hidden;
+    display: flex;
+    height: 100%;
+    flex-direction: column;
+    justify-content: flex-end;
+    transition: visibility .3s;
+}
+#list-choice-popup.opened{
+    visibility: visible;
+}
+#list-choice-popup-background{
+    outline: none;
+    border: none;
+    cursor: default;
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    left: 0;
+    background-color: transparent;
+    transition: background-color ease .3s;
+}
+#list-choice-popup.opened #list-choice-popup-background{
+    background-color: #0000004a;
+}
+
+#popup-content{
+    border-top: 6px solid #E8907A;
+    background-color: white;
+    z-index: 1;   
+    height: 0;
+    transition: height ease .3s;
+}
+
+#list-choice-popup.opened #popup-content{
+    height: 50vh;
 }
