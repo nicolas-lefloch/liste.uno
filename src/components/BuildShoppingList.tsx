@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Item } from '../datatypes/Item';
 import ItemInput from './ItemInput';
 import ItemRow from './ItemRow';
+import FrequentArticles from './FrequentArticles';
 import CategorizationService from '../services/CategorizationService';
 import SuggestInstallService from '../services/SuggestInstall.service';
 import { useShoppingList } from '../services/ShoppingList.newservice';
@@ -17,8 +18,8 @@ const BuildShoppingList : React.FC = () => {
         shoppingList, addItem, updateItem, removeItem,
     } = useShoppingList();
     const [editedItemKey, setEditedItemKey] = useState<string>();
-
-    const [askingEmptyListConfirm, setAskingEmptyListConfirm] = useState(false);
+    const [showingReally, setShowingReally] = useState(false);
+    const [showFrequentArticles, setShowFrequentArticles] = useState(false);
     /**
      * Add items to list when they are pushed by ItemInput component
      * @param newItems item list
@@ -47,7 +48,7 @@ const BuildShoppingList : React.FC = () => {
         shoppingList.items.forEach(
             (item) => removeItem(item.key),
         );
-        setAskingEmptyListConfirm(false);
+        setShowingReally(false);
     };
     const itemList = shoppingList.items.map(
         (item) => (
@@ -63,6 +64,10 @@ const BuildShoppingList : React.FC = () => {
         ),
     );
 
+    const toggleFrequentArticles = () => {
+        setShowFrequentArticles(!showFrequentArticles);
+    };
+
     itemList.reverse();
 
     return (
@@ -75,22 +80,37 @@ const BuildShoppingList : React.FC = () => {
                         : <span className="empty-list"> Liste vide. Que voulez-vous acheter ?</span>}
                 </ol>
             </div>
-            {
-                !!itemList.length
+            <div className="list-actions">
+                {
+                    !!itemList.length
             && (
                 <button
-                    className={`remove-all ${askingEmptyListConfirm ? 'really' : ''}`}
+                    className={`list-action-button ${showingReally ? 'really' : ''}`}
                     type="button"
-                    onClick={() => (askingEmptyListConfirm
-                        ? deleteAllItems() : setAskingEmptyListConfirm(true))}
-                    onBlur={() => setAskingEmptyListConfirm(false)}
+                    onClick={() => (showingReally
+                        ? deleteAllItems() : setShowingReally(true))}
+                    onBlur={() => setShowingReally(false)}
                 >
-                    {askingEmptyListConfirm
+                    {showingReally
                         ? 'Vraiment ?'
                         : 'Vider la liste'}
                     <div className="icon-circle"><FontAwesomeIcon icon={faTrash} color="white" /></div>
                 </button>
             )
+                }
+                <button className="list-action-button" type="button" onClick={toggleFrequentArticles}>
+                    Articles Fréquents
+                </button>
+
+            </div>
+            {
+                showFrequentArticles
+                && (
+                    <FrequentArticles
+                        onItemOuput={(item) => addItemsToList([item])}
+                        itemsAlreadyInList={shoppingList.items}
+                    />
+                )
             }
         </>
     );

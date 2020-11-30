@@ -21,12 +21,37 @@ interface ShoppingListContextDescription {
     removeItem: (itemKey: string) => void;
     updateItem: (item: Item) => void;
     addItem: (item: Item) => Item;
+    getFrequentArticles:(maxArticles : number, excludeItems : Item[])=> Item[];
 }
 const ShoppingListContext = React.createContext(null as ShoppingListContextDescription);
 
 const getListRef = (listID: string) => firebase.database().ref(`/lists/${listID}/`);
 
-const setCurrentList = (newListID: string, onListUpdated: (itemList: Item[]) => void) => {
+const sortFrequentArticles = (articles: Item[]) => {
+    const itemsNoQuantity: Item[] = articles
+        .map((item) => ({
+            category: item.category ? item.category : null,
+            name: QuantityComputingService.itemNameWithoutQuantity(item),
+            bought: false,
+            lastUpdate: new Date().getTime(),
+        }));
+    const itemOccurences: { [id: string]: { item: Item, count: number } } = itemsNoQuantity.reduce(
+        (acc, curr) => {
+            if (acc[curr.name]) {
+                acc[curr.name].count += 1;
+            } else {
+                acc[curr.name] = { item: curr, count: 1 };
+            }
+            return acc;
+        },
+        {},
+    );
+    const sorted = Object.entries(itemOccurences).sort((a, b) => b[1].count - a[1].count)
+        .map((a) => a[1].item);
+    return sorted;
+};
+
+const setCurrentList = (newListID: string, onListUpdated: (itemList: Item[]) => void, onFrequentArticlesFound: (articles: Item[]) => void) => {
     /** Removes the subscription on the previous list */
     getListRef(LocalStorageInterface.getCurrentListId()).child('current').off('value');
 
@@ -52,6 +77,15 @@ const setCurrentList = (newListID: string, onListUpdated: (itemList: Item[]) => 
                 LocationService.startGeoTracking();
             }
         });
+    listRef.child('archived').once('value',
+        (snapshot) => {
+            const archivedItems = snapshot.val();
+            const itemList = archivedItems ? Object.entries(archivedItems).map(
+                ([key, item]) => ({ ...(item as Item), key }),
+            ) : [];
+            const itemsArranged = sortFrequentArticles(itemList);
+        });
+
     LocalStorageInterface.setCurrentListId(newListID);
 };
 
@@ -105,12 +139,14 @@ const updateItemInDB = (listId: string, item: Item,
 export const ShoppingListProvider: React.FC<{ children }> = ({ children = null }) => {
     const [itemList, setItemList] = useState<Item[]>([]);
 
+    const [frequentArticles, setFrequentArticles] = useState([]);
+
     /** Handle list change */
     const urlListID = (useParams<{ listID: string }>()).listID;
     const [listId, setListId] = useState<string>('');
 
     if (urlListID && urlListID !== listId) {
-        setCurrentList(urlListID, setItemList);
+        setCurrentList(urlListID, setItemList, setFrequentArticles);
         setListId(urlListID);
     }
 
@@ -132,6 +168,13 @@ export const ShoppingListProvider: React.FC<{ children }> = ({ children = null }
             (shoppingList) => setItemList(shoppingList.items));
     };
 
+    const getFrequentArticles = (maxArticles :number, excludeItems:Item[]) => {
+        const withoutExcluded = frequentArticles.filter((item) => excludeItems.find(
+            (i) => QuantityComputingService.itemNameWithoutQuantity(i) === item.name,
+        ) === undefined);
+        return withoutExcluded.slice(0, maxArticles);
+    };
+
     const value: ShoppingListContextDescription = {
         shoppingList: {
             name: listId,
@@ -141,6 +184,7 @@ export const ShoppingListProvider: React.FC<{ children }> = ({ children = null }
         removeItem,
         updateItem,
         addItem,
+        getFrequentArticles,
     };
     return (
         <ShoppingListContext.Provider value={value}>
