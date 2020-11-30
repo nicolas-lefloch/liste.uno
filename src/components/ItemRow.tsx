@@ -107,7 +107,7 @@ const ItemRow = (props: Props) => {
                     )
                     : (
                         <>
-                            <div onDoubleClick={() => props.onToggleEdition(true)} className="item-label">
+                            <div onDoubleClick={() => props.onToggleEdition(true)} className={`item-label ${props.item.bought ? 'bought' : ''}`}>
                                 <p>
                                     {props.item.name}
                                 </p>

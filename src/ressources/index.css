@@ -345,12 +345,6 @@ input[type="checkbox"]:checked ~label::before {
 
 }
 
-body{
-    -webkit-tap-highlight-color:transparent;
-    -moz-tap-highlight-color:transparent;
-    -o-tap-highlight-color:transparent;
-}
-
 .install-prompt{
     display: flex;
     justify-content: revert;
@@ -612,4 +606,12 @@ button.remove-all {
 }
 .item-row-options button:hover{
     background-color: rgba(0,0,0,.2);
+}
+
+.item-label{
+    transition: color .5s;
+}
+.item-label.bought{
+    text-decoration: line-through;
+    color: rgba(0,0,0,.4)
 }
