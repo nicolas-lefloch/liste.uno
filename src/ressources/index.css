@@ -656,7 +656,7 @@ button.list-action-button.really{
 }
 
 
-button, a{
+button, a, .while-shopping-row{
     user-select: none;
     -webkit-tap-highlight-color: transparent;
 }
