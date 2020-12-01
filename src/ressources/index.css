@@ -223,11 +223,10 @@ a:hover, a:visited, a:link, a:active
     content: "";
     height: 2.2em;
     width: 2.2em;
-
     left: 3px;
     bottom: 5px;
     background-color: #E8907A;
-    transition: cubic-bezier(0.18, 0.89, 0.32, 1.28) .1s ;
+    transition: transform cubic-bezier(0.18, 0.89, 0.11, 0.94) .1s;
     z-index: -1;
     border-radius: 50%;
 }
@@ -596,7 +595,7 @@ button.list-action-button.really{
     overflow-y: auto;
     padding: 30px 20px;
     box-shadow:  1px -6px 13px 4px #b9b9b99c;
-    transition: top ease .3s, box-shadow ease .3s, border-top-width ease .3s;
+    transition: top ease .15s, box-shadow ease .3s, border-top-width ease .3s;
     border-radius: 3em 3em 0 0;
     padding-top: 1em;
 }

@@ -22,13 +22,13 @@ import OptionsMenu from './components/options-menu/OptionsMenu';
 
 const BuildListPage: React.FC = () => (
     <>
-        <div className="switch-and-share">
-            <SwitchListMode />
-            <ShareList />
-        </div>
-        <PromptInstall />
         <BuildShoppingList />
         <OptionsMenu />
+    </>
+);
+const ShoppingPage: React.FC = () => (
+    <>
+        <WhileShoppingList />
     </>
 
 );
@@ -44,20 +44,17 @@ function App() {
                 </header>
                 <Switch>
                     <Route path="/:listID">
+                        <div className="switch-and-share">
+                            <SwitchListMode />
+                            <ShareList />
+                        </div>
+                        <PromptInstall />
                         <ShoppingListProvider>
-                            <Route path="/:listID/shopping">
-                                <div className="switch-and-share">
-                                    <SwitchListMode />
-                                    <ShareList />
-                                </div>
-                                <PromptInstall />
-                                <WhileShoppingList />
-                            </Route>
-                            <Route path="/:listID/hacker">
-                                <LocationHistory />
-                            </Route>
                             <Route path="/:listID/build-list/:action?/:editedItemKey?">
                                 <BuildListPage />
+                            </Route>
+                            <Route path="/:listID/shopping">
+                                <ShoppingPage />
                             </Route>
                             <Route
                                 path="/:listID"
@@ -66,7 +63,9 @@ function App() {
                                     <Redirect to={`/${props.match.params.listID}/build-list`} />
                                 )}
                             />
-
+                            <Route path="/:listID/hacker">
+                                <LocationHistory />
+                            </Route>
                         </ShoppingListProvider>
                     </Route>
 

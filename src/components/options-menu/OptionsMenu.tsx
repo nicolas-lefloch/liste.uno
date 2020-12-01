@@ -1,4 +1,5 @@
 import React, { useContext, useState } from 'react';
+import ReactDOM from 'react-dom';
 import { useHistory, useParams, useRouteMatch } from 'react-router-dom';
 import OptionButtons from './OptionButtons';
 import ListChoicePopup from './ListChoicePopup';
@@ -24,7 +25,7 @@ const OptionsMenu: React.FC = () => {
             }
         },
     };
-    return (
+    return ReactDOM.createPortal((
         <div id="options-menu-container">
             <div id="options-menu">
                 <MenuContext.Provider value={menuContextValue}>
@@ -33,7 +34,7 @@ const OptionsMenu: React.FC = () => {
                 </MenuContext.Provider>
             </div>
         </div>
-    );
+    ), document.body);
 };
 export const useOptionsMenu = () => useContext(MenuContext);
 export default OptionsMenu;
