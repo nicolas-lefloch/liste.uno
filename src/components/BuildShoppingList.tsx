@@ -22,7 +22,6 @@ const BuildShoppingList: React.FC = () => {
     const { editedItemKey, listID } = useParams<{editedItemKey:string, listID:string}>();
     const history = useHistory();
     const toggleEdition = (startEdition:boolean, itemKey:string) => {
-        console.log('toggleEdition');
         if (startEdition) {
             const path = `/${listID}/build-list/edit-item/${itemKey}`;
             if (editedItemKey) {

@@ -8,20 +8,24 @@ interface Props {
 const ListChoicePopup: React.FC<Props> = (props: Props) => {
     const { toggleListChoiceMenu } = useOptionsMenu();
     const backgroundRef = useRef<HTMLButtonElement>();
-
+    const maxOffset = window.innerHeight;
+    const minOffset = maxOffset / 2;
     const popupRef = useRef<HTMLDivElement>();
-    const [popupHeight, setPopupHeight] = useState(0);
+    const [popupOffset, setPopupOffset] = useState(props.opened ? minOffset : maxOffset);
+    const [exceedingBorder, setExceedingBorder] = useState(0);
+    useEffect(() => {
+        setPopupOffset(props.opened ? minOffset : maxOffset);
+    }, [props.opened]);
     const [dragging, setDragging] = useState(false);
     useEffect(() => {
         let dragOrigin: number;
         let lastY: number;
-        let lastDirectionIsBottom: boolean;
-        let initialHeight:number;
+        let lastDirection: number;
+        let initialOffset: number;
         const startDrag = (event: TouchEvent) => {
             dragOrigin = event.touches[0].clientY;
             lastY = dragOrigin;
-            initialHeight = popupRef.current.clientHeight;
-            setPopupHeight(initialHeight);
+            initialOffset = parseInt(popupRef.current.style.top, 10);
             setDragging(true);
         };
         const doDrag = (event: TouchEvent) => {
@@ -29,21 +33,33 @@ const ListChoicePopup: React.FC<Props> = (props: Props) => {
             if (dragOrigin) {
                 const currentY = event.touches[0].clientY;
                 const yDrag = currentY - dragOrigin;
-                let newHeight = initialHeight - yDrag;
-                if (newHeight > initialHeight) {
-                    newHeight = initialHeight;
+                let newOffset = initialOffset + yDrag;
+                if (newOffset > maxOffset) {
+                    newOffset = maxOffset;
                 }
-                if (newHeight < 0) {
-                    newHeight = 0;
+                const tooHighDrag = Math.min(minOffset - newOffset);
+
+                if (newOffset < minOffset) {
+                    newOffset = minOffset;
                 }
-                lastDirectionIsBottom = currentY > lastY;
+                lastDirection = lastY - currentY;
                 lastY = currentY;
-                setPopupHeight(newHeight);
+                const addedWidth = tooHighDrag > 0 ? tooHighDrag ** (1 / 2.5) : 0;
+                setExceedingBorder(addedWidth);
+                setPopupOffset(newOffset - addedWidth + 6);
             }
         };
         const endDrag = () => {
             setDragging(false);
-            toggleListChoiceMenu(!lastDirectionIsBottom);
+            setExceedingBorder(0);
+            // console.log('end drag, last direction is : ', lastDirection);
+            const currentOffset = parseInt(popupRef.current.style.top, 10);
+            if ((lastDirection < 0 && currentOffset > minOffset) || currentOffset === maxOffset) {
+                // console.log('toggle close');
+                toggleListChoiceMenu(false);
+            } else {
+                setPopupOffset(minOffset);
+            }
         };
         backgroundRef.current.addEventListener('touchstart', startDrag);
         backgroundRef.current.addEventListener('touchmove', doDrag, { passive: false });
@@ -56,13 +72,28 @@ const ListChoicePopup: React.FC<Props> = (props: Props) => {
         >
             <button
                 type="button"
-                onClick={() => toggleListChoiceMenu(false)}
-                onKeyDown={() => toggleListChoiceMenu(false)}
+                onClick={() => props.opened && toggleListChoiceMenu(false)}
+                onKeyDown={() => props.opened && toggleListChoiceMenu(false)}
                 ref={backgroundRef}
                 id="list-choice-popup-background"
                 aria-label="Fermer la popup"
             />
-            <div id="popup-content" ref={popupRef} style={dragging ? { height: popupHeight, transition: 'none' } : {}}>
+            <div
+                id="popup-content"
+                ref={popupRef}
+                style={
+                    {
+                        top: popupOffset,
+                        ...(dragging
+                            ? {
+                                transition: 'none',
+                                borderTopWidth: exceedingBorder + 6,
+                                boxShadow: `1px -${6 + exceedingBorder * 2}px 13px 4px #b9b9b99c`,
+                            }
+                            : {}),
+                    }
+                }
+            >
                 <ListChoice />
             </div>
         </div>

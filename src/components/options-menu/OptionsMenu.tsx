@@ -12,15 +12,15 @@ const OptionsMenu: React.FC = () => {
     const listChoiceOpened = !!useRouteMatch('/:listID/build-list/list-choice');
     const { listID } = useParams<{listID : string}>();
     const history = useHistory();
-    console.log(history);
     const menuContextValue: MenuContextType = {
         toggleListChoiceMenu: (shouldOpen) => {
+            console.log('toggle ', shouldOpen ? 'open' : 'close');
             if (shouldOpen) {
-                console.log(`pushing /${listID}/build-list/list-choice`);
+                // console.log(`pushing /${listID}/build-list/list-choice`);
                 history.push(`/${listID}/build-list/list-choice`);
             } else {
-                console.log('going back');
-                history.goBack();
+                // console.log('going back');
+                history.replace(`/${listID}/build-list`);
             }
         },
     };
