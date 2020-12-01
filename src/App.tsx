@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import './ressources/App.css';
 import {
     BrowserRouter as Router,
@@ -19,6 +19,19 @@ import { SnackBarProvider } from './utilities/SnackBar';
 import { ShoppingListProvider } from './services/ShoppingList.newservice';
 import LocalStorageInterface from './services/LocalStorageInterface';
 import OptionsMenu from './components/options-menu/OptionsMenu';
+
+const BuildListPage: React.FC = () => (
+    <>
+        <div className="switch-and-share">
+            <SwitchListMode />
+            <ShareList />
+        </div>
+        <PromptInstall />
+        <BuildShoppingList />
+        <OptionsMenu />
+    </>
+
+);
 
 function App() {
     return (
@@ -43,14 +56,15 @@ function App() {
                             <Route path="/:listID/hacker">
                                 <LocationHistory />
                             </Route>
+                            <Route path="/:listID/build-list/:action?/:editedItemKey?">
+                                <BuildListPage />
+                            </Route>
                             <Route path="/:listID" exact>
-                                <div className="switch-and-share">
-                                    <SwitchListMode />
-                                    <ShareList />
-                                </div>
-                                <PromptInstall />
-                                <BuildShoppingList />
-                                <OptionsMenu />
+                                <Redirect
+                                    to={{
+                                        pathname: `/${LocalStorageInterface.getCurrentListId()}/build-list`,
+                                    }}
+                                />
                             </Route>
                         </ShoppingListProvider>
                     </Route>
@@ -58,7 +72,7 @@ function App() {
                     <Route path="/" exact>
                         <Redirect
                             to={{
-                                pathname: `/${LocalStorageInterface.getCurrentListId()}`,
+                                pathname: `/${LocalStorageInterface.getCurrentListId()}/build-list`,
                             }}
                         />
                     </Route>

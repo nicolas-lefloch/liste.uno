@@ -1,4 +1,5 @@
 import React, { useContext, useState } from 'react';
+import { useHistory, useParams, useRouteMatch } from 'react-router-dom';
 import OptionButtons from './OptionButtons';
 import ListChoicePopup from './ListChoicePopup';
 
@@ -8,9 +9,17 @@ interface MenuContextType {
 const MenuContext = React.createContext<MenuContextType>(undefined);
 
 const OptionsMenu: React.FC = () => {
-    const [listChoiceOpened, setListChoiceOpened] = useState(false);
+    const listChoiceOpened = !!useRouteMatch('/:listID/build-list/list-choice');
+    const { listID } = useParams<{listID : string}>();
+    const history = useHistory();
     const menuContextValue: MenuContextType = {
-        toggleListChoiceMenu: (shouldOpen) => setListChoiceOpened(shouldOpen),
+        toggleListChoiceMenu: (shouldOpen) => {
+            if (shouldOpen) {
+                history.push(`/${listID}/build-list/list-choice`);
+            } else {
+                history.goBack();
+            }
+        },
     };
     return (
         <div id="options-menu-container">

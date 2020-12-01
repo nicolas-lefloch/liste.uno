@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useHistory, useParams } from 'react-router-dom';
 import { Item } from '../datatypes/Item';
 import ItemInput from './ItemInput';
 import ItemRow from './ItemRow';
@@ -17,7 +18,21 @@ const BuildShoppingList: React.FC = () => {
     const {
         shoppingList, addItem, updateItem, removeItem,
     } = useShoppingList();
-    const [editedItemKey, setEditedItemKey] = useState<string>();
+
+    const { editedItemKey, listID } = useParams<{editedItemKey:string, listID:string}>();
+    const history = useHistory();
+    const toggleEdition = (startEdition:boolean, itemKey:string) => {
+        if (startEdition) {
+            const path = `/${listID}/build-list/edit-item/${itemKey}`;
+            if (editedItemKey) {
+                history.replace(path);
+            } else {
+                history.push(path);
+            }
+        } else {
+            history.goBack();
+        }
+    };
     const [showingReally, setShowingReally] = useState(false);
     const [showFrequentArticles, setShowFrequentArticles] = useState(false);
     /**
@@ -57,7 +72,7 @@ const BuildShoppingList: React.FC = () => {
                 item={item}
                 editable={editedItemKey === item.key}
                 onToggleEdition={
-                    (shouldEdit) => setEditedItemKey(shouldEdit ? item.key : undefined)
+                    (shouldEdit) => toggleEdition(shouldEdit, item.key)
                 }
                 onDelete={() => removeItem(item.key)}
             />

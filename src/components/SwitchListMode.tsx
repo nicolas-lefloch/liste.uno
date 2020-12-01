@@ -9,7 +9,7 @@ const SwitchListMode = () => {
 
     const isShopping = path.length === 3 && path[2] === 'shopping';
     return (
-        <Link to={`/${listID}/${!isShopping ? 'shopping' : ''}`}>
+        <Link to={`/${listID}/${!isShopping ? 'shopping' : 'build-list'}`}>
             <div className={isShopping ? 'switch-mode active' : 'switch-mode'}>
                 <span className="slider" />
                 <button type="button" className={`small-button ${isShopping ? '' : 'active-mode'}`}>

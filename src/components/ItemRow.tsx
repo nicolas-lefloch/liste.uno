@@ -66,10 +66,6 @@ const ItemRow = (props: Props) => {
         );
     };
 
-    const doubleClickEditAdvice = () => {
-        triggerSnackBar('Double-clic pour éditer', 1000);
-    };
-
     /** The list of available categories to assign, shown under the item */
     const categoriesList = CategorizationService.getAppCategories().map((category) => (
         <li key={category.name}>

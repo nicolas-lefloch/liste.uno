@@ -168,7 +168,6 @@ export const ShoppingListProvider: React.FC<{ children }> = ({ children = null }
             (shoppingList) => setItemList(shoppingList.items));
     };
 
-
     const value: ShoppingListContextDescription = {
         shoppingList: {
             name: listId,
