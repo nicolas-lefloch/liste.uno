@@ -46,7 +46,7 @@ const ListChoicePopup: React.FC<Props> = (props: Props) => {
                 lastY = currentY;
                 const addedWidth = tooHighDrag > 0 ? tooHighDrag ** (1 / 2.5) : 0;
                 setExceedingBorder(addedWidth);
-                setPopupOffset(newOffset - addedWidth + 6);
+                setPopupOffset(newOffset - addedWidth);
             }
         };
         const endDrag = () => {
@@ -88,7 +88,7 @@ const ListChoicePopup: React.FC<Props> = (props: Props) => {
                             ? {
                                 transition: 'none',
                                 borderTopWidth: exceedingBorder + 6,
-                                boxShadow: `1px -${6 + exceedingBorder * 2}px 13px 4px #b9b9b99c`,
+                                boxShadow: `1px -${6 + exceedingBorder}px 13px 4px #b9b9b99c`,
                             }
                             : {}),
                     }

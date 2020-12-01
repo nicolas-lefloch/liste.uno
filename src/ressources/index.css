@@ -589,7 +589,7 @@ button.list-action-button.really{
     position: absolute;
     left:0;
     right: 0;
-    height: 100vh;
+    bottom: 0;
     border-top: 6px solid #E8907A;
     background-color: white;
     z-index: 1;   
