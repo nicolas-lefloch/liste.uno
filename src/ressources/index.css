@@ -8,6 +8,7 @@ body{
     margin: 0 auto;
     position: relative;
     border-top: 6px solid #E8907A;
+    padding-bottom: 100px;
 }
 #root {
     margin-bottom: 3em;

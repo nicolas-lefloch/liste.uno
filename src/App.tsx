@@ -59,13 +59,14 @@ function App() {
                             <Route path="/:listID/build-list/:action?/:editedItemKey?">
                                 <BuildListPage />
                             </Route>
-                            <Route path="/:listID" exact>
-                                <Redirect
-                                    to={{
-                                        pathname: `/${LocalStorageInterface.getCurrentListId()}/build-list`,
-                                    }}
-                                />
-                            </Route>
+                            <Route
+                                path="/:listID"
+                                exact
+                                render={(props) => (
+                                    <Redirect to={`/${props.match.params.listID}/build-list`} />
+                                )}
+                            />
+
                         </ShoppingListProvider>
                     </Route>
 
