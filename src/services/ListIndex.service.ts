@@ -10,7 +10,6 @@ const generateListName = () => `Liste du ${new Date().toLocaleDateString('fr-FR'
 
 export default class ListIndexService {
     static setListName = (id :string, name: string) => {
-        console.log(`setting ${id} name to ${name}`);
         LocalStorageInterface.setListName(id, name);
         getListRef(id).child('name').set(name);
     };

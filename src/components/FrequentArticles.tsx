@@ -27,7 +27,6 @@ const FrequentArticles: React.FC<Props> = (props: Props) => {
     useEffect(() => {
         if (props.opened) {
             const toDisplay = getFrequentArticles(maxArticles, props.itemsAlreadyInList);
-            console.log('maximum : ', maxArticles, 'found : ', toDisplay.length);
             setShowSeeMore(toDisplay.length === maxArticles);
             setDisplayedArticles(toDisplay);
         }

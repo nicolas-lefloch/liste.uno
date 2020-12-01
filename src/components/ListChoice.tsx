@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlus, faTimes } from '@fortawesome/free-solid-svg-icons';
+import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import LocalStorageInterface from '../services/LocalStorageInterface';
 import ListURL from './ListURL';
 import EditableItem from './EditableItem';
@@ -52,14 +52,14 @@ const ListChoice: React.FC = () => {
                 >
                     <FontAwesomeIcon icon={faTimes} size="lg" />
                 </button>
-            ) : <i> </i> }
+            ) : <i> </i>}
         </li>
     ));
 
     return (
         <nav role="navigation" id="list-choice">
             <ul>
-                { listJsx }
+                {listJsx}
             </ul>
         </nav>
     );

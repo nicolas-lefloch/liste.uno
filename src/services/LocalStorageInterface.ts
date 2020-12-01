@@ -1,6 +1,5 @@
 import { Item } from '../datatypes/Item';
 import { ShoppingList } from '../datatypes/ShoppingList';
-import ListIndexService from './ListIndex.service';
 
 class LocalStorageInterface {
     static getLists() {
@@ -22,7 +21,6 @@ class LocalStorageInterface {
             name: localLists[listId] ? localLists[listId].name : '',
             items: itemList,
         };
-        console.log('saving list item ', localLists[listId].name);
         LocalStorageInterface.saveLists(localLists);
     }
 
