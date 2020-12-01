@@ -62,7 +62,7 @@ const BuildShoppingList: React.FC = () => {
 
     const deleteAllItems = () => {
         shoppingList.items.forEach(
-            (item) => removeItem(item.key),
+            (item) => item.bought && removeItem(item.key),
         );
         setShowingReally(false);
     };
@@ -98,7 +98,7 @@ const BuildShoppingList: React.FC = () => {
             </div>
             <div className="list-actions">
                 {
-                    !!itemList.length
+                    !!shoppingList.items.filter((i) => i.bought).length
                     && (
                         <button
                             className={`list-action-button ${showingReally ? 'really' : ''}`}
@@ -109,7 +109,7 @@ const BuildShoppingList: React.FC = () => {
                         >
                             {showingReally
                                 ? 'Vraiment ?'
-                                : 'Vider la liste'}
+                                : 'Supprimer les éléments barrés'}
                             <div className="icon-circle"><FontAwesomeIcon icon={faTrash} color="white" /></div>
                         </button>
                     )
