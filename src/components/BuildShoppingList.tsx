@@ -33,6 +33,9 @@ const BuildShoppingList: React.FC = () => {
             history.goBack();
         }
     };
+
+    const [optionOpenedKey, setOptionOpenedKey] = useState<string>(null);
+
     const [showingReally, setShowingReally] = useState(false);
     const [showFrequentArticles, setShowFrequentArticles] = useState(false);
     /**
@@ -74,6 +77,8 @@ const BuildShoppingList: React.FC = () => {
                 onToggleEdition={
                     (shouldEdit) => toggleEdition(shouldEdit, item.key)
                 }
+                optionOpened={optionOpenedKey === item.key}
+                onToggleOptionButtons={(shouldOpen) => setOptionOpenedKey(shouldOpen ? item.key : null)}
                 onDelete={() => removeItem(item.key)}
             />
         ),

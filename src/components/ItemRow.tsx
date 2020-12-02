@@ -16,6 +16,8 @@ interface Props {
     onDelete: () => void;
     editable: boolean;
     onToggleEdition: (editable: boolean) => void;
+    onToggleOptionButtons: (shouldOpen :boolean) => void;
+    optionOpened : boolean;
 }
 
 const ItemRow = (props: Props) => {
@@ -26,8 +28,6 @@ const ItemRow = (props: Props) => {
 
     /** Wether the categories menu should be shown or not */
     const [showCategoryMenu, setShowCategoryMenu] = useState(false);
-
-    const [showOptionButtons, setShowOptionButtons] = useState(false);
 
     /** Calls the service to update the item when the name form is submitted */
     const submitItemNameEdition = (event: FormEvent) => {
@@ -120,7 +120,14 @@ const ItemRow = (props: Props) => {
                                 )}
                             </div>
                             <div className="delete-button-container">
-                                <button className="small-button" type="button" onClick={() => setShowOptionButtons(true)}>
+                                <button
+                                    className={`small-button ${props.optionOpened ? 'active' : ''}`}
+                                    type="button"
+                                    onClick={(event) => {
+                                        event.stopPropagation();
+                                        props.onToggleOptionButtons(!props.optionOpened);
+                                    }}
+                                >
                                     <FontAwesomeIcon icon={faEllipsisV} />
                                 </button>
                             </div>
@@ -128,8 +135,8 @@ const ItemRow = (props: Props) => {
                                 onDelete={props.onDelete}
                                 onEdit={() => props.onToggleEdition(true)}
                                 onEditCategory={() => setShowCategoryMenu(true)}
-                                onCloseOptions={() => setShowOptionButtons(false)}
-                                opened={showOptionButtons}
+                                onCloseOptions={() => props.onToggleOptionButtons(false)}
+                                opened={props.optionOpened}
                             />
                         </>
                     )}

@@ -12,9 +12,9 @@ const ItemRowOptions: React.FC<Props> = (props: Props) => {
         if (props.opened) {
             document.addEventListener('click', props.onCloseOptions);
         }
-        return () => {
+        return props.opened ? () => {
             document.removeEventListener('click', props.onCloseOptions);
-        };
+        } : null;
     }, [props.opened]);
     return (
         <div className={`item-row-options ${props.opened ? 'opened' : ''}`}>

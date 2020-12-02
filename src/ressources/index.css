@@ -132,7 +132,7 @@ ol{
     outline: none;
     transition: background-color .5s;;
 }
-.small-button:focus{
+.small-button.active{
     background-color: #e8907a94;
 }
 
@@ -372,7 +372,7 @@ input[type="checkbox"]:checked ~label::before {
 button.close {
     align-self: flex-start;
 }
-button.small-button:hover, button.small-button:focus {
+button.small-button:hover, button.small-button.active {
     color: #E8907A;
 
 }
@@ -691,3 +691,19 @@ li.frequent-article > button.add-item-button{
     text-align: center;
     padding : 20px;
 }
+
+@keyframes patate{
+    0%   {transform: rotate3d(1, 1, 1,0deg);}
+    25%  {transform: rotate3d(1, 1, 1,90deg);}
+    50%  {transform: rotate3d(1, 1, 1,180deg);}
+    75% {transform: rotate3d(1, 1, 1,270deg);}
+    100% {transform: rotate3d(1, 1, 1,360deg);}
+}
+
+/* :not(body):not(div):not(header):not(html){
+    transform-origin: bottom;
+    animation : patate;
+    animation-duration: 2s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+} */
