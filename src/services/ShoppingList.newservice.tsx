@@ -152,7 +152,7 @@ export const ShoppingListProvider: React.FC<{ children }> = ({ children = null }
 
     const removeItem = (itemKey: string) => removeItemInDB(listId, itemKey,
         (shoppingList) => setItemList(shoppingList.items));
-    const updateItem = (item: Item) => updateItemInDB(listId, item,
+    const updateItem = (item: Item) => updateItemInDB(listId, { ...item, lastUpdate: new Date().getTime() },
         (shoppingList) => setItemList(shoppingList.items));
     const addItem = (item: Item) => {
         // Duplicates handling
