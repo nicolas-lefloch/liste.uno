@@ -75,6 +75,15 @@ const ListChoicePopup: React.FC<Props> = (props: Props) => {
                 onClick={() => props.opened && toggleListChoiceMenu(false)}
                 onKeyDown={() => props.opened && toggleListChoiceMenu(false)}
                 ref={backgroundRef}
+                style={
+                    {
+                        backgroundColor: `rgba(247, 247, 247, ${
+                            (0.3 * exceedingBorder ** 2) / (maxOffset - minOffset)
+                            + 0.7 - (0.7 * (popupOffset - minOffset)) / (maxOffset - minOffset)
+                        })`,
+                        ...(dragging ? { transition: 'none' } : {}),
+                    }
+                }
                 id="list-choice-popup-background"
                 aria-label="Fermer la popup"
             />
