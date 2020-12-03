@@ -6,17 +6,18 @@ interface Props {
     text : string
     current : boolean
     submitTextEdition : (value: string) => void;
+    editMode : boolean;
+    toggleEditMode : (editMode : boolean) => void;
 }
 
 const EditableItem = (props: Props) => {
-    const [editMode, setEditMode] = useState(false);
     const [innerText, setInnerText] = useState(props.text);
 
     const submit = () => {
         props.submitTextEdition(innerText);
-        setEditMode(false);
+        props.toggleEditMode(false);
     };
-    return editMode ? (
+    return props.editMode ? (
         <form onSubmit={submit}>
             <input
                 onChange={(event) => setInnerText(event.target.value)}
@@ -35,7 +36,7 @@ const EditableItem = (props: Props) => {
         </form>
     ) : (
         <>
-            <div onDoubleClick={() => setEditMode(true)} className="item-label">
+            <div onDoubleClick={() => props.toggleEditMode(true)} className="item-label">
                 <p className={props.current ? 'active' : ''}>
                     {innerText}
                 </p>

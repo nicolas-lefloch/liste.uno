@@ -112,7 +112,7 @@ ol{
     margin-right: 15px;
 }
 
-.booknote-list .delete-button-container{
+.booknote-list .row-options-button-container{
     display: flex;
     align-items: center;
 }
@@ -381,7 +381,7 @@ button.small-button:hover, button.small-button.active {
     border: 2px solid #E8907A;
     color: #E8907A;
 }
-button {
+button:not(:disabled) {
     cursor: pointer;
 }
 .map_history{
@@ -435,6 +435,7 @@ button.list-action-button.really{
 
 .snackbar{
     position: fixed;
+    z-index: 999;
     left: 50%;
     transform: translate(-50%, 0);
     background-color: rgba(0, 0, 0, .8);
@@ -487,11 +488,11 @@ button.list-action-button.really{
 
 
 
-#list-choice ul li button {
+/* #list-choice ul li button {
     color: #E8907A;
     border: 0;
     background-color: transparent;
-}
+} */
 #list-choice ul li {
     display: flex;
     justify-content: space-evenly;
@@ -609,42 +610,6 @@ button.list-action-button.really{
 }
 
 
-.item-row-options{
-    position: absolute;
-    right: 0px;
-    top: 40px;
-    display: flex;
-    flex-direction: column;
-    visibility: hidden;
-    padding: 0;
-    background-color: white;
-    z-index: 1;
-    box-shadow: 4px 4px 10px 5px #cccccc9c;
-    border-radius: 10px;
-    overflow: hidden;
-    transform-origin: right top;
-    transform: scale(.1);
-    transition: transform .2s, visibility .2s;
-}
-
-.item-row-options.opened{
-    visibility: visible;
-    width: auto;
-    height: auto;
-    transform: scaleY(1);
-    transition: transform .1s;
-}
-
-.item-row-options button{
-    border: none;
-    outline: none;
-    background-color: white;
-    font-size: 1rem;
-    padding: 15px 25px
-}
-.item-row-options button:hover{
-    background-color: rgba(0,0,0,.2);
-}
 
 .item-label{
     transition: color .5s;
@@ -707,3 +672,67 @@ li.frequent-article > button.add-item-button{
     animation-iteration-count: infinite;
     animation-timing-function: linear;
 } */
+
+
+
+/**  Row options **/
+.row-options-container{
+    position: relative;
+}
+
+.contextual-menu{
+    position: absolute;
+    right: 0px;
+    top: 40px;
+    display: flex;
+    flex-direction: column;
+    visibility: hidden;
+    padding: 0;
+    background-color: white;
+    z-index: 1;
+    box-shadow: 4px 4px 10px 5px #cccccc9c;
+    border-radius: 10px;
+    overflow: hidden;
+    transform-origin: right top;
+    transform: scale(.1);
+    transition: transform .2s, visibility .2s;
+}
+
+.contextual-menu.opened{
+    visibility: visible;
+    width: auto;
+    height: auto;
+    transform: scaleY(1);
+    transition: transform .1s;
+}
+
+.contextual-menu button{
+    border: none;
+    outline: none;
+    background-color: white;
+    font-size: 1rem;
+    padding: 15px 25px
+}
+.contextual-menu button:hover:not(:disabled){
+    background-color: rgba(0,0,0,.2);
+}
+
+
+.row-options-button{
+    background-color: transparent;
+    border: none;
+    color: #060e1063;
+    font-size: 1.4rem;
+    height: 2rem;
+    width: 2rem;
+    margin: 0;
+    padding: 0;
+    border-radius: 2rem;
+    padding-top: 2px;
+    padding-left: 1px;
+    outline: none;
+    transition: background-color .5s;;
+}
+.row-options-button.active{
+    background-color: #e8907a94;
+}

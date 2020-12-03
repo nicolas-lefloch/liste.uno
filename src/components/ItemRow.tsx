@@ -1,6 +1,6 @@
 import React, { FormEvent, useState } from 'react';
 import {
-    faSave, faEllipsisV,
+    faSave,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Item } from '../datatypes/Item';
@@ -9,15 +9,13 @@ import CategoryIcon from './CategoryIcon';
 import { Category } from '../datatypes/Category';
 import { useSnackbar } from '../utilities/SnackBar';
 import { useShoppingList } from '../services/ShoppingList.newservice';
-import ItemRowOptions from './ItemRowOptions';
+import RowOptions from './RowOptions';
 
 interface Props {
     item: Item;
     onDelete: () => void;
     editable: boolean;
     onToggleEdition: (editable: boolean) => void;
-    onToggleOptionButtons: (shouldOpen :boolean) => void;
-    optionOpened : boolean;
 }
 
 const ItemRow = (props: Props) => {
@@ -119,24 +117,20 @@ const ItemRow = (props: Props) => {
                                     <p className="item-addition-explanation">{props.item.additionExplanation}</p>
                                 )}
                             </div>
-                            <div className="delete-button-container">
-                                <button
-                                    className={`small-button ${props.optionOpened ? 'active' : ''}`}
-                                    type="button"
-                                    onClick={(event) => {
-                                        event.stopPropagation();
-                                        props.onToggleOptionButtons(!props.optionOpened);
-                                    }}
-                                >
-                                    <FontAwesomeIcon icon={faEllipsisV} />
-                                </button>
-                            </div>
-                            <ItemRowOptions
-                                onDelete={props.onDelete}
-                                onEdit={() => props.onToggleEdition(true)}
-                                onEditCategory={() => setShowCategoryMenu(true)}
-                                onCloseOptions={() => props.onToggleOptionButtons(false)}
-                                opened={props.optionOpened}
+                            <RowOptions options={[
+                                {
+                                    label: 'Supprimer',
+                                    action: props.onDelete,
+                                },
+                                {
+                                    label: 'Modifier',
+                                    action: () => props.onToggleEdition(true),
+                                },
+                                {
+                                    label: 'Catégorie',
+                                    action: () => setShowCategoryMenu(true),
+                                },
+                            ]}
                             />
                         </>
                     )}

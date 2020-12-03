@@ -1,6 +1,6 @@
 /* eslint-disable no-undef */
 import React, { useContext, useEffect, useState } from 'react';
-
+import ReactDOM from 'react-dom';
 /**
  * Create snackback React context
  */
@@ -40,11 +40,11 @@ const SnackBar = () => {
         return () => { isLastSnack = false; };
     },
     [snack, duration]);
-    return (
+    return ReactDOM.createPortal((
         <div className={`snackbar ${showing ? 'visible' : ''}`}>
             {snack}
         </div>
-    );
+    ), document.body);
 };
 
 interface Props{
