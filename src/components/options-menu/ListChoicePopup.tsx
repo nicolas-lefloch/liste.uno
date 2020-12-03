@@ -8,15 +8,20 @@ interface Props {
 const ListChoicePopup: React.FC<Props> = (props: Props) => {
     const { toggleListChoiceMenu } = useOptionsMenu();
     const backgroundRef = useRef<HTMLButtonElement>();
-    const maxOffset = window.innerHeight;
+    const [maxOffset, setMaxOffset] = useState(window.innerHeight);
     const minOffset = maxOffset / 2;
     const popupRef = useRef<HTMLDivElement>();
     const [popupOffset, setPopupOffset] = useState(props.opened ? minOffset : maxOffset);
     const [exceedingBorder, setExceedingBorder] = useState(0);
     useEffect(() => {
         setPopupOffset(props.opened ? minOffset : maxOffset);
-    }, [props.opened]);
+    }, [props.opened, maxOffset]);
     const [dragging, setDragging] = useState(false);
+    useEffect(() => {
+        window.addEventListener('resize', () => {
+            setMaxOffset(window.innerHeight);
+        });
+    }, []);
     useEffect(() => {
         let dragOrigin: number;
         let lastY: number;
@@ -52,10 +57,8 @@ const ListChoicePopup: React.FC<Props> = (props: Props) => {
         const endDrag = () => {
             setDragging(false);
             setExceedingBorder(0);
-            // console.log('end drag, last direction is : ', lastDirection);
             const currentOffset = parseInt(popupRef.current.style.top, 10);
             if ((lastDirection < 0 && currentOffset > minOffset) || currentOffset === maxOffset) {
-                // console.log('toggle close');
                 toggleListChoiceMenu(false);
             } else {
                 setPopupOffset(minOffset);
@@ -64,7 +67,14 @@ const ListChoicePopup: React.FC<Props> = (props: Props) => {
         backgroundRef.current.addEventListener('touchstart', startDrag);
         backgroundRef.current.addEventListener('touchmove', doDrag, { passive: false });
         backgroundRef.current.addEventListener('touchend', endDrag);
-    }, []);
+        return () => {
+            if (backgroundRef.current) {
+                backgroundRef.current.removeEventListener('touchstart', startDrag);
+                backgroundRef.current.removeEventListener('touchmove', doDrag);
+                backgroundRef.current.removeEventListener('touchend', endDrag);
+            }
+        };
+    }, [maxOffset]);
     return (
         <div
             id="list-choice-popup"
