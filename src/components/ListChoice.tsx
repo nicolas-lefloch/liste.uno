@@ -1,5 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { FormEvent, useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPlus, faSave } from '@fortawesome/free-solid-svg-icons';
 import LocalStorageInterface from '../services/LocalStorageInterface';
 import ListURL from './ListURL';
 import EditableItem from './EditableItem';
@@ -39,20 +41,48 @@ const ListChoice: React.FC = () => {
         setLocalLists(shoppingLists);
     };
 
+    const handleListRename = (event : FormEvent) => {
+        event.preventDefault();
+        ListIndexService.setListName(beingEditedListId, (event.target[0] as HTMLInputElement).value);
+        setLocalLists(LocalStorageInterface.getLists());
+        setBeingEditedListID('');
+    };
+
+    const newList = () => {
+        window.location.href = `/${LocalStorageInterface.generateRandomId()}`;
+    };
+
     const listJsx = Object.values(localLists).map((list) => (
         <li key={list.id}>
-            <EditableItem
-                submitTextEdition={
-                    (value) => { ListIndexService.setListName(list.id, value); }
-                }
-                editMode={beingEditedListId === list.id}
-                toggleEditMode={(editMode) => (editMode ? setBeingEditedListID(list.id) : setBeingEditedListID(''))}
-                text={list.name}
-                current={activeListId === list.id}
-            />
-            <Link to={`/${list.id}/`} onClick={() => setActiveListId(list.id)}>
-                <ListURL listID={list.id} />
-            </Link>
+            {
+                beingEditedListId === list.id ? (
+                    <form onSubmit={handleListRename} className="f-grow flex">
+                        <input
+                        // eslint-disable-next-line jsx-a11y/no-autofocus
+                            autoFocus
+                            className="f-grow"
+                            type="text"
+                            defaultValue={list.name}
+                        />
+                        <button
+                            type="submit"
+                            className="small-button"
+                            title="Save item"
+                        >
+                            <FontAwesomeIcon icon={faSave} />
+                        </button>
+                    </form>
+                ) : (
+                    <Link to={`/${list.id}/`} onClick={() => setActiveListId(list.id)} className="f-grow">
+                        <div className="list-label item-label">
+                            <p className={activeListId === list.id ? 'active' : ''}>
+                                {list.name}
+                            </p>
+                        </div>
+                    </Link>
+
+                )
+            }
             <RowOptions
                 options={[
                     {
@@ -88,6 +118,12 @@ const ListChoice: React.FC = () => {
             <ul>
                 {listJsx}
             </ul>
+            <button className="list-action-button new-list-btn" type="button" onClick={newList}>
+                Nouvelle liste
+                <div className="icon-circle">
+                    <FontAwesomeIcon icon={faPlus} color="white" />
+                </div>
+            </button>
         </nav>
     );
 };

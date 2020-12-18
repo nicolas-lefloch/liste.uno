@@ -43,7 +43,7 @@ class LocalStorageInterface {
     /**
      * Generate a pronounceable 4 chars string
      */
-    private static generateRandomId(): string {
+    public static generateRandomId(): string {
         const consonants = 'bcdfghjklmnpqrstvxz';
         const vowels = 'aeiou';
         const randomChar = (characters: string) => characters.charAt(

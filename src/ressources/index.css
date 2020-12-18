@@ -736,3 +736,19 @@ li.frequent-article > button.add-item-button{
 .row-options-button.active{
     background-color: #e8907a94;
 }
+
+.f-grow{
+    flex-grow: 1;
+}
+
+.flex{
+    display: flex;
+}
+
+.list-label{
+    color : #707070;
+}
+
+.new-list-btn{
+    margin: 20px auto;
+}
