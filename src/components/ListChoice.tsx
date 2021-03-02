@@ -134,8 +134,8 @@ const ListChoice: React.FC = () => {
                     </div>
                 </button>
                 <form onSubmit={handleListImport} className="import-list-form">
-                    <span>Lier liste existante</span>
-                    <input type="text" />
+                    <span>Import</span>
+                    <input type="text" placeholder=" liste.uno/xxxx" />
                     <button type="submit">
                         <div className="icon-circle">
                             <FontAwesomeIcon icon={faSignOutAlt} color="white" />

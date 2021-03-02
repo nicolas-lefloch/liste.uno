@@ -757,10 +757,15 @@ li.frequent-article > button.add-item-button{
     color : #707070;
 }
 
+.popin-action-btn > * {
+    margin-top: 1em;
+
+}
 .popin-action-btn {
     justify-content: space-around;
     align-items: center;
-    margin: 20px auto;
+    margin: 0px auto;
+    flex-wrap: wrap;
 }
 
 .import-list-form {
@@ -770,17 +775,21 @@ li.frequent-article > button.add-item-button{
     border: 2px solid #707070;
     font-size: 1rem;
     font-family: 'Roboto Mono', serif;
-    padding: 0.25em 0.75em;
+    padding: 0.25em 0em;
     font-weight: bold;
     display: flex;
     align-items: center;
-    justify-content: center;
-    margin-left: 1em;
+    justify-content: space-around;
 }
 
-.import-list-form span {
-    margin-left: 1em;
-    width: 30%;
+.import-list-form input {
+    border: none;
+    width: 40%;
+
+}
+.import-list-form button div {
+    width: 32px;
+    height: 32px;
 }
 .import-list-form button {
     border: none;
