@@ -44,12 +44,12 @@ function App() {
                 </header>
                 <Switch>
                     <Route path="/:listID">
-                        <div className="switch-and-share">
-                            <SwitchListMode />
-                            <ShareList />
-                        </div>
-                        <PromptInstall />
                         <ShoppingListProvider>
+                            <div className="switch-and-share">
+                                <SwitchListMode />
+                                <ShareList />
+                            </div>
+                            <PromptInstall />
                             <Route path="/:listID/build-list/:action?/:editedItemKey?">
                                 <BuildListPage />
                             </Route>
