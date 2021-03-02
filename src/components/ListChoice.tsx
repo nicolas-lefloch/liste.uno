@@ -1,10 +1,8 @@
 import React, { FormEvent, useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlus, faSave } from '@fortawesome/free-solid-svg-icons';
+import { faPlus, faSave, faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
 import LocalStorageInterface from '../services/LocalStorageInterface';
-import ListURL from './ListURL';
-import EditableItem from './EditableItem';
 import ListIndexService from '../services/ListIndex.service';
 import RowOptions from './RowOptions';
 import { useSnackbar } from '../utilities/SnackBar';
@@ -46,6 +44,11 @@ const ListChoice: React.FC = () => {
         ListIndexService.setListName(beingEditedListId, (event.target[0] as HTMLInputElement).value);
         setLocalLists(LocalStorageInterface.getLists());
         setBeingEditedListID('');
+    };
+
+    const handleListImport = (event : FormEvent) => {
+        event.preventDefault();
+        window.location.href = `/${(event.target[0] as HTMLInputElement).value}`;
     };
 
     const newList = () => {
@@ -119,12 +122,24 @@ const ListChoice: React.FC = () => {
             <ul>
                 {listJsx}
             </ul>
-            <button className="list-action-button new-list-btn" type="button" onClick={newList}>
-                Nouvelle liste
-                <div className="icon-circle">
-                    <FontAwesomeIcon icon={faPlus} color="white" />
-                </div>
-            </button>
+            <div className="flex popin-action-btn">
+                <button className="list-action-button" type="button" onClick={newList}>
+                    Nouvelle liste
+                    <div className="icon-circle">
+                        <FontAwesomeIcon icon={faPlus} color="white" />
+                    </div>
+                </button>
+                <form onSubmit={handleListImport} className="import-list-form">
+                    <span>Lier liste existante</span>
+                    <input type="text" />
+                    <button type="submit">
+                        <div className="icon-circle">
+                            <FontAwesomeIcon icon={faSignOutAlt} color="white" />
+                        </div>
+                    </button>
+                </form>
+
+            </div>
         </nav>
     );
 };

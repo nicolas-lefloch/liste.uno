@@ -757,6 +757,33 @@ li.frequent-article > button.add-item-button{
     color : #707070;
 }
 
-.new-list-btn{
+.popin-action-btn {
+    justify-content: space-around;
+    align-items: center;
     margin: 20px auto;
 }
+
+.import-list-form {
+    border-radius: 50px;
+    color: #E8907A;
+    background-color: white;
+    border: 2px solid #707070;
+    font-size: 1rem;
+    font-family: 'Roboto Mono', serif;
+    padding: 0.25em 0.75em;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 1em;
+}
+
+.import-list-form span {
+    margin-left: 1em;
+    width: 30%;
+}
+.import-list-form button {
+    border: none;
+    background-color: transparent;
+}
+
