@@ -78,7 +78,15 @@ const ItemInput = (props: Props) => {
     };
 
     const handlePaste = (pastedText: string) => {
-        props.onItemsOutput(VoiceRecorderService.transcriptToItems(pastedText));
+        const items = pastedText.split(/\n/i)
+            .map((s) => s.trim())
+            .filter((s) => !!s)
+            .map(
+                (item) => ({
+                    name: item, lastUpdate: new Date().getTime(), bought: false, category: null,
+                }),
+            );
+        props.onItemsOutput(items);
         setItemName('');
     };
 

@@ -56,6 +56,9 @@ const BuildShoppingList: React.FC = () => {
                             if (category) {
                                 updateItem({ ...itemWithKey, category });
                             }
+                        }).catch((error) => {
+                            console.error('Could not categorize ', itemWithKey.name);
+                            console.error(error);
                         });
                 }
             },
