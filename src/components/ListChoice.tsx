@@ -34,11 +34,6 @@ const ListChoice: React.FC = () => {
         });
     }, [urlListID]);
 
-    const removeList = (listID : string) => {
-        const shoppingLists = LocalStorageInterface.removeList(listID);
-        setLocalLists(shoppingLists);
-    };
-
     const handleListRename = (event : FormEvent) => {
         event.preventDefault();
         ListIndexService.setListName(beingEditedListId, (event.target[0] as HTMLInputElement).value);
@@ -57,6 +52,20 @@ const ListChoice: React.FC = () => {
 
     const newList = () => {
         window.location.href = `/${LocalStorageInterface.generateRandomId()}`;
+    };
+
+    const removeList = (listID : string) => {
+        const shoppingLists = LocalStorageInterface.removeList(listID);
+        setLocalLists(shoppingLists);
+        if (activeListId === listID) {
+            if (Object.values(shoppingLists).length > 0) {
+                const redirectList = Object.keys(localLists)[0];
+                setActiveListId(redirectList);
+                window.location.href = `/${redirectList}`;
+            } else {
+                newList();
+            }
+        }
     };
 
     const listJsx = Object.values(localLists).map((list) => (
@@ -93,7 +102,6 @@ const ListChoice: React.FC = () => {
                                 {
                                     label: 'Supprimer',
                                     action: () => removeList(list.id),
-                                    disabled: activeListId === list.id,
                                 },
                                 {
                                     label: 'Renommer',
