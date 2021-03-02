@@ -39,6 +39,22 @@ export default class VoiceRecorderService {
             .map((item) => item.replace(/^une |^un /i, '1 '))
         // The speech recognition mistakes "deux" for "de"
             .map((item) => item.replace(/^de /, '2 '))
+            .map((item) => item.replace(/un /, '1 '))
+            .map((item) => item.replace(/^deux /, '2 '))
+            .map((item) => item.replace(/^trois /, '3 '))
+            .map((item) => item.replace(/^quatre /, '4 '))
+            .map((item) => item.replace(/^cinq /, '5 '))
+            .map((item) => item.replace(/^six /, '6 '))
+            .map((item) => item.replace(/^sept /, '7 '))
+            .map((item) => item.replace(/^huit /, '8 '))
+            .map((item) => item.replace(/^neuf /, '9 '))
+            .map((item) => item.replace(/^dix /, '10 '))
+            .map((item) => item.replace(/^onze /, '11 '))
+            .map((item) => item.replace(/^douze /, '12 '))
+            .map((item) => item.replace(/^treize /, '13 '))
+            .map((item) => item.replace(/^quatorze /, '14 '))
+            .map((item) => item.replace(/^quinze /, '15 '))
+            .map((item) => item.replace(/^seize /, '16 '))
             .map((s) => s.charAt(0).toUpperCase() + s.slice(1))
             .map(
                 (item) => ({

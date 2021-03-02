@@ -102,7 +102,7 @@ const removeItemInDB = (listID: string, itemKey: string,
     itemRef.once('value',
         (snapshot) => {
             const value = snapshot.val() as Item;
-            if (value.bought) {
+            if (value && value.bought) {
                 listRef.child('archived').push(snapshot.val());
             }
             itemRef.remove();
