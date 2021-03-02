@@ -56,11 +56,11 @@ const ListChoice: React.FC = () => {
         <li key={list.id}>
             {
                 beingEditedListId === list.id ? (
-                    <form onSubmit={handleListRename} className="f-grow flex">
+                    <form onSubmit={handleListRename} className="f-grow flex f-vcenter">
                         <input
                         // eslint-disable-next-line jsx-a11y/no-autofocus
                             autoFocus
-                            className="f-grow"
+                            className="f-grow list-name"
                             type="text"
                             defaultValue={list.name}
                         />
@@ -73,43 +73,44 @@ const ListChoice: React.FC = () => {
                         </button>
                     </form>
                 ) : (
-                    <Link to={`/${list.id}/`} onClick={() => setActiveListId(list.id)} className="f-grow">
-                        <div className="list-label item-label">
-                            <p className={activeListId === list.id ? 'active' : ''}>
-                                {list.name}
-                            </p>
-                        </div>
-                    </Link>
-
+                    <>
+                        <Link to={`/${list.id}/`} onClick={() => setActiveListId(list.id)} className="f-grow">
+                            <div className="list-label item-label">
+                                <p className={activeListId === list.id ? 'active' : ''}>
+                                    {list.name}
+                                </p>
+                            </div>
+                        </Link>
+                        <RowOptions
+                            options={[
+                                {
+                                    label: 'Supprimer',
+                                    action: () => removeList(list.id),
+                                    disabled: activeListId === list.id,
+                                },
+                                {
+                                    label: 'Renommer',
+                                    action: () => setBeingEditedListID(list.id),
+                                },
+                                {
+                                    label: 'Partager',
+                                    action: () => {
+                                        navigator.clipboard.writeText(`https://liste.uno/${list.id}`).then(() => {
+                                            triggerSnackBar((
+                                                <p>
+                                                    Lien de votre liste copié
+                                                    <br />
+                                                    Partagez-le pour faire vos courses à plusieurs.
+                                                </p>
+                                            ), 3000);
+                                        });
+                                    },
+                                },
+                            ]}
+                        />
+                    </>
                 )
             }
-            <RowOptions
-                options={[
-                    {
-                        label: 'Supprimer',
-                        action: () => removeList(list.id),
-                        disabled: activeListId === list.id,
-                    },
-                    {
-                        label: 'Renommer',
-                        action: () => setBeingEditedListID(list.id),
-                    },
-                    {
-                        label: 'Partager',
-                        action: () => {
-                            navigator.clipboard.writeText(`https://liste.uno/${list.id}`).then(() => {
-                                triggerSnackBar((
-                                    <p>
-                                        Lien de votre liste copié
-                                        <br />
-                                        Partagez-le pour faire vos courses à plusieurs.
-                                    </p>
-                                ), 3000);
-                            });
-                        },
-                    },
-                ]}
-            />
         </li>
     ));
 

@@ -82,7 +82,7 @@ ol{
 .editable-shopping-list > ol > li > div{
     display: flex;
 }
-.booknote-list  .item-label, .editable-shopping-list form input, .category-label{
+.booknote-list  .item-label, .editable-shopping-list form input, .category-label, .list-name{
     flex-grow: 1;
     font-family: 'Roboto', serif;
     letter-spacing: 1px;
@@ -90,6 +90,12 @@ ol{
     font-size: 1.4em;
     align-items: center;
     display: flex;
+}
+.list-name {
+    padding: 0.5em 0.5em 0.5em 4px;
+    font-size: 1em;
+    border: none;
+    outline: none;
 }
 
 .editable-shopping-list form{
@@ -740,7 +746,9 @@ li.frequent-article > button.add-item-button{
 .f-grow{
     flex-grow: 1;
 }
-
+.f-vcenter {
+    align-items: center;
+}
 .flex{
     display: flex;
 }
