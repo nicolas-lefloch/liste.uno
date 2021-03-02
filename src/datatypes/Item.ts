@@ -10,4 +10,5 @@ export interface Item {
     boughtTime? : number;
     boughtLocation? : PositionRecord,
     category: Category;
+    fromSiri? : boolean;
 }

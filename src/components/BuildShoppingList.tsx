@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useHistory, useParams } from 'react-router-dom';
@@ -10,6 +10,7 @@ import CategorizationService from '../services/CategorizationService';
 import SuggestInstallService from '../services/SuggestInstall.service';
 import { useShoppingList } from '../services/ShoppingList.newservice';
 import { ReactComponent as EmptyListImg } from '../ressources/svg/empty_cart.svg';
+import VoiceRecorderService from '../services/voice-recorder.service';
 
 /**
  * Main view of app
@@ -61,6 +62,18 @@ const BuildShoppingList: React.FC = () => {
         );
         SuggestInstallService.registerInteractionWasMade();
     };
+
+    // Handle items from siri
+    useEffect(() => {
+        const itemsFromSiri = shoppingList.items.filter((item) => item.fromSiri);
+        console.log('Items from siri : ', itemsFromSiri);
+        // All items from siri will have to be split and categorized as if they were voice added directly from liste.uno
+        itemsFromSiri.forEach((item) => {
+            const generatedItems = VoiceRecorderService.transcriptToItems(item.name);
+            removeItem(item.key);
+            addItemsToList(generatedItems);
+        });
+    }, [shoppingList]);
 
     const deleteAllItems = () => {
         shoppingList.items.forEach(

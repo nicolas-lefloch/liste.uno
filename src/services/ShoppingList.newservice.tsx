@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 
 import { useParams } from 'react-router-dom';
 import firebase from 'firebase/app';
@@ -138,7 +138,6 @@ const updateItemInDB = (listId: string, item: Item,
 
 export const ShoppingListProvider: React.FC<{ children }> = ({ children = null }) => {
     const [itemList, setItemList] = useState<Item[]>([]);
-
     const [frequentArticles, setFrequentArticles] = useState([]);
 
     /** Handle list change */
