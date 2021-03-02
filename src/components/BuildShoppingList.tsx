@@ -9,6 +9,8 @@ import FrequentArticles from './FrequentArticles';
 import CategorizationService from '../services/CategorizationService';
 import SuggestInstallService from '../services/SuggestInstall.service';
 import { useShoppingList } from '../services/ShoppingList.newservice';
+import { ReactComponent as EmptyListImg } from '../ressources/svg/empty_cart.svg';
+
 /**
  * Main view of app
  * Edition of a shopping list
@@ -93,7 +95,12 @@ const BuildShoppingList: React.FC = () => {
                 <div className="vertical-bar" />
                 <ol>
                     {itemList.length ? itemList
-                        : <span className="empty-list"> Liste vide. Que voulez-vous acheter ?</span>}
+                        : (
+                            <div>
+                                <span className="empty-list"> Liste vide. Que voulez-vous acheter ?</span>
+                                <EmptyListImg />
+                            </div>
+                        )}
                 </ol>
             </div>
             <div className="list-actions">
