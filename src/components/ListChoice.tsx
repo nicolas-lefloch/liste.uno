@@ -48,7 +48,11 @@ const ListChoice: React.FC = () => {
 
     const handleListImport = (event : FormEvent) => {
         event.preventDefault();
-        window.location.href = `/${(event.target[0] as HTMLInputElement).value}`;
+        const inputValue = (event.target[0] as HTMLInputElement).value;
+        if (inputValue !== undefined && inputValue.length > 0) {
+            const splitInput = inputValue.split('/');
+            window.location.href = `/${splitInput[splitInput.length - 1]}`;
+        }
     };
 
     const newList = () => {
