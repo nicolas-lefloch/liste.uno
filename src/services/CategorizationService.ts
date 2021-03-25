@@ -23,6 +23,9 @@ import { ReactComponent as SpiceIcon } from '../ressources/svg/spice-icon.svg';
 import { ReactComponent as OilsAndVinegarIcon } from '../ressources/svg/olive-oil-icon.svg';
 import { ReactComponent as FreshIcon } from '../ressources/svg/fresh-icon.svg';
 import { ReactComponent as BiscuitIcon } from '../ressources/svg/biscuits-icon.svg';
+import { ReactComponent as WorldCuisineIcon } from '../ressources/svg/world-cuisine-icon.svg';
+import { ReactComponent as MusicIcon } from '../ressources/svg/music-icon.svg';
+import { ReactComponent as LibraryIcon } from '../ressources/svg/book-icon.svg';
 import ConfigData from '../config.json';
 
 if (!firebase.apps.length) {
@@ -127,6 +130,18 @@ export default class CategorizationService {
         {
             category: { name: 'Biscuits' },
             icon: { type: 'SVGAsComponent', image: BiscuitIcon, iconURL: `${process.env.PUBLIC_URL}/category-icons/biscuits-icon.svg` },
+        },
+        {
+            category: { name: 'Cuisine du monde' },
+            icon: { type: 'SVGAsComponent', image: WorldCuisineIcon, iconURL: `${process.env.PUBLIC_URL}/category-icons/world-cuisine-icon.svg` },
+        },
+        {
+            category: { name: 'Musique' },
+            icon: { type: 'SVGAsComponent', image: MusicIcon, iconURL: `${process.env.PUBLIC_URL}/category-icons/music-icon.svg` },
+        },
+        {
+            category: { name: 'Librairie' },
+            icon: { type: 'SVGAsComponent', image: LibraryIcon, iconURL: `${process.env.PUBLIC_URL}/category-icons/book-icon.svg` },
         },
     ];
 
