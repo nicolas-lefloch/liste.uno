@@ -49,7 +49,7 @@ class LocalStorageInterface {
         const randomChar = (characters: string) => characters.charAt(
             Math.floor(Math.random() * characters.length),
         );
-        const res = [...Array(4).keys()].map(
+        const res = [...Array(6).keys()].map(
             (i) => (i % 2 === 0 ? randomChar(consonants) : randomChar(vowels)),
         ).join('');
         return res;

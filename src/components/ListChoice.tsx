@@ -46,7 +46,8 @@ const ListChoice: React.FC = () => {
         const inputValue = (event.target[0] as HTMLInputElement).value;
         if (inputValue !== undefined && inputValue.length > 0) {
             const splitInput = inputValue.split('/');
-            window.location.href = `/${splitInput[splitInput.length - 1]}`;
+            const listID = splitInput[splitInput.length - 1].toLocaleLowerCase().trim();
+            window.location.href = `/${listID}`;
         }
     };
 
@@ -143,7 +144,7 @@ const ListChoice: React.FC = () => {
                 </button>
                 <form onSubmit={handleListImport} className="import-list-form">
                     <span>Import</span>
-                    <input type="text" placeholder=" liste.uno/xxxx" />
+                    <input type="text" placeholder=" liste.uno/xxxxxx" />
                     <button type="submit">
                         <div className="icon-circle">
                             <FontAwesomeIcon icon={faSignOutAlt} color="white" />
