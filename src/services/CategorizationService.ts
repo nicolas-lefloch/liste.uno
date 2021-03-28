@@ -26,6 +26,7 @@ import { ReactComponent as BiscuitIcon } from '../ressources/svg/biscuits-icon.s
 import { ReactComponent as WorldCuisineIcon } from '../ressources/svg/world-cuisine-icon.svg';
 import { ReactComponent as MusicIcon } from '../ressources/svg/music-icon.svg';
 import { ReactComponent as LibraryIcon } from '../ressources/svg/book-icon.svg';
+import { ReactComponent as HealthIcon } from '../ressources/svg/health-icon.svg';
 import ConfigData from '../config.json';
 
 if (!firebase.apps.length) {
@@ -142,6 +143,10 @@ export default class CategorizationService {
         {
             category: { name: 'Librairie' },
             icon: { type: 'SVGAsComponent', image: LibraryIcon, iconURL: `${process.env.PUBLIC_URL}/category-icons/book-icon.svg` },
+        },
+        {
+            category: { name: 'Pharmacie' },
+            icon: { type: 'SVGAsComponent', image: HealthIcon, iconURL: `${process.env.PUBLIC_URL}/category-icons/health-icon.svg` },
         },
     ];
 
