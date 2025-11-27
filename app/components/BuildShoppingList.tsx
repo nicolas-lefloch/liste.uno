@@ -56,7 +56,6 @@ const BuildShoppingList: React.FC = () => {
                 const itemWithKey = addItem(item);
                 if (!itemWithKey.category) {
                     // get preferred category when item has no category
-                    console.log("Looking for category of ", itemWithKey)
                     CategorizationService
                         .getPreferredCategory(itemWithKey, shoppingList.id)
                         .then((category) => {
@@ -79,27 +78,27 @@ const BuildShoppingList: React.FC = () => {
         // All items from siri will have to be split and categorized as if they were voice added directly from liste.uno
         itemsFromSiri.forEach((item) => {
             const generatedItems = VoiceRecorderService.transcriptToItems(item.name);
-            removeItem(item.key!);
+            removeItem(item.key);
             addItemsToList(generatedItems);
         });
     }, [shoppingList]);
 
     const deleteAllItems = () => {
         shoppingList.items.forEach(
-            (item) => item.bought && removeItem(item.key!),
+            (item) => item.bought && removeItem(item.key),
         );
         setShowingReally(false);
     };
     const itemList = shoppingList.items.map(
         (item) => (
             <ItemRow
-                key={item.key! + item.lastUpdate}
+                key={item.key + item.lastUpdate}
                 item={item}
                 editable={editedItemKey === item.key}
                 onToggleEdition={
-                    (shouldEdit) => toggleEdition(shouldEdit, item.key!)
+                    (shouldEdit) => toggleEdition(shouldEdit, item.key)
                 }
-                onDelete={() => removeItem(item.key!)}
+                onDelete={() => removeItem(item.key)}
             />
         ),
     );

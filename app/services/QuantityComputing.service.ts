@@ -31,7 +31,7 @@ export default class QuantityComputingService {
         if (!existingQuantity) {
             return {
                 itemToRemove: matchingItem,
-                itemToAdd: { ...newItem, category: matchingItem.category },
+                itemToAdd: { ...newItem, category: matchingItem.category || null },
             };
         }
 

@@ -9,6 +9,7 @@ import {
 
 import type { Route } from "./+types/root";
 import "app/ressources/index.css"
+import * as serviceWorker from './serviceWorkerRegistration';
 
 export const links: Route.LinksFunction = () => [
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
@@ -75,3 +76,6 @@ export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
     </main>
   );
 }
+
+
+serviceWorker.register();

@@ -1,14 +1,14 @@
 import React, { useContext, useEffect, useState } from 'react';
 
 import { useParams } from 'react-router';
-import  { getApps, initializeApp } from 'firebase/app';
+import { getApps, initializeApp } from 'firebase/app';
 import QuantityComputingService from './QuantityComputing.service';
 import type { Item } from '../datatypes/Item';
 import type { ShoppingList } from '../datatypes/ShoppingList';
 import ConfigData from '../config.json';
 import LocationService from './LocationService';
 import LocalStorageInterface from './LocalStorageInterface';
-import { child, getDatabase, off, onValue, ref , get, push, update} from 'firebase/database';
+import { child, getDatabase, off, onValue, ref, get, push, update } from 'firebase/database';
 import { remove } from 'firebase/database';
 
 if (!getApps().length) {
@@ -22,9 +22,9 @@ interface ShoppingListContextDescription {
     removeItem: (itemKey: string) => void;
     updateItem: (item: Item) => void;
     addItem: (item: Item) => Item;
-    frequentArticles : Item[];
+    frequentArticles: Item[];
 }
-const ShoppingListContext = React.createContext<ShoppingListContextDescription|undefined>(undefined);
+const ShoppingListContext = React.createContext<ShoppingListContextDescription>(undefined);
 
 const getListRef = (listID: string) => ref(getDatabase(), `/lists/${listID}/`);
 
@@ -54,7 +54,7 @@ const sortFrequentArticles = (articles: Item[]) => {
 
 const setCurrentList = (newListID: string, onListUpdated: (itemList: Item[]) => void, onFrequentArticlesFound: (articles: Item[]) => void) => {
     /** Removes the subscription on the previous list */
-    off(child(getListRef(LocalStorageInterface.getCurrentListId()),'current'), 'value');
+    off(child(getListRef(LocalStorageInterface.getCurrentListId()), 'current'), 'value');
 
     /** Immediately outputs the items from local storage
      * If offline, it will be the unique call of onListUpdated
@@ -93,6 +93,7 @@ const setCurrentList = (newListID: string, onListUpdated: (itemList: Item[]) => 
 
 const removeItemInDB = (listID: string, itemKey: string,
     onLocalListUpdated: (shoppingList: ShoppingList) => void) => {
+
     /** Locally */
     const items = LocalStorageInterface.getListItems(listID);
     LocalStorageInterface.saveListItems(listID, items.filter((item) => item.key !== itemKey));
@@ -114,7 +115,7 @@ const removeItemInDB = (listID: string, itemKey: string,
 const addItemInDB = (listId: string, item: Item,
     onLocalListUpdated: (shoppingList: ShoppingList) => void): Item => {
     /** Schedules the adding online, but immediately returns the key */
-    const { key } = push(child(getListRef(listId),'current'));
+    const { key } = push(child(getListRef(listId), 'current'), item);
     const newItemWithKey: Item = { ...item, key };
 
     const items = LocalStorageInterface.getListItems(listId);
@@ -162,10 +163,8 @@ export const ShoppingListProvider: React.FC<{ children }> = ({ children = null }
             itemToAdd,
         } = QuantityComputingService.handleQuantities(itemList, item);
         if (itemToRemove) {
-            console.log("Removing item ", itemToRemove.key)
             removeItemInDB(listId, itemToRemove.key, () => {
-                console.log("removed ", itemToRemove.key)
-             });
+            });
         }
 
         return addItemInDB(listId, itemToAdd,

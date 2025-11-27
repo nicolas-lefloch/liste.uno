@@ -20,7 +20,7 @@ const ItemInput = (props: Props) => {
                 name: itemName.trim(),
                 lastUpdate: new Date().getTime(),
                 bought: false,
-                category: undefined,
+                category: null,
             };
             props.onItemsOutput([newItem]);
             setItemName('');
@@ -83,7 +83,7 @@ const ItemInput = (props: Props) => {
             .filter((s) => !!s)
             .map(
                 (item) => ({
-                    name: item, lastUpdate: new Date().getTime(), bought: false, category: undefined,
+                    name: item, lastUpdate: new Date().getTime(), bought: false, category: null,
                 }),
             );
         props.onItemsOutput(items);

@@ -61,7 +61,7 @@ export default class VoiceRecorderService {
             .map((s) => s.charAt(0).toUpperCase() + s.slice(1))
             .map(
                 (item) => ({
-                    name: item, lastUpdate: new Date().getTime(), bought: false, category: undefined,
+                    name: item, lastUpdate: new Date().getTime(), bought: false, category: null,
                 }),
             );
         return res;
