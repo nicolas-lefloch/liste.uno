@@ -42,7 +42,7 @@ export default class SuggestInstallService {
      */
     static registerInteractionWasMade() {
         SuggestInstallService.interactions += 1;
-        if (this.interactions == 2 && !localStorage.getItem('installation_refused')) {
+        if (this.interactions == 3 && !localStorage.getItem('installation_refused')) {
             if (!this.deferredPrompt) {
                 // eslint-disable-next-line no-console
                 console.log('could not suggest install because no beforeinstallprompt was caught');
