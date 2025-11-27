@@ -10,7 +10,7 @@ import SuggestInstallService from '../services/SuggestInstall.service';
 import { useShoppingList } from '../services/ShoppingList.newservice';
 import EmptyListImg from '../ressources/svg/empty_cart.svg?react';
 import VoiceRecorderService from '../services/voice-recorder.service';
-import { useParams } from 'react-router';
+import { useNavigate, useParams } from 'react-router';
 
 /**
  * Main view of app
@@ -19,7 +19,6 @@ import { useParams } from 'react-router';
  */
 const BuildShoppingList: React.FC = () => {
     const shoppingListContext = useShoppingList()
-    console.log("patate", {shoppingListContext})
     if(!shoppingListContext){
         throw new Error("BuildShoppingList must be inside a ShoppingListProvider")
     }
@@ -29,18 +28,19 @@ const BuildShoppingList: React.FC = () => {
     } = shoppingListContext;
 
     const { editedItemKey, listID } = useParams<{ editedItemKey: string, listID: string }>();
-    // const history = useHistory();
+    
+    const navigate = useNavigate();
     const toggleEdition = (startEdition: boolean, itemKey: string) => {
-    //     if (startEdition) {
-    //         const path = `/${listID}/build-list/edit-item/${itemKey}`;
-    //         if (editedItemKey) {
-    //             history.replace(path);
-    //         } else {
-    //             history.push(path);
-    //         }
-    //     } else {
-    //         history.goBack();
-    //     }
+        if (startEdition) {
+            const path = `/${listID}/build-list/edit-item/${itemKey}`;
+            if (editedItemKey) {
+                navigate(path, {replace: true});
+            } else {
+                navigate(path);
+            }
+        } else {
+            navigate(-1);
+        }
     };
 
     const [showingReally, setShowingReally] = useState(false);
@@ -56,6 +56,7 @@ const BuildShoppingList: React.FC = () => {
                 const itemWithKey = addItem(item);
                 if (!itemWithKey.category) {
                     // get preferred category when item has no category
+                    console.log("Looking for category of ", itemWithKey)
                     CategorizationService
                         .getPreferredCategory(itemWithKey, shoppingList.id)
                         .then((category) => {
@@ -75,7 +76,6 @@ const BuildShoppingList: React.FC = () => {
     // Handle items from siri
     useEffect(() => {
         const itemsFromSiri = shoppingList.items.filter((item) => item.fromSiri);
-        console.log('Items from siri : ', itemsFromSiri);
         // All items from siri will have to be split and categorized as if they were voice added directly from liste.uno
         itemsFromSiri.forEach((item) => {
             const generatedItems = VoiceRecorderService.transcriptToItems(item.name);
@@ -95,8 +95,7 @@ const BuildShoppingList: React.FC = () => {
             <ItemRow
                 key={item.key! + item.lastUpdate}
                 item={item}
-                // editable={editedItemKey === item.key}
-                editable={false}
+                editable={editedItemKey === item.key}
                 onToggleEdition={
                     (shouldEdit) => toggleEdition(shouldEdit, item.key!)
                 }

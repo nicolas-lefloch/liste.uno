@@ -3,28 +3,28 @@ import type { Category } from '../datatypes/Category';
 import CategorizationService from '../services/CategorizationService';
 import UnknownIcon from '../ressources/svg/unknown-icon.svg?react';
 
-interface Props{
-    onClick? : () => void;
-    category? : Category;
+interface Props {
+    onClick?: () => void;
+    category?: Category;
     size?: number;
 }
-const CategoryIcon : React.FC<Props> = (props : Props) => {
+const CategoryIcon: React.FC<Props> = ({ onClick = () => { }, category, size = 40 }: Props) => {
     const getCategoryImage = () => {
-        if (props.category) {
-            const matchingCategory = CategorizationService.getCategoryImage(props.category);
+        if (category) {
+            const matchingCategory = CategorizationService.getCategoryImage(category);
             if (matchingCategory) {
                 const CategoryImage = matchingCategory.image;
-                return (<CategoryImage width={props.size} height={props.size} />);
+                return (<CategoryImage width={size} height={size} />);
             }
         }
-        return <UnknownIcon width={props.size} height={props.size} />;
+        return <UnknownIcon width={size} height={size} />;
     };
     return (
         <button
             type="button"
             className="category-icon"
-            title={props.category != null ? props.category.name : ''}
-            onClick={props.onClick}
+            title={category != null ? category.name : ''}
+            onClick={onClick}
         >
             {getCategoryImage()}
 
@@ -32,9 +32,6 @@ const CategoryIcon : React.FC<Props> = (props : Props) => {
 
     );
 };
-CategoryIcon.defaultProps = {
-    onClick: () => {},
-    size: 40,
-};
+
 
 export default CategoryIcon;

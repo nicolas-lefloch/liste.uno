@@ -1,5 +1,5 @@
 import React from 'react';
-import { Category } from '../datatypes/Category';
+import type { Category } from '../datatypes/Category';
 import WhileShoppingItemRow from './WhileShoppingItemRow';
 import CategoryIcon from './CategoryIcon';
 import { useShoppingList } from '../services/ShoppingList.newservice';

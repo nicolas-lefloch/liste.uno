@@ -162,7 +162,10 @@ export const ShoppingListProvider: React.FC<{ children }> = ({ children = null }
             itemToAdd,
         } = QuantityComputingService.handleQuantities(itemList, item);
         if (itemToRemove) {
-            removeItemInDB(listId, itemToRemove.key, () => { });
+            console.log("Removing item ", itemToRemove.key)
+            removeItemInDB(listId, itemToRemove.key, () => {
+                console.log("removed ", itemToRemove.key)
+             });
         }
 
         return addItemInDB(listId, itemToAdd,

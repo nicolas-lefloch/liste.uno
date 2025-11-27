@@ -29,22 +29,21 @@ const ItemInput = (props: Props) => {
 
     const consigli = ['Carottes', '3 Patates', 'Pain'];
     const ottenireLaBuonaParolaTagliata = (i:number, durazioneDeLaPausaInPassi:number) => {
-        // const conto = consigli.map((str) => 2 * str.length + durazioneDeLaPausaInPassi)
-        //     .reduce(
-        //         (acc, val) => acc.concat((acc.length === 0 ? 0 : acc[acc.length - 1]) + val), [],
-        //     );
-        // const massimo = conto[conto.length - 1];
-        // const indice = conto.findIndex((val) => val > (i % massimo));
-        // const parola = consigli[indice];
-        // const passo = (
-        //     (i % massimo) - (indice === 0 ? 0 : conto[indice - 1]))
-        //     % (2 * parola.length + durazioneDeLaPausaInPassi);
-        // return parola.substring(
-        //     0,
-        //     passo + 1 > parola.length + durazioneDeLaPausaInPassi
-        //         ? 2 * parola.length - passo + durazioneDeLaPausaInPassi : passo,
-        // );
-        return consigli[i]
+        const conto = consigli.map((str) => 2 * str.length + durazioneDeLaPausaInPassi)
+            .reduce(
+                (acc, val) => acc.concat((acc.length === 0 ? 0 : acc[acc.length - 1]) + val), [],
+            );
+        const massimo = conto[conto.length - 1];
+        const indice = conto.findIndex((val) => val > (i % massimo));
+        const parola = consigli[indice];
+        const passo = (
+            (i % massimo) - (indice === 0 ? 0 : conto[indice - 1]))
+            % (2 * parola.length + durazioneDeLaPausaInPassi);
+        return parola.substring(
+            0,
+            passo + 1 > parola.length + durazioneDeLaPausaInPassi
+                ? 2 * parola.length - passo + durazioneDeLaPausaInPassi : passo,
+        );
     };
     useEffect(() => {
         const sub = timer(0, 100).subscribe((i) => setPlaceholder(

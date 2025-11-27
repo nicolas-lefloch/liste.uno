@@ -1,5 +1,5 @@
-import React, { FormEvent, useEffect, useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import React, { type FormEvent, useEffect, useState } from 'react';
+import { Link, useParams } from 'react-router';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus, faSave, faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
 import LocalStorageInterface from '../services/LocalStorageInterface';

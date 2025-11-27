@@ -34,7 +34,7 @@ const ItemRow = (props: Props) => {
         updateItem({
             ...props.item,
             name: innerItemName,
-            additionExplanation: undefined,
+            additionExplanation: null,
             lastUpdate: new Date().getTime(),
         });
     };
