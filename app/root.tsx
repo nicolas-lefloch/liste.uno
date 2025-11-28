@@ -9,16 +9,20 @@ import {
 
 import type { Route } from "./+types/root";
 import "app/ressources/index.css"
-import * as serviceWorker from './serviceWorkerRegistration';
+import { registerSW } from "virtual:pwa-register";
+
+const updateSW = registerSW({
+  onNeedRefresh() {
+    if (confirm("New content available. Reload?")) {
+      updateSW(true);
+    }
+  },
+});
 
 export const links: Route.LinksFunction = () => [
   {
     rel: "icon",
     href: "/logo.svg"
-  },
-  {
-    rel: "manifest",
-    href: "/manifest.json"
   },
   {
     rel: "apple-touch-icon",
@@ -81,6 +85,3 @@ export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
     </main>
   );
 }
-
-
-serviceWorker.register();
