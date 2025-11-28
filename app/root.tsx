@@ -30,6 +30,7 @@ export const links: Route.LinksFunction = () => [
   }
 ];
 
+
 export function Layout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="fr">
@@ -41,6 +42,11 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Meta />
         <Links />
         <title>Liste.Uno</title>
+        <script
+          src="https://beamanalytics.b-cdn.net/beam.min.js"
+          data-token="4d8ec1c4-c84f-4e25-a59c-2e07a6b3c36b"
+          async
+        />
       </head>
       <body>
         <div id="root">
