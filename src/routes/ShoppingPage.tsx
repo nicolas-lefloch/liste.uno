@@ -1,10 +1,9 @@
 import WhileShoppingList from "~/components/WhileShoppingList";
 
 const ShoppingPage: React.FC = () => (
-    <>
-        <WhileShoppingList />
-    </>
-
+  <>
+    <WhileShoppingList />
+  </>
 );
 
 export default ShoppingPage;
